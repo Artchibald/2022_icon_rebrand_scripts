@@ -1,4 +1,29 @@
-# WTW_v2
+<div id="top"></div>
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="">
+    <img src="imagesInReadme/WTW.png" alt="Logo" width="180" height="180">
+  </a>
+
+<h3 align="center">A Typescript file that converts into ECMA 3 target JS file for use in Adobe Illustrator 2022. JS script that automates icon export processes in Adobe Illustrator. More info TBC.</h3>
+
+  <p align="center">
+    Useful links 
+    <br />
+    <a href="https://github.com/Artchibald/WTW_2022_icon_rebrand_scripts"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    ·
+    <a href="https://github.com/Artchibald/WTW_2022_icon_rebrand_scripts/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Artchibald/WTW_2022_icon_rebrand_scripts/issues">Request Feature</a>
+        ·
+
+  </p>
+</div>
+
+# WTW_2022_icon_rebrand_scripts
 
 New stuff 
 
@@ -41,3 +66,9 @@ New stuff
 
 
 Initial inclination is a pop up with many options
+
+# TUBS
+
+2 hours amends Diane
+Friday 24 June 1 hour call and set up
+Sat 25 June 2 hours docs review, repo set up
