@@ -139,7 +139,7 @@ let CSTasks = (function () {
    //opens and returns a new document with the source document's units and the specified colorspace
    tasks.newDocument = function (sourceDoc, colorSpace) {
       /*@ts-ignore*/
-      let preset = new DocumentPreset();
+      let preset: any = new DocumentPreset();
       preset.colorMode = colorSpace;
       preset.units = sourceDoc.rulerUnits;
       let app;
@@ -169,7 +169,7 @@ let CSTasks = (function () {
    tasks.scaleAndExportPNG = function (doc, destFile, startWidth, desiredWidth) {
       let scaling = (100.0 * desiredWidth) / startWidth;
       /*@ts-ignore*/
-      let options = new ExportOptionsPNG24();
+      let options: any = new ExportOptionsPNG24();
       options.antiAliasing = true;
       options.transparency = true;
       options.artBoardClipping = true;
@@ -569,7 +569,7 @@ function main() {
    let filename = "/" + name + "_Core_RGB.eps";
    let destFile = new File(destFolder + filename);
    /*@ts-ignore*/
-   let rgbSaveOpts = new EPSSaveOptions();
+   let rgbSaveOpts: any = new EPSSaveOptions();
    rgbSaveOpts.cmykPostScript = false;
    rgbDoc.saveAs(destFile, rgbSaveOpts);
 
@@ -703,7 +703,7 @@ function main() {
    let mastFilename = "/" + name + "_Masthead_RGB.eps";
    let mastDestFile = new File(destFolder + mastFilename);
    /*@ts-ignore*/
-   let mastSaveOpts = new EPSSaveOptions();
+   let mastSaveOpts: any = new EPSSaveOptions();
    mastSaveOpts.cmykPostScript = false;
    mastDoc.saveAs(mastDestFile, mastSaveOpts);
 
