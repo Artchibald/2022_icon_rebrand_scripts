@@ -340,7 +340,7 @@ let CSTasks = (function () {
    //converts the fill colors to the indexed CMYK colors and adds a text box with the unmatched colors
    //Note that this only makes sense if you've previously indexed the same path items and haven't shifted their positions in the pathItems array
    tasks.convertToCMYK = function (doc, pathItems, colorArray, colorIndex) {
-      let unmatchedColors = [];
+      let unmatchedColors: string[] = [];
       let i;
       for (i = 0; i < pathItems.length; i++) {
          if (colorIndex[i] >= 0 && colorIndex[i] < colorArray.length)
