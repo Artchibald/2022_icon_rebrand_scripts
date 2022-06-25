@@ -69,6 +69,6 @@ Initial inclination is a pop up with many options
 
 # TUBS
 
-2 hours amends Diane
-Friday 24 June 1 hour call and set up
-Sat 25 June 2 hours docs review, repo set up
+- 2 hours amends Diane
+- Friday 24 June 1 hour call and set up
+- Sat 25 June 2 hours docs review, repo set up
