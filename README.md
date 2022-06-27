@@ -23,6 +23,10 @@
   </p>
 </div>
 
+# Ref for email comms
+
+WTW_55556_Software Product Icons and cc' rrdcreativeldn@willistowerswatson.com
+
 # WTW_2022_icon_rebrand_scripts
 
 New stuff 
