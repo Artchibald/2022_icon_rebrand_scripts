@@ -22,6 +22,7 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 /*********************************
 VARIABLES YOU MIGHT NEED TO CHANGE
 **********************************/
+var sourceDoc = app.activeDocument;
 var RGBColorElements = [
     [127, 53, 178],
     [50, 127, 239],
@@ -351,7 +352,6 @@ var CSTasks = (function () {
 /****************
  ***************/
 function main() {
-    var sourceDoc = app.activeDocument;
     /*****************************
       create export folder if needed
       ******************************/

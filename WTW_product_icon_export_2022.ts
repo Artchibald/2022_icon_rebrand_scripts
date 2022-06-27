@@ -24,6 +24,7 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 /*********************************
 VARIABLES YOU MIGHT NEED TO CHANGE
 **********************************/
+let sourceDoc = app.activeDocument;
 
 let RGBColorElements = [
    [127, 53, 178], //ultraviolet purple
@@ -410,7 +411,7 @@ let CSTasks = (function () {
  ***************/
 
 function main() {
-   let sourceDoc = app.activeDocument;
+
 
    /*****************************
      create export folder if needed
