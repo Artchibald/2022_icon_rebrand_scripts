@@ -52,7 +52,7 @@ New stuff
 - see named swatches
 - core is digi and expressive is for marketing annd press
 - we had 2 dif. once, 
-- target differet artboards
+- target different artboards (by name)
 - 2 artboards in same file
 - 1 script vs two
 - depending on icon categorisation internally
@@ -60,15 +60,20 @@ New stuff
 - magenta is consumer
 - guides: types of guides
 - see grid
-- we want grb cmyk in dif colors
+- we want rgb cmyk in dif colors
 - 1 export is favicon.ico
-- stripes: designer choooses which and direction
+- stripes: designer chooses which and direction
 
 
 Initial inclination is a pop up with many options
+
+# Discoveries
+
+Font type must be TT (truetype), doesn't work with O (opentype)
 
 # TUBS
 
 - 2 hours amends Diane
 - Friday 24 June 1 hour call and set up
-- Sat 25 June 2 hours docs review, repo set up
+- Sat 25 June 3 hours docs review, repo set up, set up typescript installation, remove all errors from original js script copy as TS
+
