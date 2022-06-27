@@ -54,6 +54,8 @@ let i;
 /********************************** 
 Module for image manipulation tasks 
 ***********************************/
+// let artboardsInfo = app.activeDocument.artboards[1].name;
+// alert(artboardsInfo);
 
 var CSTasks = (function () {
    var tasks: any = {};
@@ -64,8 +66,9 @@ var CSTasks = (function () {
 
    //takes an artboard
    //returns its left top corner as an array [x,y]
+
    tasks.getArtboardCorner = function (artboard) {
-      var corner = [artboard.artboardRect[0], artboard.artboardRect[1]];
+      var corner = [app.activeDocument.artboards[0].artboardRect[0], artboard.artboardRect[1]];
       return corner;
    };
 
