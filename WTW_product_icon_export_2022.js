@@ -179,11 +179,11 @@ var CSTasks = (function () {
         var foundFont = false;
         // broken, not needed if font is found
         /*@ts-ignore*/
-        for (var i = 0; i < textFonts.length; i++) {
+        for (var i_1 = 0; i_1 < textFonts.length; i_1++) {
             /*@ts-ignore*/
-            if (textFonts[i].name == desiredFont) {
+            if (textFonts[i_1].name == desiredFont) {
                 /*@ts-ignore*/
-                textRef.textRange.characterAttributes.textFont = textFonts[i];
+                textRef.textRange.characterAttributes.textFont = textFonts[i_1];
                 foundFont = true;
                 break;
             }
@@ -207,17 +207,17 @@ var CSTasks = (function () {
     //returns an array of ColorElements [[RGBColor,CMYKColor],[RGBColor2,CMYKColor2],...] (usable by the script for fill colors etc.)
     tasks.initializeColors = function (RGBArray, CMYKArray) {
         var colors = new Array(RGBArray.length);
-        for (var i = 0; i < RGBArray.length; i++) {
+        for (var i_2 = 0; i_2 < RGBArray.length; i_2++) {
             var rgb = new RGBColor();
-            rgb.red = RGBArray[i][0];
-            rgb.green = RGBArray[i][1];
-            rgb.blue = RGBArray[i][2];
+            rgb.red = RGBArray[i_2][0];
+            rgb.green = RGBArray[i_2][1];
+            rgb.blue = RGBArray[i_2][2];
             var cmyk = new CMYKColor();
-            cmyk.cyan = CMYKArray[i][0];
-            cmyk.magenta = CMYKArray[i][1];
-            cmyk.yellow = CMYKArray[i][2];
-            cmyk.black = CMYKArray[i][3];
-            colors[i] = [rgb, cmyk];
+            cmyk.cyan = CMYKArray[i_2][0];
+            cmyk.magenta = CMYKArray[i_2][1];
+            cmyk.yellow = CMYKArray[i_2][2];
+            cmyk.black = CMYKArray[i_2][3];
+            colors[i_2] = [rgb, cmyk];
         }
         return colors;
     };
@@ -225,12 +225,12 @@ var CSTasks = (function () {
     //returns the index in the array if it finds a match, otherwise returns -1
     tasks.matchRGB = function (color, matchArray) {
         //compares a single color RGB color against RGB colors in [[RGB],[CMYK]] array
-        for (var i = 0; i < matchArray.length; i++) {
-            if (Math.abs(color.red - matchArray[i][0].red) < 1 &&
-                Math.abs(color.green - matchArray[i][0].green) < 1 &&
-                Math.abs(color.blue - matchArray[i][0].blue) < 1) {
+        for (var i_3 = 0; i_3 < matchArray.length; i_3++) {
+            if (Math.abs(color.red - matchArray[i_3][0].red) < 1 &&
+                Math.abs(color.green - matchArray[i_3][0].green) < 1 &&
+                Math.abs(color.blue - matchArray[i_3][0].blue) < 1) {
                 //can't do equality because it adds very small decimals
-                return i;
+                return i_3;
             }
         }
         return -1;
@@ -315,12 +315,12 @@ var CSTasks = (function () {
             alert("One or more colors don't match the brand palette and weren't converted.");
             unmatchedColors = tasks.unique(unmatchedColors);
             var unmatchedString = "Unconverted colors:";
-            for (var i = 0; i < unmatchedColors.length; i++) {
-                unmatchedString = unmatchedString + "\n" + unmatchedColors[i];
+            for (var i_4 = 0; i_4 < unmatchedColors.length; i_4++) {
+                unmatchedString = unmatchedString + "\n" + unmatchedColors[i_4];
             }
             var errorMsgPos = [Infinity, Infinity]; //gets the bottom left of all the artboards
-            for (var i = 0; i < doc.artboards.length; i++) {
-                var rect = doc.artboards[i].artboardRect;
+            for (var i_5 = 0; i_5 < doc.artboards.length; i_5++) {
+                var rect = doc.artboards[i_5].artboardRect;
                 if (rect[0] < errorMsgPos[0])
                     errorMsgPos[0] = rect[0];
                 if (rect[3] < errorMsgPos[1])
@@ -338,9 +338,9 @@ var CSTasks = (function () {
         if (a.length > 0) {
             sorted = a.sort();
             uniq = [sorted[0]];
-            for (var i = 1; i < sorted.length; i++) {
-                if (sorted[i] != sorted[i - 1])
-                    uniq.push(sorted[i]);
+            for (var i_6 = 1; i_6 < sorted.length; i_6++) {
+                if (sorted[i_6] != sorted[i_6 - 1])
+                    uniq.push(sorted[i_6]);
             }
             return uniq;
         }
@@ -460,10 +460,10 @@ function main() {
     CSTasks.ungroupOnce(rgbGroup);
     //save all sizes of PNG into the export folder
     var startWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i = 0; i < PNGSizes.length; i++) {
-        var filename = "/" + name + "_Core_RGB_" + PNGSizes[i] + ".png";
-        var destFile = new File(destFolder + filename);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
+    for (var i_7 = 0; i_7 < PNGSizes.length; i_7++) {
+        var filename_1 = "/" + name + "_Core_RGB_" + PNGSizes[i_7] + ".png";
+        var destFile_1 = new File(destFolder + filename_1);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_1, startWidth, PNGSizes[i_7]);
     }
     //save EPS into the export folder
     var filename = "/" + name + "_Core_RGB.eps";
@@ -480,20 +480,20 @@ function main() {
     var inverseFile = new File(destFolder + inverseFilename);
     rgbDoc.saveAs(inverseFile, rgbSaveOpts);
     //save inverse file in all the PNG sizes
-    for (var i = 0; i < PNGSizes.length; i++) {
-        var filename = "/" + name + "_Inverse_RGB_" + PNGSizes[i] + ".png";
-        var destFile = new File(destFolder + filename);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
+    for (var i_8 = 0; i_8 < PNGSizes.length; i_8++) {
+        var filename_2 = "/" + name + "_Inverse_RGB_" + PNGSizes[i_8] + ".png";
+        var destFile_2 = new File(destFolder + filename_2);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_2, startWidth, PNGSizes[i_8]);
     }
     //convert to inactive color (WTW Icon grey at 50% opacity) and save as EPS
     CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 50);
     var inactiveFilename = "/" + name + "_Inactive_RGB.eps";
     var inactiveFile = new File(destFolder + inactiveFilename);
     rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
-    for (var i = 0; i < PNGSizes.length; i++) {
-        var filename = "/" + name + "_Inactive_RGB_" + PNGSizes[i] + ".png";
-        var destFile = new File(destFolder + filename);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
+    for (var i_9 = 0; i_9 < PNGSizes.length; i_9++) {
+        var filename_3 = "/" + name + "_Inactive_RGB_" + PNGSizes[i_9] + ".png";
+        var destFile_3 = new File(destFolder + filename_3);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_3, startWidth, PNGSizes[i_9]);
     }
     //close and clean up
     rgbDoc.close(SaveOptions.DONOTSAVECHANGES);

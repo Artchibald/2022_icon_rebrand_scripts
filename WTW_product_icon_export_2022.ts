@@ -57,8 +57,8 @@ Module for image manipulation tasks
 // let artboardsInfo = app.activeDocument.artboards[1].name;
 // alert(artboardsInfo);
 
-var CSTasks = (function () {
-   var tasks: any = {};
+let CSTasks = (function () {
+   let tasks: any = {};
 
    /********************
       POSITION AND MOVEMENT
@@ -68,21 +68,21 @@ var CSTasks = (function () {
    //returns its left top corner as an array [x,y]
 
    tasks.getArtboardCorner = function (artboard) {
-      var corner = [app.activeDocument.artboards[0].artboardRect[0], artboard.artboardRect[1]];
+      let corner = [app.activeDocument.artboards[0].artboardRect[0], artboard.artboardRect[1]];
       return corner;
    };
 
    //takes an array [x,y] for an item's position and an array [x,y] for the position of a reference point
    //returns an aray [x,y] for the offset between the two points
    tasks.getOffset = function (itemPos, referencePos) {
-      var offset = [itemPos[0] - referencePos[0], itemPos[1] - referencePos[1]];
+      let offset = [itemPos[0] - referencePos[0], itemPos[1] - referencePos[1]];
       return offset;
    };
 
    //takes an object (e.g. group) and a destination array [x,y]
    //moves the group to the specified destination
    tasks.translateObjectTo = function (object, destination) {
-      var offset = tasks.getOffset(object.position, destination);
+      let offset = tasks.getOffset(object.position, destination);
       object.translate(-offset[0], -offset[1]);
    };
 
@@ -93,7 +93,7 @@ var CSTasks = (function () {
       doc.selection = null;
       doc.artboards.setActiveArtboardIndex(index);
       doc.selectObjectsOnActiveArtboard();
-      var sel = doc.selection; // get selection
+      let sel = doc.selection; // get selection
 
       for (i = 0; i < sel.length; i++) {
          sel[i].remove();
@@ -116,7 +116,7 @@ var CSTasks = (function () {
    //takes a document and a collection of objects (e.g. selection)
    //returns a group made from that collection
    tasks.createGroup = function (doc, collection) {
-      var newGroup = doc.groupItems.add();
+      let newGroup = doc.groupItems.add();
       let k;
       for (k = 0; k < collection.length; k++) {
          collection[k].moveToBeginning(newGroup);
@@ -144,13 +144,13 @@ var CSTasks = (function () {
    //take a source document and a colorspace (e.g. DocumentColorSpace.RGB)
    //opens and returns a new document with the source document's units and the specified colorspace
    tasks.newDocument = function (sourceDoc, colorSpace) {
-      var preset = new DocumentPreset();
+      let preset = new DocumentPreset();
       /*@ts-ignore*/
       preset.colorMode = colorSpace;
       /*@ts-ignore*/
       preset.units = sourceDoc.rulerUnits;
       /*@ts-ignore*/
-      var newDoc = app.documents.addDocument(colorSpace, preset);
+      let newDoc = app.documents.addDocument(colorSpace, preset);
       newDoc.pageOrigin = sourceDoc.pageOrigin;
       newDoc.rulerOrigin = sourceDoc.rulerOrigin;
 
@@ -164,8 +164,8 @@ var CSTasks = (function () {
       artboardIndex,
       colorspace
    ) {
-      var rectToCopy = sourceDoc.artboards[artboardIndex].artboardRect;
-      var newDoc = tasks.newDocument(sourceDoc, colorspace);
+      let rectToCopy = sourceDoc.artboards[artboardIndex].artboardRect;
+      let newDoc = tasks.newDocument(sourceDoc, colorspace);
       newDoc.artboards.add(rectToCopy);
       newDoc.artboards.remove(0);
       return newDoc;
@@ -174,8 +174,8 @@ var CSTasks = (function () {
    //takes a document, destination file, starting width and desired width
    //scales the document proportionally to the desired width and exports as a PNG
    tasks.scaleAndExportPNG = function (doc, destFile, startWidth, desiredWidth) {
-      var scaling = (100.0 * desiredWidth) / startWidth;
-      var options = new ExportOptionsPNG24();
+      let scaling = (100.0 * desiredWidth) / startWidth;
+      let options = new ExportOptionsPNG24();
       /*@ts-ignore*/
       options.antiAliasing = true;
       /*@ts-ignore*/
@@ -193,7 +193,7 @@ var CSTasks = (function () {
    //takes left x, top y, width, and height
    //returns a Rect that can be used to create an artboard
    tasks.newRect = function (x, y, width, height) {
-      var rect = [];
+      let rect = [];
       rect[0] = x;
       rect[1] = -y;
       rect[2] = width + x;
@@ -208,10 +208,10 @@ var CSTasks = (function () {
    //takes a text frame and a string with the desired font name
    //sets the text frame to the desired font or alerts if not found
    tasks.setFont = function (textRef, desiredFont) {
-      var foundFont = false;
+      let foundFont = false;
       // broken, not needed if font is found
       /*@ts-ignore*/
-      for (var i = 0; i < textFonts.length; i++) {
+      for (let i = 0; i < textFonts.length; i++) {
          /*@ts-ignore*/
          if (textFonts[i].name == desiredFont) {
             /*@ts-ignore*/
@@ -229,7 +229,7 @@ var CSTasks = (function () {
    //takes a document, message string, position array and font size
    //creates a text frame with the message
    tasks.createTextFrame = function (doc, message, pos, size) {
-      var textRef = doc.textFrames.add();
+      let textRef = doc.textFrames.add();
       textRef.contents = message;
       textRef.left = pos[0];
       textRef.top = pos[1];
@@ -243,15 +243,15 @@ var CSTasks = (function () {
    //takes two equal-length arrays of corresponding colors [[R,G,B], [R2,G2,B2],...] and [[C,M,Y,K],[C2,M2,Y2,K2],...] (fairly human readable)
    //returns an array of ColorElements [[RGBColor,CMYKColor],[RGBColor2,CMYKColor2],...] (usable by the script for fill colors etc.)
    tasks.initializeColors = function (RGBArray, CMYKArray) {
-      var colors = new Array(RGBArray.length);
+      let colors = new Array(RGBArray.length);
 
-      for (var i = 0; i < RGBArray.length; i++) {
-         var rgb = new RGBColor();
+      for (let i = 0; i < RGBArray.length; i++) {
+         let rgb = new RGBColor();
          rgb.red = RGBArray[i][0];
          rgb.green = RGBArray[i][1];
          rgb.blue = RGBArray[i][2];
 
-         var cmyk = new CMYKColor();
+         let cmyk = new CMYKColor();
          cmyk.cyan = CMYKArray[i][0];
          cmyk.magenta = CMYKArray[i][1];
          cmyk.yellow = CMYKArray[i][2];
@@ -266,7 +266,7 @@ var CSTasks = (function () {
    //returns the index in the array if it finds a match, otherwise returns -1
    tasks.matchRGB = function (color, matchArray) {
       //compares a single color RGB color against RGB colors in [[RGB],[CMYK]] array
-      for (var i = 0; i < matchArray.length; i++) {
+      for (let i = 0; i < matchArray.length; i++) {
          if (
             Math.abs(color.red - matchArray[i][0].red) < 1 &&
             Math.abs(color.green - matchArray[i][0].green) < 1 &&
@@ -338,9 +338,9 @@ var CSTasks = (function () {
    //takes a collection of pathItems and an array of specified RGB and CMYK colors [[RGBColor,CMYKColor],[RGBColor2,CMYKColor2],...]
    //returns an array with an index to the RGB color if it is in the array
    tasks.indexRGBColors = function (pathItems, matchArray) {
-      var colorIndex = new Array(pathItems.length);
+      let colorIndex = new Array(pathItems.length);
       for (i = 0; i < pathItems.length; i++) {
-         var itemColor = pathItems[i].fillColor;
+         let itemColor = pathItems[i].fillColor;
          colorIndex[i] = tasks.matchRGB(itemColor, matchArray);
       }
       return colorIndex;
@@ -350,12 +350,12 @@ var CSTasks = (function () {
    //converts the fill colors to the indexed CMYK colors and adds a text box with the unmatched colors
    //Note that this only makes sense if you've previously indexed the same path items and haven't shifted their positions in the pathItems array
    tasks.convertToCMYK = function (doc, pathItems, colorArray, colorIndex) {
-      var unmatchedColors = [];
+      let unmatchedColors = [];
       for (i = 0; i < pathItems.length; i++) {
          if (colorIndex[i] >= 0 && colorIndex[i] < colorArray.length)
             pathItems[i].fillColor = colorArray[colorIndex[i]][1];
          else {
-            var unmatchedColor =
+            let unmatchedColor =
                "(" +
                pathItems[i].fillColor.red +
                ", " +
@@ -371,13 +371,13 @@ var CSTasks = (function () {
             "One or more colors don't match the brand palette and weren't converted."
          );
          unmatchedColors = tasks.unique(unmatchedColors);
-         var unmatchedString = "Unconverted colors:";
-         for (var i = 0; i < unmatchedColors.length; i++) {
+         let unmatchedString = "Unconverted colors:";
+         for (let i = 0; i < unmatchedColors.length; i++) {
             unmatchedString = unmatchedString + "\n" + unmatchedColors[i];
          }
-         var errorMsgPos = [Infinity, Infinity]; //gets the bottom left of all the artboards
-         for (var i = 0; i < doc.artboards.length; i++) {
-            var rect = doc.artboards[i].artboardRect;
+         let errorMsgPos = [Infinity, Infinity]; //gets the bottom left of all the artboards
+         for (let i = 0; i < doc.artboards.length; i++) {
+            let rect = doc.artboards[i].artboardRect;
             if (rect[0] < errorMsgPos[0]) errorMsgPos[0] = rect[0];
             if (rect[3] < errorMsgPos[1]) errorMsgPos[1] = rect[3];
          }
@@ -395,7 +395,7 @@ var CSTasks = (function () {
       if (a.length > 0) {
          sorted = a.sort();
          uniq = [sorted[0]];
-         for (var i = 1; i < sorted.length; i++) {
+         for (let i = 1; i < sorted.length; i++) {
             if (sorted[i] != sorted[i - 1]) uniq.push(sorted[i]);
          }
          return uniq;
@@ -410,20 +410,20 @@ var CSTasks = (function () {
  ***************/
 
 function main() {
-   var sourceDoc = app.activeDocument;
+   let sourceDoc = app.activeDocument;
 
    /*****************************
      create export folder if needed
      ******************************/
-   var name = sourceDoc.name.split(".")[0];
-   var destFolder = Folder(sourceDoc.path + "/" + name);
+   let name = sourceDoc.name.split(".")[0];
+   let destFolder = Folder(sourceDoc.path + "/" + name);
    if (!destFolder.exists) destFolder.create();
 
    /******************
      set up artboards
      ******************/
-   var rebuild = true;
-   var gutter = 32;
+   let rebuild = true;
+   let gutter = 32;
 
    //if there is one artboard at 256x256, create the new artboard
    if (
@@ -435,7 +435,7 @@ function main() {
       sourceDoc.artboards[0].artboardRect[3] ==
       256
    ) {
-      var firstRect = sourceDoc.artboards[0].artboardRect;
+      let firstRect = sourceDoc.artboards[0].artboardRect;
       sourceDoc.artboards.add(
          CSTasks.newRect(firstRect[2] + gutter, firstRect[1], 2400, 256)
       );
@@ -462,7 +462,7 @@ function main() {
    }
 
    //select the contents on artboard 0
-   var sel = CSTasks.selectContentsOnArtboard(sourceDoc, 0);
+   let sel = CSTasks.selectContentsOnArtboard(sourceDoc, 0);
 
    if (sel.length == 0) {
       //if nothing is in the artboard
@@ -470,9 +470,9 @@ function main() {
       return;
    }
 
-   var colors = CSTasks.initializeColors(RGBColorElements, CMYKColorElements); //initialize the colors from the brand palette
-   var iconGroup = CSTasks.createGroup(sourceDoc, sel); //group the selection (easier to work with)
-   var iconOffset = CSTasks.getOffset(
+   let colors = CSTasks.initializeColors(RGBColorElements, CMYKColorElements); //initialize the colors from the brand palette
+   let iconGroup = CSTasks.createGroup(sourceDoc, sel); //group the selection (easier to work with)
+   let iconOffset = CSTasks.getOffset(
       iconGroup.position,
       CSTasks.getArtboardCorner(sourceDoc.artboards[0])
    );
@@ -483,49 +483,49 @@ function main() {
 
    //place icon on masthead
    /*@ts-ignore*/
-   var mast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
-   var mastPos = [
+   let mast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
+   let mastPos = [
       sourceDoc.artboards[1].artboardRect[0] + iconOffset[0],
       sourceDoc.artboards[1].artboardRect[1] + iconOffset[1],
    ];
    CSTasks.translateObjectTo(mast, mastPos);
 
    //request a name for the icon, and place that as text on the masthead artboard
-   var appName = prompt("What name do you want to put in the masthead?");
+   let appName = prompt("What name do you want to put in the masthead?");
 
-   var textRef = sourceDoc.textFrames.add();
+   let textRef = sourceDoc.textFrames.add();
    textRef.contents = appName;
    textRef.textRange.characterAttributes.size = 178;
    CSTasks.setFont(textRef, desiredFont);
 
    //vertically align the baseline to be 64 px above the botom of the artboard
-   var bottomEdge =
+   let bottomEdge =
       sourceDoc.artboards[1].artboardRect[3] +
       0.25 * sourceDoc.artboards[0].artboardRect[2] -
       sourceDoc.artboards[0].artboardRect[0]; //64px (0.25*256px) above the bottom edge of the artboard
-   var vOffset = CSTasks.getOffset(textRef.anchor, [0, bottomEdge]);
+   let vOffset = CSTasks.getOffset(textRef.anchor, [0, bottomEdge]);
    textRef.translate(0, -vOffset[1]);
 
    //create an outline of the text
-   var textGroup = textRef.createOutline();
+   let textGroup = textRef.createOutline();
 
    //horizontally align the left edge of the text to be 96px to the right of the edge
-   var rightEdge =
+   let rightEdge =
       mast.position[0] +
       mast.width +
       0.375 * sourceDoc.artboards[0].artboardRect[2] -
       sourceDoc.artboards[0].artboardRect[0]; //96px (0.375*256px) right of the icon
-   var hOffset = CSTasks.getOffset(textGroup.position, [rightEdge, 0]);
+   let hOffset = CSTasks.getOffset(textGroup.position, [rightEdge, 0]);
    textGroup.translate(-hOffset[0], 0);
 
    //resize the artboard to be only a little wider than the text
-   var leftMargin = mast.position[0] - sourceDoc.artboards[1].artboardRect[0];
-   var newWidth =
+   let leftMargin = mast.position[0] - sourceDoc.artboards[1].artboardRect[0];
+   let newWidth =
       textGroup.position[0] +
       textGroup.width -
       sourceDoc.artboards[1].artboardRect[0] +
       leftMargin;
-   var resizedRect = CSTasks.newRect(
+   let resizedRect = CSTasks.newRect(
       sourceDoc.artboards[1].artboardRect[0],
       -sourceDoc.artboards[1].artboardRect[1],
       newWidth,
@@ -534,7 +534,7 @@ function main() {
    sourceDoc.artboards[1].artboardRect = resizedRect;
 
    //get the text offset for exporting
-   var mastTextOffset = CSTasks.getOffset(
+   let mastTextOffset = CSTasks.getOffset(
       textGroup.position,
       CSTasks.getArtboardCorner(sourceDoc.artboards[1])
    );
@@ -544,19 +544,19 @@ function main() {
      **********************************************************************/
 
    //create a new document with the artboard and contents from artboard 0
-   var rgbDoc = CSTasks.duplicateArtboardInNewDoc(
+   let rgbDoc = CSTasks.duplicateArtboardInNewDoc(
       sourceDoc,
       0,
       DocumentColorSpace.RGB
    );
    rgbDoc.swatches.removeAll();
 
-   var rgbGroup = iconGroup.duplicate(
+   let rgbGroup = iconGroup.duplicate(
       rgbDoc.layers[0],
       /*@ts-ignore*/
       ElementPlacement.PLACEATEND
    );
-   var rgbLoc = [
+   let rgbLoc = [
       rgbDoc.artboards[0].artboardRect[0] + iconOffset[0],
       rgbDoc.artboards[0].artboardRect[1] + iconOffset[1],
    ];
@@ -565,24 +565,24 @@ function main() {
    CSTasks.ungroupOnce(rgbGroup);
 
    //save all sizes of PNG into the export folder
-   var startWidth =
+   let startWidth =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-   for (var i = 0; i < PNGSizes.length; i++) {
-      var filename = "/" + name + "_Core_RGB_" + PNGSizes[i] + ".png";
-      var destFile = new File(destFolder + filename);
+   for (let i = 0; i < PNGSizes.length; i++) {
+      let filename = "/" + name + "_Core_RGB_" + PNGSizes[i] + ".png";
+      let destFile = new File(destFolder + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
    }
 
    //save EPS into the export folder
-   var filename = "/" + name + "_Core_RGB.eps";
-   var destFile = new File(destFolder + filename);
-   var rgbSaveOpts = new EPSSaveOptions();
+   let filename = "/" + name + "_Core_RGB.eps";
+   let destFile = new File(destFolder + filename);
+   let rgbSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    rgbSaveOpts.cmykPostScript = false;
    rgbDoc.saveAs(destFile, rgbSaveOpts);
 
    //index the RGB colors for conversion to CMYK. An inelegant location.
-   var colorIndex = CSTasks.indexRGBColors(rgbDoc.pathItems, colors);
+   let colorIndex = CSTasks.indexRGBColors(rgbDoc.pathItems, colors);
 
    //convert violet to white and save as EPS
    CSTasks.convertColorRGB(
@@ -591,27 +591,27 @@ function main() {
       colors[whiteIndex][0]
    );
 
-   var inverseFilename = "/" + name + "_Inverse_RGB.eps";
-   var inverseFile = new File(destFolder + inverseFilename);
+   let inverseFilename = "/" + name + "_Inverse_RGB.eps";
+   let inverseFile = new File(destFolder + inverseFilename);
    rgbDoc.saveAs(inverseFile, rgbSaveOpts);
 
    //save inverse file in all the PNG sizes
-   for (var i = 0; i < PNGSizes.length; i++) {
-      var filename = "/" + name + "_Inverse_RGB_" + PNGSizes[i] + ".png";
-      var destFile = new File(destFolder + filename);
+   for (let i = 0; i < PNGSizes.length; i++) {
+      let filename = "/" + name + "_Inverse_RGB_" + PNGSizes[i] + ".png";
+      let destFile = new File(destFolder + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
    }
 
    //convert to inactive color (WTW Icon grey at 50% opacity) and save as EPS
    CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 50);
 
-   var inactiveFilename = "/" + name + "_Inactive_RGB.eps";
-   var inactiveFile = new File(destFolder + inactiveFilename);
+   let inactiveFilename = "/" + name + "_Inactive_RGB.eps";
+   let inactiveFile = new File(destFolder + inactiveFilename);
    rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
 
-   for (var i = 0; i < PNGSizes.length; i++) {
-      var filename = "/" + name + "_Inactive_RGB_" + PNGSizes[i] + ".png";
-      var destFile = new File(destFolder + filename);
+   for (let i = 0; i < PNGSizes.length; i++) {
+      let filename = "/" + name + "_Inactive_RGB_" + PNGSizes[i] + ".png";
+      let destFile = new File(destFolder + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
    }
 
@@ -624,7 +624,7 @@ function main() {
      ****************/
 
    //open a new document with CMYK colorspace, and duplicate the icon to the new document
-   var cmykDoc = CSTasks.duplicateArtboardInNewDoc(
+   let cmykDoc = CSTasks.duplicateArtboardInNewDoc(
       sourceDoc,
       0,
       DocumentColorSpace.CMYK
@@ -632,12 +632,12 @@ function main() {
    cmykDoc.swatches.removeAll();
 
    //need to reverse the order of copying the group to get the right color ordering
-   var cmykGroup = iconGroup.duplicate(
+   let cmykGroup = iconGroup.duplicate(
       cmykDoc.layers[0],
       /*@ts-ignore*/
       ElementPlacement.PLACEATBEGINNING
    );
-   var cmykLoc = [
+   let cmykLoc = [
       cmykDoc.artboards[0].artboardRect[0] + iconOffset[0],
       cmykDoc.artboards[0].artboardRect[1] + iconOffset[1],
    ];
@@ -647,9 +647,9 @@ function main() {
    CSTasks.convertToCMYK(cmykDoc, cmykDoc.pathItems, colors, colorIndex);
 
    //save EPS into the export folder
-   var cmykFilename = "/" + name + "_Core_CMYK.eps";
-   var cmykDestFile = new File(destFolder + cmykFilename);
-   var cmykSaveOpts = new EPSSaveOptions();
+   let cmykFilename = "/" + name + "_Core_CMYK.eps";
+   let cmykDestFile = new File(destFolder + cmykFilename);
+   let cmykSaveOpts = new EPSSaveOptions();
    cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
 
    //convert violet to white and save as EPS
@@ -659,8 +659,8 @@ function main() {
       colors[whiteIndex][1]
    );
 
-   var cmykInverseFilename = "/" + name + "_Inverse_CMYK.eps";
-   var cmykInverseFile = new File(destFolder + cmykInverseFilename);
+   let cmykInverseFilename = "/" + name + "_Inverse_CMYK.eps";
+   let cmykInverseFile = new File(destFolder + cmykInverseFilename);
    cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
 
    //close and clean up
@@ -672,40 +672,40 @@ function main() {
      ********************/
 
    //open a new doc and copy and position the icon and the masthead text
-   var mastDoc = CSTasks.duplicateArtboardInNewDoc(
+   let mastDoc = CSTasks.duplicateArtboardInNewDoc(
       sourceDoc,
       1,
       DocumentColorSpace.RGB
    );
    mastDoc.swatches.removeAll();
 
-   var mastGroup = iconGroup.duplicate(
+   let mastGroup = iconGroup.duplicate(
       mastDoc.layers[0],
       /*@ts-ignore*/
       ElementPlacement.PLACEATEND
    );
-   var mastLoc = [
+   let mastLoc = [
       mastDoc.artboards[0].artboardRect[0] + iconOffset[0],
       mastDoc.artboards[0].artboardRect[1] + iconOffset[1],
    ];
    CSTasks.translateObjectTo(mastGroup, mastLoc);
    CSTasks.ungroupOnce(mastGroup);
 
-   var mastText = textGroup.duplicate(
+   let mastText = textGroup.duplicate(
       mastDoc.layers[0],
       /*@ts-ignore*/
       ElementPlacement.PLACEATEND
    );
-   var mastTextLoc = [
+   let mastTextLoc = [
       mastDoc.artboards[0].artboardRect[0] + mastTextOffset[0],
       mastDoc.artboards[0].artboardRect[1] + mastTextOffset[1],
    ];
    CSTasks.translateObjectTo(mastText, mastTextLoc);
 
    //save RGB EPS into the export folder
-   var mastFilename = "/" + name + "_Masthead_RGB.eps";
-   var mastDestFile = new File(destFolder + mastFilename);
-   var mastSaveOpts = new EPSSaveOptions();
+   let mastFilename = "/" + name + "_Masthead_RGB.eps";
+   let mastDestFile = new File(destFolder + mastFilename);
+   let mastSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    mastSaveOpts.cmykPostScript = false;
    mastDoc.saveAs(mastDestFile, mastSaveOpts);
