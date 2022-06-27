@@ -44,6 +44,8 @@ var PNGSizes = [1024, 256, 128, 64, 48, 32]; //sizes to export
 var violetIndex = 0; //these are for converting to inverse and inactive versions
 var grayIndex = 1;
 var whiteIndex = 5;
+//loop default 
+var i;
 /**********************************
 Module for image manipulation tasks
 ***********************************/
@@ -78,8 +80,8 @@ var CSTasks = (function () {
         doc.artboards.setActiveArtboardIndex(index);
         doc.selectObjectsOnActiveArtboard();
         var sel = doc.selection; // get selection
-        for (k = 0; k < sel.length; k++) {
-            sel[k].remove();
+        for (i = 0; i < sel.length; i++) {
+            sel[i].remove();
         }
     };
     /*********************************
@@ -108,7 +110,9 @@ var CSTasks = (function () {
     tasks.ungroupOnce = function (group) {
         var i;
         for (i = group.pageItems.length - 1; i >= 0; i--) {
-            group.pageItems[i].move(group.pageItems[i].layer, ElementPlacement.PLACEATEND);
+            group.pageItems[i].move(group.pageItems[i].layer, 
+            /*@ts-ignore*/
+            ElementPlacement.PLACEATEND);
         }
     };
     /****************************
@@ -118,8 +122,11 @@ var CSTasks = (function () {
     //opens and returns a new document with the source document's units and the specified colorspace
     tasks.newDocument = function (sourceDoc, colorSpace) {
         var preset = new DocumentPreset();
+        /*@ts-ignore*/
         preset.colorMode = colorSpace;
+        /*@ts-ignore*/
         preset.units = sourceDoc.rulerUnits;
+        /*@ts-ignore*/
         var newDoc = app.documents.addDocument(colorSpace, preset);
         newDoc.pageOrigin = sourceDoc.pageOrigin;
         newDoc.rulerOrigin = sourceDoc.rulerOrigin;
@@ -139,10 +146,15 @@ var CSTasks = (function () {
     tasks.scaleAndExportPNG = function (doc, destFile, startWidth, desiredWidth) {
         var scaling = (100.0 * desiredWidth) / startWidth;
         var options = new ExportOptionsPNG24();
+        /*@ts-ignore*/
         options.antiAliasing = true;
+        /*@ts-ignore*/
         options.transparency = true;
+        /*@ts-ignore*/
         options.artBoardClipping = true;
+        /*@ts-ignore*/
         options.horizontalScale = scaling;
+        /*@ts-ignore*/
         options.verticalScale = scaling;
         doc.exportFile(destFile, ExportType.PNG24, options);
     };
@@ -263,7 +275,6 @@ var CSTasks = (function () {
     };
     //takes a pathItems array, endColor and opacity and converts all pathItems into endColor at the specified opacity
     tasks.convertAll = function (pathItems, endColor, opcty) {
-        var i;
         for (i = 0; i < pathItems.length; i++) {
             pathItems[i].fillColor = endColor;
             pathItems[i].opacity = opcty;
@@ -273,7 +284,6 @@ var CSTasks = (function () {
     //returns an array with an index to the RGB color if it is in the array
     tasks.indexRGBColors = function (pathItems, matchArray) {
         var colorIndex = new Array(pathItems.length);
-        var i;
         for (i = 0; i < pathItems.length; i++) {
             var itemColor = pathItems[i].fillColor;
             colorIndex[i] = tasks.matchRGB(itemColor, matchArray);
@@ -393,6 +403,7 @@ function main() {
       Create new artboard with masthead
       *********************************/
     //place icon on masthead
+    /*@ts-ignore*/
     var mast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
     var mastPos = [
         sourceDoc.artboards[1].artboardRect[0] + iconOffset[0],
@@ -436,7 +447,9 @@ function main() {
     //create a new document with the artboard and contents from artboard 0
     var rgbDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 0, DocumentColorSpace.RGB);
     rgbDoc.swatches.removeAll();
-    var rgbGroup = iconGroup.duplicate(rgbDoc.layers[0], ElementPlacement.PLACEATEND);
+    var rgbGroup = iconGroup.duplicate(rgbDoc.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
     var rgbLoc = [
         rgbDoc.artboards[0].artboardRect[0] + iconOffset[0],
         rgbDoc.artboards[0].artboardRect[1] + iconOffset[1],
@@ -454,6 +467,7 @@ function main() {
     var filename = "/" + name + "_Core_RGB.eps";
     var destFile = new File(destFolder + filename);
     var rgbSaveOpts = new EPSSaveOptions();
+    /*@ts-ignore*/
     rgbSaveOpts.cmykPostScript = false;
     rgbDoc.saveAs(destFile, rgbSaveOpts);
     //index the RGB colors for conversion to CMYK. An inelegant location.
@@ -489,7 +503,9 @@ function main() {
     var cmykDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 0, DocumentColorSpace.CMYK);
     cmykDoc.swatches.removeAll();
     //need to reverse the order of copying the group to get the right color ordering
-    var cmykGroup = iconGroup.duplicate(cmykDoc.layers[0], ElementPlacement.PLACEATBEGINNING);
+    var cmykGroup = iconGroup.duplicate(cmykDoc.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATBEGINNING);
     var cmykLoc = [
         cmykDoc.artboards[0].artboardRect[0] + iconOffset[0],
         cmykDoc.artboards[0].artboardRect[1] + iconOffset[1],
@@ -516,14 +532,18 @@ function main() {
     //open a new doc and copy and position the icon and the masthead text
     var mastDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 1, DocumentColorSpace.RGB);
     mastDoc.swatches.removeAll();
-    var mastGroup = iconGroup.duplicate(mastDoc.layers[0], ElementPlacement.PLACEATEND);
+    var mastGroup = iconGroup.duplicate(mastDoc.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
     var mastLoc = [
         mastDoc.artboards[0].artboardRect[0] + iconOffset[0],
         mastDoc.artboards[0].artboardRect[1] + iconOffset[1],
     ];
     CSTasks.translateObjectTo(mastGroup, mastLoc);
     CSTasks.ungroupOnce(mastGroup);
-    var mastText = textGroup.duplicate(mastDoc.layers[0], ElementPlacement.PLACEATEND);
+    var mastText = textGroup.duplicate(mastDoc.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
     var mastTextLoc = [
         mastDoc.artboards[0].artboardRect[0] + mastTextOffset[0],
         mastDoc.artboards[0].artboardRect[1] + mastTextOffset[1],
@@ -533,6 +553,7 @@ function main() {
     var mastFilename = "/" + name + "_Masthead_RGB.eps";
     var mastDestFile = new File(destFolder + mastFilename);
     var mastSaveOpts = new EPSSaveOptions();
+    /*@ts-ignore*/
     mastSaveOpts.cmykPostScript = false;
     mastDoc.saveAs(mastDestFile, mastSaveOpts);
     //close and clean up
