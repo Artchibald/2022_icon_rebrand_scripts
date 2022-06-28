@@ -58,9 +58,9 @@ Module for image manipulation tasks
 // let artboardsInfo = app.activeDocument.artboards[1].name;
 // alert(artboardsInfo);
 
-if (sourceDoc.artboards[0].name = "Core") {
+// if (sourceDoc.artboards[0].name = "Core") {
 
-}
+// }
 
 let CSTasks = (function () {
    let tasks: any = {};
@@ -416,21 +416,42 @@ let CSTasks = (function () {
 
 function main() {
 
+   // hide guides
+   let guideLayer = sourceDoc.layers["Guidelines"];
+   /**********************************
+ ** HIDE / SHOW SOME LAYERS NEEDED
+ ***********************************/
+   try {
+      guideLayer.visible = false;
+   } catch (e) {
+      alert(
+         "Issue with layer hiding the Guidelines layer (do not change name from Guidelines).",
+         e.message
+      );
+   }
+
+
 
    /*****************************
-     create export folder if needed
+     create export folders if needed
      ******************************/
+
+   // Core folder
    let name = sourceDoc.name.split(".")[0];
-   let destFolder = Folder(sourceDoc.path + "/" + name);
-   if (!destFolder.exists) destFolder.create();
+   let destCoreFolder = Folder(sourceDoc.path + "/" + "Core");
+   if (!destCoreFolder.exists) destCoreFolder.create();
+
+   // Expressive folder
+   let destExpressiveFolder = Folder(sourceDoc.path + "/" + "Expressive");
+   if (!destExpressiveFolder.exists) destExpressiveFolder.create();
 
    /******************
      set up artboards
      ******************/
    let rebuild = true;
-   let gutter = 32;
+   // let gutter = 32;
 
-   //if there is one artboard at 256x256, create the new artboard
+   //if there is two artboards at 256x256, create the new third artboard
    if (
       sourceDoc.artboards.length == 2 &&
       sourceDoc.artboards[0].artboardRect[2] -
@@ -443,7 +464,10 @@ function main() {
       // alert("More than 2 artboards detected!");
       let firstRect = sourceDoc.artboards[0].artboardRect;
       sourceDoc.artboards.add(
-         CSTasks.newRect(firstRect[2] * 2.2 + gutter, firstRect[1], 2400, 256)
+         // CSTasks.newRect(firstRect[1] * 2.5 + gutter, firstRect[2], 2400, 256)
+         // CSTasks.newRect(firstRect[1] * 0.5, firstRect[2], 2400, 256)
+
+         CSTasks.newRect(firstRect[1], firstRect[2] + 128, 2400, 256)
       );
    }
 
@@ -575,13 +599,13 @@ function main() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < PNGSizes.length; i++) {
       let filename = "/" + name + "_Core_RGB_" + PNGSizes[i] + ".png";
-      let destFile = new File(destFolder + filename);
+      let destFile = new File(destCoreFolder + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
    }
 
    //save EPS into the export folder
    let filename = "/" + name + "_Core_RGB.eps";
-   let destFile = new File(destFolder + filename);
+   let destFile = new File(destCoreFolder + filename);
    let rgbSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    rgbSaveOpts.cmykPostScript = false;
@@ -598,13 +622,13 @@ function main() {
    );
 
    let inverseFilename = "/" + name + "_Inverse_RGB.eps";
-   let inverseFile = new File(destFolder + inverseFilename);
+   let inverseFile = new File(destCoreFolder + inverseFilename);
    rgbDoc.saveAs(inverseFile, rgbSaveOpts);
 
    //save inverse file in all the PNG sizes
    for (let i = 0; i < PNGSizes.length; i++) {
       let filename = "/" + name + "_Inverse_RGB_" + PNGSizes[i] + ".png";
-      let destFile = new File(destFolder + filename);
+      let destFile = new File(destCoreFolder + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
    }
 
@@ -612,12 +636,12 @@ function main() {
    CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 50);
 
    let inactiveFilename = "/" + name + "_Inactive_RGB.eps";
-   let inactiveFile = new File(destFolder + inactiveFilename);
+   let inactiveFile = new File(destCoreFolder + inactiveFilename);
    rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
 
    for (let i = 0; i < PNGSizes.length; i++) {
       let filename = "/" + name + "_Inactive_RGB_" + PNGSizes[i] + ".png";
-      let destFile = new File(destFolder + filename);
+      let destFile = new File(destCoreFolder + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
    }
 
@@ -654,7 +678,7 @@ function main() {
 
    //save EPS into the export folder
    let cmykFilename = "/" + name + "_Core_CMYK.eps";
-   let cmykDestFile = new File(destFolder + cmykFilename);
+   let cmykDestFile = new File(destCoreFolder + cmykFilename);
    let cmykSaveOpts = new EPSSaveOptions();
    cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
 
@@ -666,7 +690,7 @@ function main() {
    );
 
    let cmykInverseFilename = "/" + name + "_Inverse_CMYK.eps";
-   let cmykInverseFile = new File(destFolder + cmykInverseFilename);
+   let cmykInverseFile = new File(destCoreFolder + cmykInverseFilename);
    cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
 
    //close and clean up
@@ -710,7 +734,7 @@ function main() {
 
    //save RGB EPS into the export folder
    let mastFilename = "/" + name + "_Masthead_RGB.eps";
-   let mastDestFile = new File(destFolder + mastFilename);
+   let mastDestFile = new File(destCoreFolder + mastFilename);
    let mastSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    mastSaveOpts.cmykPostScript = false;

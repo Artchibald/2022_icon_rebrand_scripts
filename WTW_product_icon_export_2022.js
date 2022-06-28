@@ -52,8 +52,8 @@ Module for image manipulation tasks
 ***********************************/
 // let artboardsInfo = app.activeDocument.artboards[1].name;
 // alert(artboardsInfo);
-if (sourceDoc.artboards[0].name = "Core") {
-}
+// if (sourceDoc.artboards[0].name = "Core") {
+// }
 var CSTasks = (function () {
     var tasks = {};
     /********************
@@ -354,19 +354,35 @@ var CSTasks = (function () {
 /****************
  ***************/
 function main() {
+    // hide guides
+    var guideLayer = sourceDoc.layers["Guidelines"];
+    /**********************************
+  ** HIDE / SHOW SOME LAYERS NEEDED
+  ***********************************/
+    try {
+        guideLayer.visible = false;
+    }
+    catch (e) {
+        alert("Issue with layer hiding the Guidelines layer (do not change name from Guidelines).", e.message);
+    }
     /*****************************
-      create export folder if needed
+      create export folders if needed
       ******************************/
+    // Core folder
     var name = sourceDoc.name.split(".")[0];
-    var destFolder = Folder(sourceDoc.path + "/" + name);
-    if (!destFolder.exists)
-        destFolder.create();
+    var destCoreFolder = Folder(sourceDoc.path + "/" + "Core");
+    if (!destCoreFolder.exists)
+        destCoreFolder.create();
+    // Expressive folder
+    var destExpressiveFolder = Folder(sourceDoc.path + "/" + "Expressive");
+    if (!destExpressiveFolder.exists)
+        destExpressiveFolder.create();
     /******************
       set up artboards
       ******************/
     var rebuild = true;
-    var gutter = 32;
-    //if there is one artboard at 256x256, create the new artboard
+    // let gutter = 32;
+    //if there is two artboards at 256x256, create the new third artboard
     if (sourceDoc.artboards.length == 2 &&
         sourceDoc.artboards[0].artboardRect[2] -
             sourceDoc.artboards[0].artboardRect[0] ==
@@ -376,7 +392,10 @@ function main() {
             256) {
         // alert("More than 2 artboards detected!");
         var firstRect = sourceDoc.artboards[0].artboardRect;
-        sourceDoc.artboards.add(CSTasks.newRect(firstRect[2] * 2.2 + gutter, firstRect[1], 2400, 256));
+        sourceDoc.artboards.add(
+        // CSTasks.newRect(firstRect[1] * 2.5 + gutter, firstRect[2], 2400, 256)
+        // CSTasks.newRect(firstRect[1] * 0.5, firstRect[2], 2400, 256)
+        CSTasks.newRect(firstRect[1], firstRect[2] + 128, 2400, 256));
     }
     //if the masthead artboard is present, check if rebuilding or just exporting
     else if (sourceDoc.artboards.length == 3 &&
@@ -465,12 +484,12 @@ function main() {
     var startWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
     for (var i_7 = 0; i_7 < PNGSizes.length; i_7++) {
         var filename_1 = "/" + name + "_Core_RGB_" + PNGSizes[i_7] + ".png";
-        var destFile_1 = new File(destFolder + filename_1);
+        var destFile_1 = new File(destCoreFolder + filename_1);
         CSTasks.scaleAndExportPNG(rgbDoc, destFile_1, startWidth, PNGSizes[i_7]);
     }
     //save EPS into the export folder
     var filename = "/" + name + "_Core_RGB.eps";
-    var destFile = new File(destFolder + filename);
+    var destFile = new File(destCoreFolder + filename);
     var rgbSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/
     rgbSaveOpts.cmykPostScript = false;
@@ -480,22 +499,22 @@ function main() {
     //convert violet to white and save as EPS
     CSTasks.convertColorRGB(rgbDoc.pathItems, colors[violetIndex][0], colors[whiteIndex][0]);
     var inverseFilename = "/" + name + "_Inverse_RGB.eps";
-    var inverseFile = new File(destFolder + inverseFilename);
+    var inverseFile = new File(destCoreFolder + inverseFilename);
     rgbDoc.saveAs(inverseFile, rgbSaveOpts);
     //save inverse file in all the PNG sizes
     for (var i_8 = 0; i_8 < PNGSizes.length; i_8++) {
         var filename_2 = "/" + name + "_Inverse_RGB_" + PNGSizes[i_8] + ".png";
-        var destFile_2 = new File(destFolder + filename_2);
+        var destFile_2 = new File(destCoreFolder + filename_2);
         CSTasks.scaleAndExportPNG(rgbDoc, destFile_2, startWidth, PNGSizes[i_8]);
     }
     //convert to inactive color (WTW Icon grey at 50% opacity) and save as EPS
     CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 50);
     var inactiveFilename = "/" + name + "_Inactive_RGB.eps";
-    var inactiveFile = new File(destFolder + inactiveFilename);
+    var inactiveFile = new File(destCoreFolder + inactiveFilename);
     rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
     for (var i_9 = 0; i_9 < PNGSizes.length; i_9++) {
         var filename_3 = "/" + name + "_Inactive_RGB_" + PNGSizes[i_9] + ".png";
-        var destFile_3 = new File(destFolder + filename_3);
+        var destFile_3 = new File(destCoreFolder + filename_3);
         CSTasks.scaleAndExportPNG(rgbDoc, destFile_3, startWidth, PNGSizes[i_9]);
     }
     //close and clean up
@@ -520,13 +539,13 @@ function main() {
     CSTasks.convertToCMYK(cmykDoc, cmykDoc.pathItems, colors, colorIndex);
     //save EPS into the export folder
     var cmykFilename = "/" + name + "_Core_CMYK.eps";
-    var cmykDestFile = new File(destFolder + cmykFilename);
+    var cmykDestFile = new File(destCoreFolder + cmykFilename);
     var cmykSaveOpts = new EPSSaveOptions();
     cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
     //convert violet to white and save as EPS
     CSTasks.convertColorCMYK(cmykDoc.pathItems, colors[violetIndex][1], colors[whiteIndex][1]);
     var cmykInverseFilename = "/" + name + "_Inverse_CMYK.eps";
-    var cmykInverseFile = new File(destFolder + cmykInverseFilename);
+    var cmykInverseFile = new File(destCoreFolder + cmykInverseFilename);
     cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
     //close and clean up
     cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
@@ -556,7 +575,7 @@ function main() {
     CSTasks.translateObjectTo(mastText, mastTextLoc);
     //save RGB EPS into the export folder
     var mastFilename = "/" + name + "_Masthead_RGB.eps";
-    var mastDestFile = new File(destFolder + mastFilename);
+    var mastDestFile = new File(destCoreFolder + mastFilename);
     var mastSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/
     mastSaveOpts.cmykPostScript = false;

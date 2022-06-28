@@ -89,3 +89,6 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 # No license for graphik font, delete on completion
 
 # Shorten file names as per Jo request
+
+# Add swatch to your swatches panel before starting with swtach .ai file. Swatch menu > Other Library...
+
