@@ -169,10 +169,29 @@ var CSTasks = (function () {
         var scaling = (100.0 * desiredWidth) / startWidth;
         var options = new ExportOptionsSVG();
         /*@ts-ignore*/
+        options.transparency = true;
+        /*@ts-ignore*/
+        options.artBoardClipping = true;
+        /*@ts-ignore*/
         options.horizontalScale = scaling;
         /*@ts-ignore*/
         options.verticalScale = scaling;
         doc.exportFile(destFile, ExportType.SVG, options);
+    };
+    //takes a document, destination file, starting width and desired width
+    //scales the document proportionally to the desired width and exports as a SVG
+    tasks.scaleAndExportJPEG = function (doc, destFile, startWidth, desiredWidth) {
+        var scaling = (100.0 * desiredWidth) / startWidth;
+        var options = new ExportOptionsJPEG();
+        /*@ts-ignore*/
+        options.antiAliasing = true;
+        /*@ts-ignore*/
+        options.artBoardClipping = true;
+        /*@ts-ignore*/
+        options.horizontalScale = scaling;
+        /*@ts-ignore*/
+        options.verticalScale = scaling;
+        doc.exportFile(destFile, ExportType.JPEG, options);
     };
     //takes left x, top y, width, and height
     //returns a Rect that can be used to create an artboard
@@ -507,6 +526,13 @@ function main() {
         var destFile_2 = new File(destCoreFolder + filename_2);
         CSTasks.scaleAndExportSVG(rgbDoc, destFile_2, svgStartWidth, PNGSizes[i_8]);
     }
+    //save all sizes of JPEG into the export folder
+    var jpegStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_9 = 0; i_9 < PNGSizes.length; i_9++) {
+        var filename_3 = "/".concat(name, "_Core_RGB_").concat(PNGSizes[i_9], ".jpg");
+        var destFile_3 = new File(destCoreFolder + filename_3);
+        CSTasks.scaleAndExportJPEG(rgbDoc, destFile_3, jpegStartWidth, PNGSizes[i_9]);
+    }
     //save EPS into the export folder
     var filename = "/" + name + "_Core_RGB.eps";
     var destFile = new File(destCoreFolder + filename);
@@ -522,20 +548,20 @@ function main() {
     var inverseFile = new File(destCoreFolder + inverseFilename);
     rgbDoc.saveAs(inverseFile, rgbSaveOpts);
     //save inverse file in all the PNG sizes
-    for (var i_9 = 0; i_9 < PNGSizes.length; i_9++) {
-        var filename_3 = "/" + name + "_Inverse_RGB_" + PNGSizes[i_9] + ".png";
-        var destFile_3 = new File(destCoreFolder + filename_3);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_3, startWidth, PNGSizes[i_9]);
+    for (var i_10 = 0; i_10 < PNGSizes.length; i_10++) {
+        var filename_4 = "/" + name + "_Inverse_RGB_" + PNGSizes[i_10] + ".png";
+        var destFile_4 = new File(destCoreFolder + filename_4);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_4, startWidth, PNGSizes[i_10]);
     }
     //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
     CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
     var inactiveFilename = "/" + name + "_Inactive_RGB.eps";
     var inactiveFile = new File(destCoreFolder + inactiveFilename);
     rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
-    for (var i_10 = 0; i_10 < PNGSizes.length; i_10++) {
-        var filename_4 = "/" + name + "_Inactive_RGB_" + PNGSizes[i_10] + ".png";
-        var destFile_4 = new File(destCoreFolder + filename_4);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_4, startWidth, PNGSizes[i_10]);
+    for (var i_11 = 0; i_11 < PNGSizes.length; i_11++) {
+        var filename_5 = "/" + name + "_Inactive_RGB_" + PNGSizes[i_11] + ".png";
+        var destFile_5 = new File(destCoreFolder + filename_5);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_5, startWidth, PNGSizes[i_11]);
     }
     //close and clean up
     rgbDoc.close(SaveOptions.DONOTSAVECHANGES);

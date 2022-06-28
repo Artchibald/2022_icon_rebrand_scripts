@@ -201,10 +201,30 @@ let CSTasks = (function () {
       let scaling = (100.0 * desiredWidth) / startWidth;
       let options = new ExportOptionsSVG();
       /*@ts-ignore*/
+      options.transparency = true;
+      /*@ts-ignore*/
+      options.artBoardClipping = true;
+      /*@ts-ignore*/
       options.horizontalScale = scaling;
       /*@ts-ignore*/
       options.verticalScale = scaling;
       doc.exportFile(destFile, ExportType.SVG, options);
+   };
+
+   //takes a document, destination file, starting width and desired width
+   //scales the document proportionally to the desired width and exports as a SVG
+   tasks.scaleAndExportJPEG = function (doc, destFile, startWidth, desiredWidth) {
+      let scaling = (100.0 * desiredWidth) / startWidth;
+      let options = new ExportOptionsJPEG();
+      /*@ts-ignore*/
+      options.antiAliasing = true;
+      /*@ts-ignore*/
+      options.artBoardClipping = true;
+      /*@ts-ignore*/
+      options.horizontalScale = scaling;
+      /*@ts-ignore*/
+      options.verticalScale = scaling;
+      doc.exportFile(destFile, ExportType.JPEG, options);
    };
 
    //takes left x, top y, width, and height
@@ -624,6 +644,16 @@ function main() {
       let filename = `/${name}_Core_RGB_${PNGSizes[i]}.svg`;
       let destFile = new File(destCoreFolder + filename);
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgStartWidth, PNGSizes[i]);
+   }
+
+
+   //save all sizes of JPEG into the export folder
+   let jpegStartWidth =
+      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+   for (let i = 0; i < PNGSizes.length; i++) {
+      let filename = `/${name}_Core_RGB_${PNGSizes[i]}.jpg`;
+      let destFile = new File(destCoreFolder + filename);
+      CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth, PNGSizes[i]);
    }
 
 
