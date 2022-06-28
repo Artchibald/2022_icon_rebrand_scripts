@@ -93,3 +93,8 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 
 # Add swatch to your swatches panel before starting with swtach .ai file. Swatch menu > Other Library...
 
+
+# Tomorrow
+
+- Create folders for all SVG, EPS, JPG,PNG and try to save them in the right place
+- Find bug: One or more colors....
