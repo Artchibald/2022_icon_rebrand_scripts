@@ -47,8 +47,8 @@ let CMYKColorElements = [
 let desiredFont = "Graphik-Regular";
 let PNGSizes = [1024, 512, 256, 128, 64, 48, 32, 24, 16]; //sizes to export
 let violetIndex = 0; //these are for converting to inverse and inactive versions
-let grayIndex = 1;
-let whiteIndex = 5;
+let grayIndex = 5;
+let lightGreyIndex = 4;
 //loop default 
 let i;
 
@@ -193,6 +193,18 @@ let CSTasks = (function () {
       options.verticalScale = scaling;
 
       doc.exportFile(destFile, ExportType.PNG24, options);
+   };
+
+   //takes a document, destination file, starting width and desired width
+   //scales the document proportionally to the desired width and exports as a SVG
+   tasks.scaleAndExportSVG = function (doc, destFile, startWidth, desiredWidth) {
+      let scaling = (100.0 * desiredWidth) / startWidth;
+      let options = new ExportOptionsSVG();
+      /*@ts-ignore*/
+      options.horizontalScale = scaling;
+      /*@ts-ignore*/
+      options.verticalScale = scaling;
+      doc.exportFile(destFile, ExportType.SVG, options);
    };
 
    //takes left x, top y, width, and height
@@ -441,7 +453,7 @@ function main() {
    let destCoreFolder = Folder(sourceDoc.path + "/" + "Core");
    if (!destCoreFolder.exists) destCoreFolder.create();
 
-   // Expressive folder
+   // Expressive folder(no in use yet)
    let destExpressiveFolder = Folder(sourceDoc.path + "/" + "Expressive");
    if (!destExpressiveFolder.exists) destExpressiveFolder.create();
 
@@ -600,10 +612,20 @@ function main() {
    let startWidth =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < PNGSizes.length; i++) {
-      let filename = "/" + name + "_Core_RGB_" + PNGSizes[i] + ".png";
+      let filename = `/${name}_Core_RGB_${PNGSizes[i]}.png`;
       let destFile = new File(destCoreFolder + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
    }
+
+   //save all sizes of SVG into the export folder
+   let svgStartWidth =
+      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+   for (let i = 0; i < PNGSizes.length; i++) {
+      let filename = `/${name}_Core_RGB_${PNGSizes[i]}.svg`;
+      let destFile = new File(destCoreFolder + filename);
+      CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgStartWidth, PNGSizes[i]);
+   }
+
 
    //save EPS into the export folder
    let filename = "/" + name + "_Core_RGB.eps";
@@ -620,7 +642,7 @@ function main() {
    CSTasks.convertColorRGB(
       rgbDoc.pathItems,
       colors[violetIndex][0],
-      colors[whiteIndex][0]
+      colors[lightGreyIndex][0]
    );
 
    let inverseFilename = "/" + name + "_Inverse_RGB.eps";
@@ -634,8 +656,8 @@ function main() {
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
    }
 
-   //convert to inactive color (WTW Icon grey at 50% opacity) and save as EPS
-   CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 50);
+   //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
+   CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
 
    let inactiveFilename = "/" + name + "_Inactive_RGB.eps";
    let inactiveFile = new File(destCoreFolder + inactiveFilename);
@@ -688,7 +710,7 @@ function main() {
    CSTasks.convertColorCMYK(
       cmykDoc.pathItems,
       colors[violetIndex][1],
-      colors[whiteIndex][1]
+      colors[lightGreyIndex][1]
    );
 
    let cmykInverseFilename = "/" + name + "_Inverse_CMYK.eps";

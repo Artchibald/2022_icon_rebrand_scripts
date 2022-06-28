@@ -43,8 +43,8 @@ var CMYKColorElements = [
 var desiredFont = "Graphik-Regular";
 var PNGSizes = [1024, 512, 256, 128, 64, 48, 32, 24, 16]; //sizes to export
 var violetIndex = 0; //these are for converting to inverse and inactive versions
-var grayIndex = 1;
-var whiteIndex = 5;
+var grayIndex = 5;
+var lightGreyIndex = 4;
 //loop default 
 var i;
 /**********************************
@@ -162,6 +162,17 @@ var CSTasks = (function () {
         /*@ts-ignore*/
         options.verticalScale = scaling;
         doc.exportFile(destFile, ExportType.PNG24, options);
+    };
+    //takes a document, destination file, starting width and desired width
+    //scales the document proportionally to the desired width and exports as a SVG
+    tasks.scaleAndExportSVG = function (doc, destFile, startWidth, desiredWidth) {
+        var scaling = (100.0 * desiredWidth) / startWidth;
+        var options = new ExportOptionsSVG();
+        /*@ts-ignore*/
+        options.horizontalScale = scaling;
+        /*@ts-ignore*/
+        options.verticalScale = scaling;
+        doc.exportFile(destFile, ExportType.SVG, options);
     };
     //takes left x, top y, width, and height
     //returns a Rect that can be used to create an artboard
@@ -373,7 +384,7 @@ function main() {
     var destCoreFolder = Folder(sourceDoc.path + "/" + "Core");
     if (!destCoreFolder.exists)
         destCoreFolder.create();
-    // Expressive folder
+    // Expressive folder(no in use yet)
     var destExpressiveFolder = Folder(sourceDoc.path + "/" + "Expressive");
     if (!destExpressiveFolder.exists)
         destExpressiveFolder.create();
@@ -485,9 +496,16 @@ function main() {
     //save all sizes of PNG into the export folder
     var startWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
     for (var i_7 = 0; i_7 < PNGSizes.length; i_7++) {
-        var filename_1 = "/" + name + "_Core_RGB_" + PNGSizes[i_7] + ".png";
+        var filename_1 = "/".concat(name, "_Core_RGB_").concat(PNGSizes[i_7], ".png");
         var destFile_1 = new File(destCoreFolder + filename_1);
         CSTasks.scaleAndExportPNG(rgbDoc, destFile_1, startWidth, PNGSizes[i_7]);
+    }
+    //save all sizes of SVG into the export folder
+    var svgStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_8 = 0; i_8 < PNGSizes.length; i_8++) {
+        var filename_2 = "/".concat(name, "_Core_RGB_").concat(PNGSizes[i_8], ".svg");
+        var destFile_2 = new File(destCoreFolder + filename_2);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_2, svgStartWidth, PNGSizes[i_8]);
     }
     //save EPS into the export folder
     var filename = "/" + name + "_Core_RGB.eps";
@@ -499,25 +517,25 @@ function main() {
     //index the RGB colors for conversion to CMYK. An inelegant location.
     var colorIndex = CSTasks.indexRGBColors(rgbDoc.pathItems, colors);
     //convert violet to white and save as EPS
-    CSTasks.convertColorRGB(rgbDoc.pathItems, colors[violetIndex][0], colors[whiteIndex][0]);
+    CSTasks.convertColorRGB(rgbDoc.pathItems, colors[violetIndex][0], colors[lightGreyIndex][0]);
     var inverseFilename = "/" + name + "_Inverse_RGB.eps";
     var inverseFile = new File(destCoreFolder + inverseFilename);
     rgbDoc.saveAs(inverseFile, rgbSaveOpts);
     //save inverse file in all the PNG sizes
-    for (var i_8 = 0; i_8 < PNGSizes.length; i_8++) {
-        var filename_2 = "/" + name + "_Inverse_RGB_" + PNGSizes[i_8] + ".png";
-        var destFile_2 = new File(destCoreFolder + filename_2);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_2, startWidth, PNGSizes[i_8]);
+    for (var i_9 = 0; i_9 < PNGSizes.length; i_9++) {
+        var filename_3 = "/" + name + "_Inverse_RGB_" + PNGSizes[i_9] + ".png";
+        var destFile_3 = new File(destCoreFolder + filename_3);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_3, startWidth, PNGSizes[i_9]);
     }
-    //convert to inactive color (WTW Icon grey at 50% opacity) and save as EPS
-    CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 50);
+    //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
+    CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
     var inactiveFilename = "/" + name + "_Inactive_RGB.eps";
     var inactiveFile = new File(destCoreFolder + inactiveFilename);
     rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
-    for (var i_9 = 0; i_9 < PNGSizes.length; i_9++) {
-        var filename_3 = "/" + name + "_Inactive_RGB_" + PNGSizes[i_9] + ".png";
-        var destFile_3 = new File(destCoreFolder + filename_3);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_3, startWidth, PNGSizes[i_9]);
+    for (var i_10 = 0; i_10 < PNGSizes.length; i_10++) {
+        var filename_4 = "/" + name + "_Inactive_RGB_" + PNGSizes[i_10] + ".png";
+        var destFile_4 = new File(destCoreFolder + filename_4);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_4, startWidth, PNGSizes[i_10]);
     }
     //close and clean up
     rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
@@ -545,7 +563,7 @@ function main() {
     var cmykSaveOpts = new EPSSaveOptions();
     cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
     //convert violet to white and save as EPS
-    CSTasks.convertColorCMYK(cmykDoc.pathItems, colors[violetIndex][1], colors[whiteIndex][1]);
+    CSTasks.convertColorCMYK(cmykDoc.pathItems, colors[violetIndex][1], colors[lightGreyIndex][1]);
     var cmykInverseFilename = "/" + name + "_Inverse_CMYK.eps";
     var cmykInverseFile = new File(destCoreFolder + cmykInverseFilename);
     cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
