@@ -45,7 +45,7 @@ let CMYKColorElements = [
 
 // let desiredFont = "NHaasGroteskTXStd-55Rg";
 let desiredFont = "Monaco";
-let PNGSizes = [1024, 256, 128, 64, 48, 32]; //sizes to export
+let PNGSizes = [1024, 512, 256, 128, 64, 48, 32, 24, 16]; //sizes to export
 let violetIndex = 0; //these are for converting to inverse and inactive versions
 let grayIndex = 1;
 let whiteIndex = 5;
@@ -451,7 +451,7 @@ function main() {
    let rebuild = true;
    // let gutter = 32;
 
-   //if there is two artboards at 256x256, create the new third artboard
+   //if there is two artboards at 256x256, create the new third masthead artboard
    if (
       sourceDoc.artboards.length == 2 &&
       sourceDoc.artboards[0].artboardRect[2] -
@@ -490,6 +490,8 @@ function main() {
       alert("Please try again with 2 artboards that are 256x256px.");
       return;
    }
+   // Archie Notes &&&&&&&
+   // Core copy to masthead starts here, need to duplicate
 
    //select the contents on artboard 0
    let sel = CSTasks.selectContentsOnArtboard(sourceDoc, 0);
