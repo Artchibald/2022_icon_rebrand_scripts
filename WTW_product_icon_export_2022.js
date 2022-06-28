@@ -40,7 +40,7 @@ var CMYKColorElements = [
     [0, 0, 0, 50], // Gray matter Dark dark grey
 ];
 // let desiredFont = "NHaasGroteskTXStd-55Rg";
-var desiredFont = "Monaco";
+var desiredFont = "Graphik-Regular";
 var PNGSizes = [1024, 512, 256, 128, 64, 48, 32, 24, 16]; //sizes to export
 var violetIndex = 0; //these are for converting to inverse and inactive versions
 var grayIndex = 1;

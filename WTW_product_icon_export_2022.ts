@@ -44,7 +44,7 @@ let CMYKColorElements = [
 ];
 
 // let desiredFont = "NHaasGroteskTXStd-55Rg";
-let desiredFont = "Monaco";
+let desiredFont = "Graphik-Regular";
 let PNGSizes = [1024, 512, 256, 128, 64, 48, 32, 24, 16]; //sizes to export
 let violetIndex = 0; //these are for converting to inverse and inactive versions
 let grayIndex = 1;
