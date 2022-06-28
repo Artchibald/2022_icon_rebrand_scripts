@@ -86,3 +86,6 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 - Sat 25 June 3 hours docs review, repo set up, set up typescript installation, remove all errors from original js script copy as TS
 - Monday 27 June 8 hours, start script edits, convert to typescript without breaking, multiple tests, artboard division breakthrough, separate new file into 2 artboards, core & expressive. Move masthead over to position artboard 3 with JS maths. Lots of reading old script and ai script docs. Drew diagram of intended funcitonalty and passed onto team for review.
 
+# No license for graphik font, delete on completion
+
+# Shorten file names as per Jo request
