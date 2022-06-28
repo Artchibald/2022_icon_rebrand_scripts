@@ -47,6 +47,13 @@ var grayIndex = 5;
 var lightGreyIndex = 4;
 //loop default 
 var i;
+// folder creations
+var CoreFolderName = "Core";
+var ExpressiveFolderName = "Expressive";
+//was here, used throughout
+var name = sourceDoc.name.split(".")[0];
+var destCoreFolder = Folder("".concat(sourceDoc.path, "/").concat(CoreFolderName));
+var destExpressiveFolder = Folder("".concat(sourceDoc.path, "/").concat(ExpressiveFolderName));
 /**********************************
 Module for image manipulation tasks
 ***********************************/
@@ -398,15 +405,17 @@ function main() {
     /*****************************
       create export folders if needed
       ******************************/
-    // Core folder
-    var name = sourceDoc.name.split(".")[0];
-    var destCoreFolder = Folder(sourceDoc.path + "/" + "Core");
-    if (!destCoreFolder.exists)
-        destCoreFolder.create();
-    // Expressive folder(no in use yet)
-    var destExpressiveFolder = Folder(sourceDoc.path + "/" + "Expressive");
-    if (!destExpressiveFolder.exists)
-        destExpressiveFolder.create();
+    try {
+        // Core folder
+        if (!destCoreFolder.exists)
+            destCoreFolder.create();
+        // Expressive folder(no in use yet)
+        if (!destExpressiveFolder.exists)
+            destExpressiveFolder.create();
+    }
+    catch (e) {
+        alert("Issues with creating Core and Expressive folders.", e.message);
+    }
     /******************
       set up artboards
       ******************/

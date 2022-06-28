@@ -51,6 +51,14 @@ let grayIndex = 5;
 let lightGreyIndex = 4;
 //loop default 
 let i;
+// folder creations
+let CoreFolderName = "Core";
+let ExpressiveFolderName = "Expressive";
+//was here, used throughout
+let name = sourceDoc.name.split(".")[0];
+let destCoreFolder = Folder(`${sourceDoc.path}/${CoreFolderName}`);
+let destExpressiveFolder = Folder(`${sourceDoc.path}/${ExpressiveFolderName}`);
+
 
 /********************************** 
 Module for image manipulation tasks 
@@ -468,14 +476,23 @@ function main() {
      create export folders if needed
      ******************************/
 
-   // Core folder
-   let name = sourceDoc.name.split(".")[0];
-   let destCoreFolder = Folder(sourceDoc.path + "/" + "Core");
-   if (!destCoreFolder.exists) destCoreFolder.create();
+   try {
+      // Core folder
 
-   // Expressive folder(no in use yet)
-   let destExpressiveFolder = Folder(sourceDoc.path + "/" + "Expressive");
-   if (!destExpressiveFolder.exists) destExpressiveFolder.create();
+
+      if (!destCoreFolder.exists) destCoreFolder.create();
+      // Expressive folder(no in use yet)
+
+      if (!destExpressiveFolder.exists) destExpressiveFolder.create();
+
+   } catch (e) {
+      alert(
+         "Issues with creating Core and Expressive folders.",
+         e.message
+      );
+   }
+
+
 
    /******************
      set up artboards
