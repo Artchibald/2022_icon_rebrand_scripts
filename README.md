@@ -93,8 +93,24 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 
 # Add swatch to your swatches panel before starting with swtach .ai file. Swatch menu > Other Library...
 
+# New briefs from Katie
 
-# Tomorrow
+As mentioned, we wanted to explore potential options for exporting the expressive assets onto artboards with specific layouts.
+
+Please see attached .ai file (social media and email sizes).
+
+Basically – wondering if we can select a consistent X,Y coordinate and place that expressive icon there, with a dark ultraviolet background, and in the case of the social items – pre-populate the text of the application as well as the WTW logo (assets attached here).
+
+The text and the WTW logo would also remain locked in a consistent location, and the expressive icon would be consistently cropped.
+
+Please let me know if you’d like to discuss live. (Example below shows that expressive icon would be cropped – slightly). See email 28 June
+
+# To do
 
 - Create folders for all SVG, EPS, JPG,PNG and try to save them in the right place
 - Find bug: One or more colors....
+- Change svg dimensions?
+
+# J
+
+- Convert to CMYK breaking script, not working 
