@@ -86,7 +86,7 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 - Sat 25 June 3 hours docs review, repo set up, set up typescript installation, remove all errors from original js script copy as TS
 - Monday 27 June 8 hours, start script edits, convert to typescript without breaking, multiple tests, artboard division breakthrough, separate new file into 2 artboards, core & expressive. Move masthead over to position artboard 3 with JS maths. Lots of reading old script and ai script docs. Drew diagram of intended funcitonalty and passed onto team for review.
 - Tue 28 June Reviewed and commented back on expectations spreadsheet. Read up on favicon.ico. Code bugs resolved: Hid guidelines layer before expots start, create expressive folder, move masthead down vertically, successfully add graphik font to script.
-
+- Wed 29 June, morning reorganise all exports into respective folders. Trying to fix RGB color bug.
 # No license for graphik font, delete on completion
 
 # Shorten file names as per Jo request
@@ -113,4 +113,6 @@ Please let me know if you’d like to discuss live. (Example below shows that ex
 
 # J
 
-- Convert to CMYK breaking script, not working 
+- let tasks: any = {}; line 83, better solution than any?
+- Is there a way to edit the viewbox 256 settings in each svg?
+- Convert to CMYK breaking script, not working colors undefined
