@@ -527,7 +527,7 @@ function main() {
       new Folder(`${sourceDoc.path}/${coreName}/${jpgName}`).create();
       new Folder(`${sourceDoc.path}/${coreName}/${pngName}`).create();
       new Folder(`${sourceDoc.path}/${coreName}/${svgName}`).create();
-      // Expressive folder(no in use yet)
+      // Expressive folder(not in use yet)
       new Folder(`${sourceDoc.path}/${expressiveName}`).create();
       new Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`).create();
       new Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`).create();
@@ -685,6 +685,15 @@ function main() {
    CSTasks.translateObjectTo(rgbGroup, rgbLoc);
 
    CSTasks.ungroupOnce(rgbGroup);
+
+   //save a master PNG
+   let masterStartWidth =
+      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}.png`;
+      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
+      CSTasks.scaleAndExportPNG(rgbDoc, destFile, masterStartWidth, exportSizes[2]);
+   }
 
    //save all sizes of PNG into the export folder
    let startWidth =
