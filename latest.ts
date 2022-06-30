@@ -695,6 +695,16 @@ function main() {
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, masterStartWidth, exportSizes[2]);
    }
 
+   //save a master SVG 
+   let svgMasterCoreStartWidth =
+      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
+      CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgMasterCoreStartWidth, exportSizes[2]);
+   }
+
    //save all sizes of PNG into the export folder
    let startWidth =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];

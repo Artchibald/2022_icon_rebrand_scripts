@@ -540,26 +540,33 @@ function main() {
         var destFile_1 = new File(Folder("".concat(sourceDoc.path)) + filename_1);
         CSTasks.scaleAndExportPNG(rgbDoc, destFile_1, masterStartWidth, exportSizes[2]);
     }
+    //save a master SVG 
+    var svgMasterCoreStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_8 = 0; i_8 < exportSizes.length; i_8++) {
+        var filename_2 = "/".concat(iconFilename, ".svg");
+        var destFile_2 = new File(Folder("".concat(sourceDoc.path)) + filename_2);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_2, svgMasterCoreStartWidth, exportSizes[2]);
+    }
     //save all sizes of PNG into the export folder
     var startWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_8 = 0; i_8 < exportSizes.length; i_8++) {
-        var filename_2 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[i_8], ".png");
-        var destFile_2 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_2);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_2, startWidth, exportSizes[i_8]);
+    for (var i_9 = 0; i_9 < exportSizes.length; i_9++) {
+        var filename_3 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[i_9], ".png");
+        var destFile_3 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_3);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_3, startWidth, exportSizes[i_9]);
     }
     //save all sizes of SVG into the export folder
     var svgCoreStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_9 = 0; i_9 < exportSizes.length; i_9++) {
-        var filename_3 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[i_9], ".svg");
-        var destFile_3 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(svgName)) + filename_3);
-        CSTasks.scaleAndExportSVG(rgbDoc, destFile_3, svgCoreStartWidth, exportSizes[i_9]);
+    for (var i_10 = 0; i_10 < exportSizes.length; i_10++) {
+        var filename_4 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[i_10], ".svg");
+        var destFile_4 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(svgName)) + filename_4);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_4, svgCoreStartWidth, exportSizes[i_10]);
     }
     //save all sizes of JPEG into the export folder
     var jpegStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_10 = 0; i_10 < exportSizes.length; i_10++) {
-        var filename_4 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[i_10], ".jpg");
-        var destFile_4 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(jpgName)) + filename_4);
-        CSTasks.scaleAndExportJPEG(rgbDoc, destFile_4, jpegStartWidth, exportSizes[i_10]);
+    for (var i_11 = 0; i_11 < exportSizes.length; i_11++) {
+        var filename_5 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[i_11], ".jpg");
+        var destFile_5 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(jpgName)) + filename_5);
+        CSTasks.scaleAndExportJPEG(rgbDoc, destFile_5, jpegStartWidth, exportSizes[i_11]);
     }
     //save EPS into the export folder
     var filename = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, ".eps");
@@ -576,20 +583,20 @@ function main() {
     var inverseFile = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(epsName)) + inverseFilename);
     rgbDoc.saveAs(inverseFile, rgbSaveOpts);
     //save inverse file in all the PNG sizes
-    for (var i_11 = 0; i_11 < exportSizes.length; i_11++) {
-        var filename_5 = "/".concat(iconFilename, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[i_11], ".png");
-        var destFile_5 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_5);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_5, startWidth, exportSizes[i_11]);
+    for (var i_12 = 0; i_12 < exportSizes.length; i_12++) {
+        var filename_6 = "/".concat(iconFilename, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[i_12], ".png");
+        var destFile_6 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_6);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_6, startWidth, exportSizes[i_12]);
     }
     //convert to inactive color (WTW Icon grey at 50% opacity) and save as EPS
     CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
     var inactiveFilename = "/".concat(iconFilename, "_").concat(inactiveName, "_").concat(rgbName, ".eps");
     var inactiveFile = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(epsName)) + inactiveFilename);
     rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
-    for (var i_12 = 0; i_12 < exportSizes.length; i_12++) {
-        var filename_6 = "/".concat(iconFilename, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[i_12], ".png");
-        var destFile_6 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_6);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_6, startWidth, exportSizes[i_12]);
+    for (var i_13 = 0; i_13 < exportSizes.length; i_13++) {
+        var filename_7 = "/".concat(iconFilename, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[i_13], ".png");
+        var destFile_7 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_7);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_7, startWidth, exportSizes[i_13]);
     }
     //close and clean up
     rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
