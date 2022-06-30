@@ -584,20 +584,33 @@ function main() {
     rgbDoc.saveAs(inverseFile, rgbSaveOpts);
     //save inverse file in all the PNG sizes
     for (var i_12 = 0; i_12 < exportSizes.length; i_12++) {
-        var filename_6 = "/".concat(iconFilename, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[i_12], ".png");
+        var filename_6 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[i_12], ".png");
         var destFile_6 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_6);
         CSTasks.scaleAndExportPNG(rgbDoc, destFile_6, startWidth, exportSizes[i_12]);
     }
-    //convert to inactive color (WTW Icon grey at 50% opacity) and save as EPS
+    //save inverse file in all the SVG sizes
+    for (var i_13 = 0; i_13 < exportSizes.length; i_13++) {
+        var filename_7 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[i_13], ".svg");
+        var destFile_7 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(svgName)) + filename_7);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_7, startWidth, exportSizes[i_13]);
+    }
+    //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
     CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
     var inactiveFilename = "/".concat(iconFilename, "_").concat(inactiveName, "_").concat(rgbName, ".eps");
     var inactiveFile = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(epsName)) + inactiveFilename);
     rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
-    for (var i_13 = 0; i_13 < exportSizes.length; i_13++) {
-        var filename_7 = "/".concat(iconFilename, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[i_13], ".png");
-        var destFile_7 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_7);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_7, startWidth, exportSizes[i_13]);
+    for (var i_14 = 0; i_14 < exportSizes.length; i_14++) {
+        var filename_8 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[i_14], ".png");
+        var destFile_8 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_8);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_8, startWidth, exportSizes[i_14]);
     }
+    for (var i_15 = 0; i_15 < exportSizes.length; i_15++) {
+        var filename_9 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[i_15], ".svg");
+        var destFile_9 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(svgName)) + filename_9);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_9, startWidth, exportSizes[i_15]);
+    }
+    // Add new layer above Guidelines and fill white
+    // then repeat export loops for SVG PNG JPG Here
     //close and clean up
     rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
     rgbDoc = null;

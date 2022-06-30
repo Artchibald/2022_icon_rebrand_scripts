@@ -757,12 +757,19 @@ function main() {
 
    //save inverse file in all the PNG sizes
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${inverseName}_${rgbName}_${exportSizes[i]}.png`;
+      let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[i]}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
 
-   //convert to inactive color (WTW Icon grey at 50% opacity) and save as EPS
+   //save inverse file in all the SVG sizes
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[i]}.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
+      CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
+   }
+
+   //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
    CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
 
    let inactiveFilename = `/${iconFilename}_${inactiveName}_${rgbName}.eps`;
@@ -770,10 +777,20 @@ function main() {
    rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
 
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${inactiveName}_${rgbName}_${exportSizes[i]}.png`;
+      let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[i]}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
+
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[i]}.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
+      CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
+   }
+
+   // Add new layer above Guidelines and fill white
+
+   // then repeat export loops for SVG PNG JPG Here
 
    //close and clean up
    rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
