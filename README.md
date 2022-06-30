@@ -105,6 +105,8 @@ The text and the WTW logo would also remain locked in a consistent location, and
 
 Please let me know if you’d like to discuss live. (Example below shows that expressive icon would be cropped – slightly). See email 28 June
 
+# New action for pattern form Diane and Chris, see chat and discuss on call
+
 # To do
 
 - Create folders for all SVG, EPS, JPG,PNG and try to save them in the right place
@@ -116,3 +118,21 @@ Please let me know if you’d like to discuss live. (Example below shows that ex
 - let tasks: any = {}; line 83, better solution than any?
 - Is there a way to edit the viewbox 256 settings in each svg?
 - Convert to CMYK breaking script, not working colors undefined
+- Inverse action works with old colors not new ones
+
+# Notes from design brief call 29june
+
+1 new brand graphic, magenta color panels
++ patterns
+
+= perspective
+
+2 iconology new style
+
+if you are manipulating them, follow the pdf process
+
+Graphic motif I use 100% STRIPE scaling(web)
+
+ # Illustrator Edit > Assign profile > Must match sRGB IEC61966-2.1 or it won't work
+
+ # Select each individual color and under Window> Colours make sure each shape color is set to rgb or it wont work!
