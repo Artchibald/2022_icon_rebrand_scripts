@@ -49,7 +49,6 @@ let grayIndex = 1;
 let whiteIndex = 5;
 //loop default 
 let i;
-let k;
 // folder creations
 let coreName = "Core";
 let expressiveName = "Expressive";
@@ -86,6 +85,8 @@ interface Task {
       artboardIndex: any,
       colorspace: any);
    scaleAndExportPNG(doc: any, destFile: any, startWidth: any, desiredWidth: any);
+   scaleAndExportSVG(doc: any, destFile: any, startWidth: any, desiredWidth: any);
+   scaleAndExportJPEG(doc: any, destFile: any, startWidth: any, desiredWidth: any);
    newRect(x: any, y: any, width: any, height: any);
    setFont(textRef: any, desiredFont: any);
    createTextFrame(doc: any, message: any, pos: any, size: any);
@@ -238,7 +239,7 @@ let CSTasks = (function () {
 
    //takes a document, destination file, starting width and desired width
    //scales the document proportionally to the desired width and exports as a SVG
-   tasks.scaleAndExportCoreSVG = function (doc, destFile, startWidth, desiredWidth) {
+   tasks.scaleAndExportSVG = function (doc, destFile, startWidth, desiredWidth) {
       let scaling = (100.0 * desiredWidth) / startWidth;
       let options = new ExportOptionsSVG();
       /*@ts-ignore*/

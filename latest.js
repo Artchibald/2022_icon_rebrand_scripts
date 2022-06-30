@@ -46,7 +46,6 @@ var grayIndex = 1;
 var whiteIndex = 5;
 //loop default 
 var i;
-var k;
 // folder creations
 var coreName = "Core";
 var expressiveName = "Expressive";
@@ -174,7 +173,7 @@ var CSTasks = (function () {
     };
     //takes a document, destination file, starting width and desired width
     //scales the document proportionally to the desired width and exports as a SVG
-    tasks.scaleAndExportCoreSVG = function (doc, destFile, startWidth, desiredWidth) {
+    tasks.scaleAndExportSVG = function (doc, destFile, startWidth, desiredWidth) {
         var scaling = (100.0 * desiredWidth) / startWidth;
         var options = new ExportOptionsSVG();
         /*@ts-ignore*/
