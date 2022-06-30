@@ -22,6 +22,7 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 /*********************************
 VARIABLES YOU MIGHT NEED TO CHANGE
 **********************************/
+var sourceDoc = app.activeDocument;
 var RGBColorElements = [
     [127, 53, 178],
     [191, 191, 191],
@@ -39,12 +40,31 @@ var CMYKColorElements = [
     [0, 0, 0, 0], // white
 ];
 var desiredFont = "Graphik-Regular";
-var PNGSizes = [1024, 256, 128, 64, 48, 32]; //sizes to export
+var exportSizes = [1024, 512, 256, 128, 64, 48, 32, 24, 16]; //sizes to export
 var violetIndex = 0; //these are for converting to inverse and inactive versions
 var grayIndex = 1;
 var whiteIndex = 5;
+//loop default 
 var i;
 var k;
+// folder creations
+var coreName = "Core";
+var expressiveName = "Expressive";
+var inverseName = "Inverse";
+var inactiveName = "Inactive";
+// Colors
+var rgbName = "RGB";
+var cmykName = "CMYK";
+//Folder creations
+var pngName = "png";
+var jpgName = "jpg";
+var svgName = "svg";
+var epsName = "eps";
+var iconFilename = sourceDoc.name.split(".")[0];
+var rebuild = true;
+// let gutter = 32;
+// hide guides
+var guideLayer = sourceDoc.layers["Guidelines"];
 var CSTasks = (function () {
     var tasks = {};
     /********************
@@ -76,9 +96,8 @@ var CSTasks = (function () {
         doc.artboards.setActiveArtboardIndex(index);
         doc.selectObjectsOnActiveArtboard();
         var sel = doc.selection; // get selection
-        var k;
-        for (k = 0; k < sel.length; k++) {
-            sel[k].remove();
+        for (i = 0; i < sel.length; i++) {
+            sel[i].remove();
         }
     };
     /*********************************
@@ -96,8 +115,8 @@ var CSTasks = (function () {
     //returns a group made from that collection
     tasks.createGroup = function (doc, collection) {
         var newGroup = doc.groupItems.add();
-        for (k = 0; k < collection.length; k++) {
-            collection[k].moveToBeginning(newGroup);
+        for (i = 0; i < collection.length; i++) {
+            collection[i].moveToBeginning(newGroup);
         }
         return newGroup;
     };
@@ -153,6 +172,47 @@ var CSTasks = (function () {
         options.verticalScale = scaling;
         doc.exportFile(destFile, ExportType.PNG24, options);
     };
+    //takes a document, destination file, starting width and desired width
+    //scales the document proportionally to the desired width and exports as a SVG
+    tasks.scaleAndExportCoreSVG = function (doc, destFile, startWidth, desiredWidth) {
+        var scaling = (100.0 * desiredWidth) / startWidth;
+        var options = new ExportOptionsSVG();
+        /*@ts-ignore*/
+        options.horizontalScale = scaling;
+        /*@ts-ignore*/
+        options.verticalScale = scaling;
+        // /*@ts-ignore*/
+        // options.transparency = true;
+        /*@ts-ignore*/
+        // options.compressed = false; 
+        // /*@ts-ignore*/
+        // options.saveMultipleArtboards = true;
+        // /*@ts-ignore*/
+        // options.artboardRange = ""
+        // options.cssProperties.STYLEATTRIBUTES = false;
+        // /*@ts-ignore*/
+        // options.cssProperties.PRESENTATIONATTRIBUTES = false;
+        // /*@ts-ignore*/
+        // options.cssProperties.STYLEELEMENTS = false;
+        // /*@ts-ignore*/
+        // options.artBoardClipping = true;
+        doc.exportFile(destFile, ExportType.SVG, options);
+    };
+    //takes a document, destination file, starting width and desired width
+    //scales the document proportionally to the desired width and exports as a SVG
+    tasks.scaleAndExportJPEG = function (doc, destFile, startWidth, desiredWidth) {
+        var scaling = (100.0 * desiredWidth) / startWidth;
+        var options = new ExportOptionsJPEG();
+        /*@ts-ignore*/
+        options.antiAliasing = true;
+        /*@ts-ignore*/
+        options.artBoardClipping = true;
+        /*@ts-ignore*/
+        options.horizontalScale = scaling;
+        /*@ts-ignore*/
+        options.verticalScale = scaling;
+        doc.exportFile(destFile, ExportType.JPEG, options);
+    };
     //takes left x, top y, width, and height
     //returns a Rect that can be used to create an artboard
     tasks.newRect = function (x, y, width, height) {
@@ -171,11 +231,11 @@ var CSTasks = (function () {
     tasks.setFont = function (textRef, desiredFont) {
         var foundFont = false;
         /*@ts-ignore*/
-        for (var i = 0; i < textFonts.length; i++) {
+        for (var i_1 = 0; i_1 < textFonts.length; i_1++) {
             /*@ts-ignore*/
-            if (textFonts[i].name == desiredFont) {
+            if (textFonts[i_1].name == desiredFont) {
                 /*@ts-ignore*/
-                textRef.textRange.characterAttributes.textFont = textFonts[i];
+                textRef.textRange.characterAttributes.textFont = textFonts[i_1];
                 foundFont = true;
                 break;
             }
@@ -199,17 +259,17 @@ var CSTasks = (function () {
     //returns an array of ColorElements [[RGBColor,CMYKColor],[RGBColor2,CMYKColor2],...] (usable by the script for fill colors etc.)
     tasks.initializeColors = function (RGBArray, CMYKArray) {
         var colors = new Array(RGBArray.length);
-        for (var i = 0; i < RGBArray.length; i++) {
+        for (var i_2 = 0; i_2 < RGBArray.length; i_2++) {
             var rgb = new RGBColor();
-            rgb.red = RGBArray[i][0];
-            rgb.green = RGBArray[i][1];
-            rgb.blue = RGBArray[i][2];
+            rgb.red = RGBArray[i_2][0];
+            rgb.green = RGBArray[i_2][1];
+            rgb.blue = RGBArray[i_2][2];
             var cmyk = new CMYKColor();
-            cmyk.cyan = CMYKArray[i][0];
-            cmyk.magenta = CMYKArray[i][1];
-            cmyk.yellow = CMYKArray[i][2];
-            cmyk.black = CMYKArray[i][3];
-            colors[i] = [rgb, cmyk];
+            cmyk.cyan = CMYKArray[i_2][0];
+            cmyk.magenta = CMYKArray[i_2][1];
+            cmyk.yellow = CMYKArray[i_2][2];
+            cmyk.black = CMYKArray[i_2][3];
+            colors[i_2] = [rgb, cmyk];
         }
         return colors;
     };
@@ -217,12 +277,12 @@ var CSTasks = (function () {
     //returns the index in the array if it finds a match, otherwise returns -1
     tasks.matchRGB = function (color, matchArray) {
         //compares a single color RGB color against RGB colors in [[RGB],[CMYK]] array
-        for (var i = 0; i < matchArray.length; i++) {
-            if (Math.abs(color.red - matchArray[i][0].red) < 1 &&
-                Math.abs(color.green - matchArray[i][0].green) < 1 &&
-                Math.abs(color.blue - matchArray[i][0].blue) < 1) {
+        for (var i_3 = 0; i_3 < matchArray.length; i_3++) {
+            if (Math.abs(color.red - matchArray[i_3][0].red) < 1 &&
+                Math.abs(color.green - matchArray[i_3][0].green) < 1 &&
+                Math.abs(color.blue - matchArray[i_3][0].blue) < 1) {
                 //can't do equality because it adds very small decimals
-                return i;
+                return i_3;
             }
         }
         return -1;
@@ -306,12 +366,12 @@ var CSTasks = (function () {
             alert("One or more colors don't match the brand palette and weren't converted.");
             unmatchedColors = tasks.unique(unmatchedColors);
             var unmatchedString = "Unconverted colors:";
-            for (var i = 0; i < unmatchedColors.length; i++) {
-                unmatchedString = unmatchedString + "\n" + unmatchedColors[i];
+            for (var i_4 = 0; i_4 < unmatchedColors.length; i_4++) {
+                unmatchedString = unmatchedString + "\n" + unmatchedColors[i_4];
             }
             var errorMsgPos = [Infinity, Infinity]; //gets the bottom left of all the artboards
-            for (var i = 0; i < doc.artboards.length; i++) {
-                var rect = doc.artboards[i].artboardRect;
+            for (var i_5 = 0; i_5 < doc.artboards.length; i_5++) {
+                var rect = doc.artboards[i_5].artboardRect;
                 if (rect[0] < errorMsgPos[0])
                     errorMsgPos[0] = rect[0];
                 if (rect[3] < errorMsgPos[1])
@@ -329,9 +389,9 @@ var CSTasks = (function () {
         if (a.length > 0) {
             sorted = a.sort();
             uniq = [sorted[0]];
-            for (var i = 1; i < sorted.length; i++) {
-                if (sorted[i] != sorted[i - 1])
-                    uniq.push(sorted[i]);
+            for (var i_6 = 1; i_6 < sorted.length; i_6++) {
+                if (sorted[i_6] != sorted[i_6 - 1])
+                    uniq.push(sorted[i_6]);
             }
             return uniq;
         }
@@ -342,7 +402,15 @@ var CSTasks = (function () {
 /****************
  ***************/
 function main() {
-    var sourceDoc = app.activeDocument;
+    /**********************************
+   ** HIDE / SHOW SOME LAYERS NEEDED
+   ***********************************/
+    try {
+        guideLayer.visible = false;
+    }
+    catch (e) {
+        alert("Issue with layer hiding the Guidelines layer (do not change name from exactly Guidelines).", e.message);
+    }
     /*****************************
     create export folder if needed
     ******************************/
@@ -355,19 +423,23 @@ function main() {
     ******************/
     var rebuild = true;
     var gutter = 32;
-    //if there is one artboard at 256x256, create the new artboard
-    if (sourceDoc.artboards.length == 1 &&
+    //if there are two artboards at 256x256, create the new third masthead artboard
+    if (sourceDoc.artboards.length == 2 &&
         sourceDoc.artboards[0].artboardRect[2] -
             sourceDoc.artboards[0].artboardRect[0] ==
             256 &&
         sourceDoc.artboards[0].artboardRect[1] -
             sourceDoc.artboards[0].artboardRect[3] ==
             256) {
+        // alert("More than 2 artboards detected!");
         var firstRect = sourceDoc.artboards[0].artboardRect;
-        sourceDoc.artboards.add(CSTasks.newRect(firstRect[2] + gutter, firstRect[1], 2400, 256));
+        sourceDoc.artboards.add(
+        // CSTasks.newRect(firstRect[1] * 2.5 + gutter, firstRect[2], 2400, 256)
+        // CSTasks.newRect(firstRect[1] * 0.5, firstRect[2], 2400, 256)
+        CSTasks.newRect(firstRect[1], firstRect[2] + 128, 2400, 256));
     }
     //if the masthead artboard is present, check if rebuilding or just exporting
-    else if (sourceDoc.artboards.length == 2 &&
+    else if (sourceDoc.artboards.length == 3 &&
         sourceDoc.artboards[1].artboardRect[1] -
             sourceDoc.artboards[1].artboardRect[3] ==
             256) {
@@ -379,7 +451,7 @@ function main() {
     }
     //otherwise abort
     else {
-        alert("Please try again with a single artboard that is 256x256px.");
+        alert("Please try again with 2 artboards that are 256x256px.");
         return;
     }
     //select the contents on artboard 0
@@ -399,8 +471,8 @@ function main() {
     /*@ts-ignore*/
     var mast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
     var mastPos = [
-        sourceDoc.artboards[1].artboardRect[0] + iconOffset[0],
-        sourceDoc.artboards[1].artboardRect[1] + iconOffset[1],
+        sourceDoc.artboards[2].artboardRect[0] + iconOffset[0],
+        sourceDoc.artboards[2].artboardRect[1] + iconOffset[1],
     ];
     CSTasks.translateObjectTo(mast, mastPos);
     //request a name for the icon, and place that as text on the masthead artboard
@@ -410,7 +482,7 @@ function main() {
     textRef.textRange.characterAttributes.size = 178;
     CSTasks.setFont(textRef, desiredFont);
     //vertically align the baseline to be 64 px above the botom of the artboard
-    var bottomEdge = sourceDoc.artboards[1].artboardRect[3] +
+    var bottomEdge = sourceDoc.artboards[2].artboardRect[3] +
         0.25 * sourceDoc.artboards[0].artboardRect[2] -
         sourceDoc.artboards[0].artboardRect[0]; //64px (0.25*256px) above the bottom edge of the artboard
     var vOffset = CSTasks.getOffset(textRef.anchor, [0, bottomEdge]);
@@ -425,15 +497,15 @@ function main() {
     var hOffset = CSTasks.getOffset(textGroup.position, [rightEdge, 0]);
     textGroup.translate(-hOffset[0], 0);
     //resize the artboard to be only a little wider than the text
-    var leftMargin = mast.position[0] - sourceDoc.artboards[1].artboardRect[0];
+    var leftMargin = mast.position[0] - sourceDoc.artboards[2].artboardRect[0];
     var newWidth = textGroup.position[0] +
         textGroup.width -
-        sourceDoc.artboards[1].artboardRect[0] +
+        sourceDoc.artboards[2].artboardRect[0] +
         leftMargin;
-    var resizedRect = CSTasks.newRect(sourceDoc.artboards[1].artboardRect[0], -sourceDoc.artboards[1].artboardRect[1], newWidth, 256);
-    sourceDoc.artboards[1].artboardRect = resizedRect;
+    var resizedRect = CSTasks.newRect(sourceDoc.artboards[2].artboardRect[0], -sourceDoc.artboards[2].artboardRect[1], newWidth, 256);
+    sourceDoc.artboards[2].artboardRect = resizedRect;
     //get the text offset for exporting
-    var mastTextOffset = CSTasks.getOffset(textGroup.position, CSTasks.getArtboardCorner(sourceDoc.artboards[1]));
+    var mastTextOffset = CSTasks.getOffset(textGroup.position, CSTasks.getArtboardCorner(sourceDoc.artboards[2]));
     /*********************************************************************
     RGB export (EPS, PNGs at multiple sizes, inactive EPS and inverse EPS)
     **********************************************************************/
@@ -451,10 +523,10 @@ function main() {
     CSTasks.ungroupOnce(rgbGroup);
     //save all sizes of PNG into the export folder
     var startWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i = 0; i < PNGSizes.length; i++) {
-        var filename = "/" + name + "_Core_RGB_" + PNGSizes[i] + ".png";
-        var destFile = new File(destFolder + filename);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
+    for (var i_7 = 0; i_7 < exportSizes.length; i_7++) {
+        var filename_1 = "/" + name + "_Core_RGB_" + exportSizes[i_7] + ".png";
+        var destFile_1 = new File(destFolder + filename_1);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_1, startWidth, exportSizes[i_7]);
     }
     //save EPS into the export folder
     var filename = "/" + name + "_Core_RGB.eps";
@@ -471,20 +543,20 @@ function main() {
     var inverseFile = new File(destFolder + inverseFilename);
     rgbDoc.saveAs(inverseFile, rgbSaveOpts);
     //save inverse file in all the PNG sizes
-    for (var i = 0; i < PNGSizes.length; i++) {
-        var filename = "/" + name + "_Inverse_RGB_" + PNGSizes[i] + ".png";
-        var destFile = new File(destFolder + filename);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
+    for (var i_8 = 0; i_8 < exportSizes.length; i_8++) {
+        var filename_2 = "/" + name + "_Inverse_RGB_" + exportSizes[i_8] + ".png";
+        var destFile_2 = new File(destFolder + filename_2);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_2, startWidth, exportSizes[i_8]);
     }
     //convert to inactive color (WTW Icon grey at 50% opacity) and save as EPS
     CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 50);
     var inactiveFilename = "/" + name + "_Inactive_RGB.eps";
     var inactiveFile = new File(destFolder + inactiveFilename);
     rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
-    for (var i = 0; i < PNGSizes.length; i++) {
-        var filename = "/" + name + "_Inactive_RGB_" + PNGSizes[i] + ".png";
-        var destFile = new File(destFolder + filename);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, PNGSizes[i]);
+    for (var i_9 = 0; i_9 < exportSizes.length; i_9++) {
+        var filename_3 = "/" + name + "_Inactive_RGB_" + exportSizes[i_9] + ".png";
+        var destFile_3 = new File(destFolder + filename_3);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_3, startWidth, exportSizes[i_9]);
     }
     //close and clean up
     rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
