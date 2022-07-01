@@ -73,6 +73,16 @@ let destFolder = Folder(sourceDoc.path + "/" + name);
 Module for image manipulation tasks 
 ***********************************/
 
+// create a white bg layer, send to bottom of layer stack 
+let numberOfLayersToBeAdded = 1;
+let myWhiteBgLayer = sourceDoc.layers.add();
+myWhiteBgLayer.name = "White_BG_layer";
+var countOfLayers = sourceDoc.layers.length;
+myWhiteBgLayer.zOrder(ZOrderMethod.SENDTOBACK);
+
+// then repeat export loops for SVG PNG JPG Here
+
+
 interface Task {
    getArtboardCorner(artboard: any);
    getOffset(itemPos: any, referencePos: any);
@@ -795,6 +805,9 @@ function main() {
    //close and clean up
    rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
    rgbDoc = null;
+
+
+
 
    /****************
    CMYK export (EPS)

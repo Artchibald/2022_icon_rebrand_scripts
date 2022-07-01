@@ -135,6 +135,12 @@ Graphic motif I use 100% STRIPE scaling(web)
 
  # Illustrator Edit > Assign profile > Must match sRGB IEC61966-2.1 or it won't work
 
- # Select each individual color shape and under Window > Colours make sure each shape color is set to rgb or it wont work!
+ # Select each individual color shape and under Window > Colours make sure each shape color is set to rgb in burger menu or it wont work!
 
- # Presentation question folder structure
+ # Presentation question them for folder structure
+
+ # Blockers
+
+ CMYK and RGB don't match this time round!
+
+ SVG dimensions to be addressed

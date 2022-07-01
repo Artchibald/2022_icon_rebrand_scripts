@@ -66,6 +66,15 @@ var rebuild = true;
 var guideLayer = sourceDoc.layers["Guidelines"];
 var name = sourceDoc.name.split(".")[0];
 var destFolder = Folder(sourceDoc.path + "/" + name);
+/**********************************
+Module for image manipulation tasks
+***********************************/
+// create a white bg layer, send to bottom of layer stack 
+var numberOfLayersToBeAdded = 1;
+var myWhiteBgLayer = sourceDoc.layers.add();
+myWhiteBgLayer.name = "White_BG_layer";
+var countOfLayers = sourceDoc.layers.length;
+myWhiteBgLayer.zOrder(ZOrderMethod.SENDTOBACK);
 var CSTasks = (function () {
     var tasks = {};
     /********************
