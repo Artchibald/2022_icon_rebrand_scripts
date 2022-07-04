@@ -87,6 +87,12 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 - Monday 27 June 8 hours, start script edits, convert to typescript without breaking, multiple tests, artboard division breakthrough, separate new file into 2 artboards, core & expressive. Move masthead over to position artboard 3 with JS maths. Lots of reading old script and ai script docs. Drew diagram of intended funcitonalty and passed onto team for review.
 - Tue 28 June Reviewed and commented back on expectations spreadsheet. Read up on favicon.ico. Code bugs resolved: Hid guidelines layer before expots start, create expressive folder, move masthead down vertically, successfully add graphik font to script.
 - Wed 29 June, morning reorganise all exports into respective folders. Trying to fix RGB color bug.
+- Thu 30 Continued debugging script, progress in spreadsheet required exports, discovered CMYK - RGB mismatch bug
+- Fri 1 July continued debugging, call and present latest work, trying ot get SVG on white bg to export
+- Mon 4 July Found fix for PNG exports on white bg but not SVG, tried to create a Tpyescript interface for debugging but not possible in ECMA 3 exports using AI API so abandoned.
+
+
+
 # No license for graphik font, delete on completion
 
 # Shorten file names as per Jo request

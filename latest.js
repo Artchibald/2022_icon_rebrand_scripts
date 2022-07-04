@@ -173,6 +173,21 @@ var CSTasks = (function () {
         options.verticalScale = scaling;
         doc.exportFile(destFile, ExportType.PNG24, options);
     };
+    tasks.scaleAndExportNonTransparentPNG = function (doc, destFile, startWidth, desiredWidth) {
+        var scaling = (100.0 * desiredWidth) / startWidth;
+        var options = new ExportOptionsPNG24();
+        /*@ts-ignore*/
+        options.antiAliasing = true;
+        /*@ts-ignore*/
+        options.transparency = false;
+        /*@ts-ignore*/
+        options.artBoardClipping = true;
+        /*@ts-ignore*/
+        options.horizontalScale = scaling;
+        /*@ts-ignore*/
+        options.verticalScale = scaling;
+        doc.exportFile(destFile, ExportType.PNG24, options);
+    };
     //takes a document, destination file, starting width and desired width
     //scales the document proportionally to the desired width and exports as a SVG
     tasks.scaleAndExportSVG = function (doc, destFile, startWidth, desiredWidth) {
@@ -372,11 +387,11 @@ var CSTasks = (function () {
             }
             var errorMsgPos = [Infinity, Infinity]; //gets the bottom left of all the artboards
             for (var i_5 = 0; i_5 < doc.artboards.length; i_5++) {
-                var rect_1 = doc.artboards[i_5].artboardRect;
-                if (rect_1[0] < errorMsgPos[0])
-                    errorMsgPos[0] = rect_1[0];
-                if (rect_1[3] < errorMsgPos[1])
-                    errorMsgPos[1] = rect_1[3];
+                var rect = doc.artboards[i_5].artboardRect;
+                if (rect[0] < errorMsgPos[0])
+                    errorMsgPos[0] = rect[0];
+                if (rect[3] < errorMsgPos[1])
+                    errorMsgPos[1] = rect[3];
             }
             errorMsgPos[1] = errorMsgPos[1] - 20;
             tasks.createTextFrame(doc, unmatchedString, errorMsgPos, 18);
@@ -521,213 +536,224 @@ function main() {
     /*********************************************************************
     RGB export (EPS, PNGs at multiple sizes, inactive EPS and inverse EPS)
     **********************************************************************/
-    //create a new document with the artboard and contents from artboard 0
-    // let rgbDoc = CSTasks.duplicateArtboardInNewDoc(
-    //    sourceDoc,
-    //    0,
-    //    DocumentColorSpace.RGB
-    // );
-    // rgbDoc.swatches.removeAll();
-    // let rgbGroup = iconGroup.duplicate(
-    //    rgbDoc.layers[0],
-    //    /*@ts-ignore*/
-    //    ElementPlacement.PLACEATEND
-    // );
-    // let rgbLoc = [
-    //    rgbDoc.artboards[0].artboardRect[0] + iconOffset[0],
-    //    rgbDoc.artboards[0].artboardRect[1] + iconOffset[1],
-    // ];
-    // CSTasks.translateObjectTo(rgbGroup, rgbLoc);
-    // CSTasks.ungroupOnce(rgbGroup);
-    // //save a master PNG
-    // let masterStartWidth =
+    var rgbDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 0, DocumentColorSpace.RGB);
+    // Add new layer above Guidelines and fill white
+    // let myWhiteBgLayer = sourceDoc.layers.add();
+    // myWhiteBgLayer.name = "White_BG_layer";
+    // let getArtworkLayer = sourceDoc.layers.getByName('Artwork');
+    // sourceDoc.activeLayer = sourceDoc.layers.getByName("Artwork"); // activates third layer from top
+    // sourceDoc.activeLayer.hasSelectedArtwork = true; // selects all in active layer
+    // var rect = getArtworkLayer.pathItems.rectangle(
+    //    rgbDoc.artboards[0].artboardRect[0],
+    //    rgbDoc.artboards[0].artboardRect[1],
+    //    256,
+    //    256);
+    // var setColor = new RGBColor();
+    // setColor.red = 155;
+    // setColor.green = 155;
+    // setColor.blue = 155;
+    // rect.filled = true;
+    // rect.fillColor = setColor;
+    // sourceDoc.selection = null;
+    //var artworkLayer = sourceDoc.layers.getByName('Artwork').layers.getByName('<Path>');
+    //rect.zOrder(ZOrderMethod.SENDTOBACK);
+    // let getWhiteBgLayer = sourceDoc.layers.getByName('Artwork').layers.getByName('<Path>');
+    // getWhiteBgLayer.zOrder(ZOrderMethod.SENDTOBACK);
+    //artworkLayer.locked;
+    //save all sizes of PNG into the export folder
+    // let startWidthonFFF =
     //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
     // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}.png`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
-    //    CSTasks.scaleAndExportPNG(rgbDoc, destFile, masterStartWidth, exportSizes[2]);
-    // }
-    // //save a master SVG 
-    // let svgMasterCoreStartWidth =
-    //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}.svg`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
-    //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgMasterCoreStartWidth, exportSizes[2]);
-    // }
-    // //save all sizes of PNG into the export folder
-    // let startWidth =
-    //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.png`;
+    //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_onFFF.png`;
     //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
-    //    CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
+    //    CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile, startWidthonFFF, exportSizes[i]);
     // }
-    // //save all sizes of SVG into the export folder
-    // let svgCoreStartWidth =
+    //sourceDoc.layers.getByName('White_BG_layer').remove();
+    //save all sizes of SVG into the export folder
+    // let svgCoreStartWidthonFFF =
     //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
     // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.svg`;
+    //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_onFFF.svg`;
     //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
-    //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[i]);
+    //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidthonFFF, exportSizes[i]);
     // }
     // //save all sizes of JPEG into the export folder
-    // let jpegStartWidth =
+    // let jpegStartWidthonFFF =
     //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
     // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.jpg`;
+    //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_onFFF.jpg`;
     //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filename);
-    //    CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth, exportSizes[i]);
+    //    CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidthonFFF, exportSizes[i]);
     // }
-    // //save EPS into the export folder
-    // let filename = `/${iconFilename}_${coreName}_${rgbName}.eps`;
-    // let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + filename);
-    // let rgbSaveOpts = new EPSSaveOptions();
-    // /*@ts-ignore*/
-    // rgbSaveOpts.cmykPostScript = false;
-    // rgbDoc.saveAs(destFile, rgbSaveOpts);
-    // //index the RGB colors for conversion to CMYK. An inelegant location.
-    // let colorIndex = CSTasks.indexRGBColors(rgbDoc.pathItems, colors);
-    // //convert violet to white and save as EPS
-    // CSTasks.convertColorRGB(
-    //    rgbDoc.pathItems,
-    //    colors[violetIndex][0],
-    //    colors[whiteIndex][0]
-    // );
-    // let inverseFilename = `/${iconFilename}_${inverseName}_${rgbName}.eps`;
-    // let inverseFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + inverseFilename);
-    // rgbDoc.saveAs(inverseFile, rgbSaveOpts);
-    // //save inverse file in all the PNG sizes
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[i]}.png`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
-    //    CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
-    // }
-    // //save inverse file in all the SVG sizes
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[i]}.svg`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
-    //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
-    // }
-    // //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
-    // CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
-    // let inactiveFilename = `/${iconFilename}_${inactiveName}_${rgbName}.eps`;
-    // let inactiveFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + inactiveFilename);
-    // rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[i]}.png`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
-    //    CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
-    // }
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[i]}.svg`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
-    //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
-    // }
-    // // Add new layer above Guidelines and fill white
-    // // then repeat export loops for SVG PNG JPG Here
-    // //close and clean up
-    // rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
-    // rgbDoc = null;
-    // /****************
-    // CMYK export (EPS)
-    // ****************/
-    // //open a new document with CMYK colorspace, and duplicate the icon to the new document
-    // let cmykDoc = CSTasks.duplicateArtboardInNewDoc(
-    //    sourceDoc,
-    //    0,
-    //    DocumentColorSpace.CMYK
-    // );
-    // cmykDoc.swatches.removeAll();
-    // //need to reverse the order of copying the group to get the right color ordering
-    // let cmykGroup = iconGroup.duplicate(
-    //    cmykDoc.layers[0],
-    //    /*@ts-ignore*/
-    //    ElementPlacement.PLACEATBEGINNING
-    // );
-    // let cmykLoc = [
-    //    cmykDoc.artboards[0].artboardRect[0] + iconOffset[0],
-    //    cmykDoc.artboards[0].artboardRect[1] + iconOffset[1],
-    // ];
-    // CSTasks.translateObjectTo(cmykGroup, cmykLoc);
-    // CSTasks.ungroupOnce(cmykGroup);
-    // CSTasks.convertToCMYK(cmykDoc, cmykDoc.pathItems, colors, colorIndex);
-    // //save EPS into the export folder
-    // let cmykFilename = `/${iconFilename}_${coreName}_${cmykName}.eps`;
-    // let cmykDestFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + cmykFilename);
-    // let cmykSaveOpts = new EPSSaveOptions();
-    // cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
-    // //convert violet to white and save as EPS
-    // CSTasks.convertColorCMYK(
-    //    cmykDoc.pathItems,
-    //    colors[violetIndex][1],
-    //    colors[whiteIndex][1]
-    // );
-    // let cmykInverseFilename = `/${iconFilename}_${inverseName}_${cmykName}.eps`;
-    // let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + cmykInverseFilename);
-    // cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
-    // //close and clean up
-    // cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
-    // cmykDoc = null;
-    // /********************
-    // Masthead export (EPS)
-    // ********************/
-    // //open a new doc and copy and position the icon and the masthead text
-    // let mastDoc = CSTasks.duplicateArtboardInNewDoc(
-    //    sourceDoc,
-    //    1,
-    //    DocumentColorSpace.RGB
-    // );
-    // mastDoc.swatches.removeAll();
-    // let mastGroup = iconGroup.duplicate(
-    //    mastDoc.layers[0],
-    //    /*@ts-ignore*/
-    //    ElementPlacement.PLACEATEND
-    // );
-    // let mastLoc = [
-    //    mastDoc.artboards[0].artboardRect[0] + iconOffset[0],
-    //    mastDoc.artboards[0].artboardRect[1] + iconOffset[1],
-    // ];
-    // CSTasks.translateObjectTo(mastGroup, mastLoc);
-    // CSTasks.ungroupOnce(mastGroup);
-    // let mastText = textGroup.duplicate(
-    //    mastDoc.layers[0],
-    //    /*@ts-ignore*/
-    //    ElementPlacement.PLACEATEND
-    // );
-    // let mastTextLoc = [
-    //    mastDoc.artboards[0].artboardRect[0] + mastTextOffset[0],
-    //    mastDoc.artboards[0].artboardRect[1] + mastTextOffset[1],
-    // ];
-    // CSTasks.translateObjectTo(mastText, mastTextLoc);
-    // //save RGB EPS into the export folder
-    // let mastFilename = `/${iconFilename}_Masthead_${rgbName}.eps`;
-    // let mastDestFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + mastFilename);
-    // let mastSaveOpts = new EPSSaveOptions();
-    // /*@ts-ignore*/
-    // mastSaveOpts.cmykPostScript = false;
-    // mastDoc.saveAs(mastDestFile, mastSaveOpts);
-    // //close and clean up
-    // mastDoc.close(SaveOptions.DONOTSAVECHANGES);
-    // mastDoc = null;
+    // then repeat export loops for SVG PNG JPG Here
+    //create a new document with the artboard and contents from artboard 0
+    rgbDoc.swatches.removeAll();
+    var rgbGroup = iconGroup.duplicate(rgbDoc.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
+    var rgbLoc = [
+        rgbDoc.artboards[0].artboardRect[0] + iconOffset[0],
+        rgbDoc.artboards[0].artboardRect[1] + iconOffset[1],
+    ];
+    CSTasks.translateObjectTo(rgbGroup, rgbLoc);
+    CSTasks.ungroupOnce(rgbGroup);
+    //save a master PNG
+    var masterStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_7 = 0; i_7 < exportSizes.length; i_7++) {
+        var filename_1 = "/".concat(iconFilename, ".png");
+        var destFile_1 = new File(Folder("".concat(sourceDoc.path)) + filename_1);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_1, masterStartWidth, exportSizes[2]);
+    }
+    //save a master SVG 
+    var svgMasterCoreStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_8 = 0; i_8 < exportSizes.length; i_8++) {
+        var filename_2 = "/".concat(iconFilename, ".svg");
+        var destFile_2 = new File(Folder("".concat(sourceDoc.path)) + filename_2);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_2, svgMasterCoreStartWidth, exportSizes[2]);
+    }
+    //save all sizes of PNG into the export folder
+    var startWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_9 = 0; i_9 < exportSizes.length; i_9++) {
+        var filename_3 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[i_9], ".png");
+        var destFile_3 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_3);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_3, startWidth, exportSizes[i_9]);
+    }
+    // non transparent png
+    var startWidthonFFF = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_10 = 0; i_10 < exportSizes.length; i_10++) {
+        var filename_4 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[i_10], "_onFFF.png");
+        var destFile_4 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_4);
+        CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile_4, startWidthonFFF, exportSizes[i_10]);
+    }
+    //save all sizes of SVG into the export folder
+    var svgCoreStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_11 = 0; i_11 < exportSizes.length; i_11++) {
+        var filename_5 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[i_11], ".svg");
+        var destFile_5 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(svgName)) + filename_5);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_5, svgCoreStartWidth, exportSizes[i_11]);
+    }
+    //save all sizes of JPEG into the export folder
+    var jpegStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_12 = 0; i_12 < exportSizes.length; i_12++) {
+        var filename_6 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[i_12], ".jpg");
+        var destFile_6 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(jpgName)) + filename_6);
+        CSTasks.scaleAndExportJPEG(rgbDoc, destFile_6, jpegStartWidth, exportSizes[i_12]);
+    }
+    //save EPS into the export folder
+    var filename = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, ".eps");
+    var destFile = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(epsName)) + filename);
+    var rgbSaveOpts = new EPSSaveOptions();
+    /*@ts-ignore*/
+    rgbSaveOpts.cmykPostScript = false;
+    rgbDoc.saveAs(destFile, rgbSaveOpts);
+    //index the RGB colors for conversion to CMYK. An inelegant location.
+    var colorIndex = CSTasks.indexRGBColors(rgbDoc.pathItems, colors);
+    //convert violet to white and save as EPS
+    CSTasks.convertColorRGB(rgbDoc.pathItems, colors[violetIndex][0], colors[whiteIndex][0]);
+    var inverseFilename = "/".concat(iconFilename, "_").concat(inverseName, "_").concat(rgbName, ".eps");
+    var inverseFile = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(epsName)) + inverseFilename);
+    rgbDoc.saveAs(inverseFile, rgbSaveOpts);
+    //save inverse file in all the PNG sizes
+    for (var i_13 = 0; i_13 < exportSizes.length; i_13++) {
+        var filename_7 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[i_13], ".png");
+        var destFile_7 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_7);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_7, startWidth, exportSizes[i_13]);
+    }
+    //save inverse file in all the SVG sizes
+    for (var i_14 = 0; i_14 < exportSizes.length; i_14++) {
+        var filename_8 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[i_14], ".svg");
+        var destFile_8 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(svgName)) + filename_8);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_8, startWidth, exportSizes[i_14]);
+    }
+    //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
+    CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
+    var inactiveFilename = "/".concat(iconFilename, "_").concat(inactiveName, "_").concat(rgbName, ".eps");
+    var inactiveFile = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(epsName)) + inactiveFilename);
+    rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
+    for (var i_15 = 0; i_15 < exportSizes.length; i_15++) {
+        var filename_9 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[i_15], ".png");
+        var destFile_9 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filename_9);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_9, startWidth, exportSizes[i_15]);
+    }
+    for (var i_16 = 0; i_16 < exportSizes.length; i_16++) {
+        var filename_10 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[i_16], ".svg");
+        var destFile_10 = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(svgName)) + filename_10);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_10, startWidth, exportSizes[i_16]);
+    }
+    //close and clean up
+    rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
+    rgbDoc = null;
+    /****************
+    CMYK export (EPS)
+    ****************/
+    //open a new document with CMYK colorspace, and duplicate the icon to the new document
+    var cmykDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 0, DocumentColorSpace.CMYK);
+    cmykDoc.swatches.removeAll();
+    //need to reverse the order of copying the group to get the right color ordering
+    var cmykGroup = iconGroup.duplicate(cmykDoc.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATBEGINNING);
+    var cmykLoc = [
+        cmykDoc.artboards[0].artboardRect[0] + iconOffset[0],
+        cmykDoc.artboards[0].artboardRect[1] + iconOffset[1],
+    ];
+    CSTasks.translateObjectTo(cmykGroup, cmykLoc);
+    CSTasks.ungroupOnce(cmykGroup);
+    CSTasks.convertToCMYK(cmykDoc, cmykDoc.pathItems, colors, colorIndex);
+    //save EPS into the export folder
+    var cmykFilename = "/".concat(iconFilename, "_").concat(coreName, "_").concat(cmykName, ".eps");
+    var cmykDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(epsName)) + cmykFilename);
+    var cmykSaveOpts = new EPSSaveOptions();
+    cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
+    //convert violet to white and save as EPS
+    CSTasks.convertColorCMYK(cmykDoc.pathItems, colors[violetIndex][1], colors[whiteIndex][1]);
+    var cmykInverseFilename = "/".concat(iconFilename, "_").concat(inverseName, "_").concat(cmykName, ".eps");
+    var cmykInverseFile = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(epsName)) + cmykInverseFilename);
+    cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
+    //close and clean up
+    cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
+    cmykDoc = null;
+    /********************
+    Masthead export (EPS)
+    ********************/
+    //open a new doc and copy and position the icon and the masthead text
+    var mastDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 1, DocumentColorSpace.RGB);
+    mastDoc.swatches.removeAll();
+    var mastGroup = iconGroup.duplicate(mastDoc.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
+    var mastLoc = [
+        mastDoc.artboards[0].artboardRect[0] + iconOffset[0],
+        mastDoc.artboards[0].artboardRect[1] + iconOffset[1],
+    ];
+    CSTasks.translateObjectTo(mastGroup, mastLoc);
+    CSTasks.ungroupOnce(mastGroup);
+    var mastText = textGroup.duplicate(mastDoc.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
+    var mastTextLoc = [
+        mastDoc.artboards[0].artboardRect[0] + mastTextOffset[0],
+        mastDoc.artboards[0].artboardRect[1] + mastTextOffset[1],
+    ];
+    CSTasks.translateObjectTo(mastText, mastTextLoc);
+    //save RGB EPS into the export folder
+    var mastFilename = "/".concat(iconFilename, "_Masthead_").concat(rgbName, ".eps");
+    var mastDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(epsName)) + mastFilename);
+    var mastSaveOpts = new EPSSaveOptions();
+    /*@ts-ignore*/
+    mastSaveOpts.cmykPostScript = false;
+    mastDoc.saveAs(mastDestFile, mastSaveOpts);
+    //close and clean up
+    mastDoc.close(SaveOptions.DONOTSAVECHANGES);
+    mastDoc = null;
     /************
     Final cleanup
     ************/
     CSTasks.ungroupOnce(iconGroup);
     CSTasks.ungroupOnce(mast);
     sourceDoc.selection = null;
+    /************
+ Add white BG and save again
+ ************/
 }
 main();
-var myWhiteBgLayer = sourceDoc.layers.add();
-myWhiteBgLayer.name = "White_BG_layer";
-sourceDoc.activeLayer = sourceDoc.layers.getByName("White_BG_layer"); // activates third layer from top
-sourceDoc.activeLayer.hasSelectedArtwork = true; // selects all in active layer
-var rect = myWhiteBgLayer.pathItems.rectangle(0, 0, 2500, 1500);
-var setColor = new RGBColor();
-setColor.red = 255;
-setColor.green = 255;
-setColor.blue = 255;
-rect.filled = true;
-rect.fillColor = setColor;
-var countOfLayers = sourceDoc.layers.length;
-myWhiteBgLayer.zOrder(ZOrderMethod.SENDTOBACK);
