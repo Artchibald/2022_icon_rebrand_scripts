@@ -804,7 +804,7 @@ function main() {
       let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
-   // non transparent png
+   // non transparent png exports
    let startWidthonFFF =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
@@ -886,8 +886,6 @@ function main() {
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
 
-
-
    //close and clean up
    rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
    rgbDoc = null;
@@ -938,6 +936,9 @@ function main() {
    let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + cmykInverseFilename);
    cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
 
+
+
+
    //close and clean up
    cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
    cmykDoc = null;
@@ -985,9 +986,14 @@ function main() {
    mastSaveOpts.cmykPostScript = false;
    mastDoc.saveAs(mastDestFile, mastSaveOpts);
 
+
+
    //close and clean up
    mastDoc.close(SaveOptions.DONOTSAVECHANGES);
    mastDoc = null;
+
+
+
 
    /************
    Final cleanup
@@ -1001,6 +1007,66 @@ function main() {
 Add white BG and save again
 ************/
 
+   // Add new layer above Guidelines and fill white
+   let myArtworkLayer = sourceDoc.layers.getByName('Artwork');
+   let myWhiteBgLayer = sourceDoc.layers.add();
+   myWhiteBgLayer.name = "White_BG_layer";
+   let GetMyWhiteBgLayer = sourceDoc.layers.getByName('White_BG_layer');
+   sourceDoc.activeLayer = GetMyWhiteBgLayer;
+   sourceDoc.activeLayer.hasSelectedArtwork = true;
+   let rect = GetMyWhiteBgLayer.pathItems.rectangle(
+      0,
+      0,
+      256,
+      256);
+   let setColor = new RGBColor();
+   setColor.red = 191;
+   setColor.green = 191;
+   setColor.blue = 191;
+   rect.filled = true;
+   rect.fillColor = setColor;
+   sourceDoc.selection = null;
+
+   for (let i = 0; i < exportSizes.length; i++) {
+
+      /*@ts-ignore*/
+      GetMyWhiteBgLayer.move(myArtworkLayer, ElementPlacement.PLACEATEND);
+   }
+
+   let rgbDoc2 = CSTasks.duplicateArtboardInNewDoc(
+      sourceDoc,
+      0,
+      DocumentColorSpace.RGB
+   );
+   rgbDoc2.swatches.removeAll();
+
+   let rgbGroup2 = iconGroup.duplicate(
+      rgbDoc2.layers[0],
+      /*@ts-ignore*/
+      ElementPlacement.PLACEATEND
+   );
+   let rgbLoc2 = [
+      rgbDoc2.artboards[0].artboardRect[0] + iconOffset[0],
+      rgbDoc2.artboards[0].artboardRect[1] + iconOffset[1],
+   ];
+   CSTasks.translateObjectTo(rgbGroup2, rgbLoc2);
+
+   CSTasks.ungroupOnce(rgbGroup2);
+
+   //save all sizes of SVG into the export folder
+   let svgCoreStartWidthonFFF =
+      rgbDoc2.artboards[0].artboardRect[2] - rgbDoc2.artboards[0].artboardRect[0];
+
+   for (let i = 0; i < exportSizes.length; i++) {
+      GetMyWhiteBgLayer.zOrder(ZOrderMethod.SENDTOBACK);
+      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_onFFF.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
+      CSTasks.scaleAndExportSVG(rgbDoc2, destFile, svgCoreStartWidthonFFF, exportSizes[i]);
+   }
+   //close and clean up
+   rgbDoc2.close(SaveOptions.DONOTSAVECHANGES);
+   rgbDoc2 = null;
+   // // artworkLayer.locked;
 
 }
 
