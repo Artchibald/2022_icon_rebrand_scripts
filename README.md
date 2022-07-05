@@ -23,17 +23,16 @@
   </p>
 </div> 
 
-# Ref for email comms
+<!--# Ref for email comms
 
-<!-- Subject >>>
+ Subject >>>
 WTW_55556_Software Product Icons
 
 cc' >>>
- rrdcreativeldn@willistowerswatson.com -->
+ rrdcreativeldn@willistowerswatson.com
 
-# 2022_icon_rebrand_scripts
+# 2022_icon_rebrand_scripts -->
 
-New stuff 
 
 # Initial call brief
 
