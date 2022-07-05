@@ -96,7 +96,7 @@ ABOVE UNPAID!
 
 
 
-# No license for graphik font, delete on completion
+<!-- # No license for graphik font, delete on completion -->
 
 # Shorten file names as per Jo request
 
