@@ -92,6 +92,7 @@ ABOVE UNPAID!
 - Thu 30 Continued debugging script, progress in spreadsheet required exports, discovered CMYK - RGB mismatch bug
 - Fri 1 July continued debugging, call and present latest work, trying ot get SVG on white bg to export
 - Mon 4 July Found fix for PNG exports on white bg but not SVG, tried to create a Tpyescript interface for debugging but not possible in ECMA 3 exports using AI API so abandoned.
+- Tue 5 July more tests on the SVG background white square, it is taking to long to restructure the l;ayers but it is doable. In the afternoon I fixed a RGB color bug with Chris's help.
 
 
 
@@ -154,3 +155,6 @@ Graphic motif I use 100% STRIPE scaling(web)
  SVG dimensions to be addressed
 
  # Issue with swatches stopping colors being RGB, trying  Edit > Edit colors > Convert to RGB
+
+ - managed to fix with    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
+   app.executeMenuCommand('Colors9');

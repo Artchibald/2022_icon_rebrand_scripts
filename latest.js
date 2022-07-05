@@ -483,6 +483,8 @@ function main() {
     }
     //select the contents on artboard 0
     var sel = CSTasks.selectContentsOnArtboard(sourceDoc, 0);
+    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
+    app.executeMenuCommand('Colors9');
     if (sel.length == 0) {
         //if nothing is in the artboard
         alert("Please try again with artwork on the main 256x256 artboard.");
