@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="">
-    <img src="imagesInReadme/WTW.png" alt="Logo" width="180" height="180">
+    <img src="imagesInReadme/img.png" alt="Logo" width="180" height="180">
   </a>
 
 <h3 align="center">A Typescript file that converts into ECMA 3 target JS file for use in Adobe Illustrator 2022. JS script that automates icon export processes in Adobe Illustrator. More info TBC.</h3>
@@ -11,27 +11,27 @@
   <p align="center">
     Useful links 
     <br />
-    <a href="https://github.com/Artchibald/WTW_2022_icon_rebrand_scripts"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Artchibald/2022_icon_rebrand_scripts"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     ·
-    <a href="https://github.com/Artchibald/WTW_2022_icon_rebrand_scripts/issues">Report Bug</a>
+    <a href="https://github.com/Artchibald/2022_icon_rebrand_scripts/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Artchibald/WTW_2022_icon_rebrand_scripts/issues">Request Feature</a>
+    <a href="https://github.com/Artchibald/2022_icon_rebrand_scripts/issues">Request Feature</a>
         ·
 
   </p>
-</div>
+</div> 
 
 # Ref for email comms
 
-Subject >>>
+<!-- Subject >>>
 WTW_55556_Software Product Icons
 
 cc' >>>
- rrdcreativeldn@willistowerswatson.com
+ rrdcreativeldn@willistowerswatson.com -->
 
-# WTW_2022_icon_rebrand_scripts
+# 2022_icon_rebrand_scripts
 
 New stuff 
 
@@ -108,9 +108,9 @@ As mentioned, we wanted to explore potential options for exporting the expressiv
 
 Please see attached .ai file (social media and email sizes).
 
-Basically – wondering if we can select a consistent X,Y coordinate and place that expressive icon there, with a dark ultraviolet background, and in the case of the social items – pre-populate the text of the application as well as the WTW logo (assets attached here).
+Basically – wondering if we can select a consistent X,Y coordinate and place that expressive icon there, with a dark ultraviolet background, and in the case of the social items – pre-populate the text of the application as well as the logo (assets attached here).
 
-The text and the WTW logo would also remain locked in a consistent location, and the expressive icon would be consistently cropped.
+The text and the logo would also remain locked in a consistent location, and the expressive icon would be consistently cropped.
 
 Please let me know if you’d like to discuss live. (Example below shows that expressive icon would be cropped – slightly). See email 28 June
 
@@ -153,3 +153,5 @@ Graphic motif I use 100% STRIPE scaling(web)
  CMYK and RGB don't match this time round!
 
  SVG dimensions to be addressed
+
+ # Issue with swatches stopping colors being RGB, trying  Edit > Edit colors > Convert to RGB

@@ -1011,6 +1011,9 @@ PARKING FOR NOW Add white BG and save again, needs to go inside a new layer with
    // rgbDoc2 = null;
    // // artworkLayer.locked;
 
+
+
+
 }
 
 main();
