@@ -859,9 +859,27 @@ function mainExpressive() {
     // rgbDoc2.close(SaveOptions.DONOTSAVECHANGES);
     // rgbDoc2 = null;
     // artworkLayer.locked;
+    // new purple bg
+    // Add new layer above Guidelines and fill white
+    var myMainArtworkLayer = sourceDoc.layers.getByName('Art');
+    var myMainPurpleBgLayer = sourceDoc.layers.add();
+    myMainPurpleBgLayer.name = "Main_Purple_BG_layer";
+    var GetMyMainPurpleBgLayer = sourceDoc.layers.getByName('Main_Purple_BG_layer');
+    // mastDoc.activeLayer = GetMyMainPurpleBgLayer;
+    // mastDoc.activeLayer.hasSelectedArtwork = true;
+    var mainRect = GetMyMainPurpleBgLayer.pathItems.rectangle(-784, 0, 1024, 512);
+    var setMainVioletBgColor = new RGBColor();
+    setMainVioletBgColor.red = 72;
+    setMainVioletBgColor.green = 8;
+    setMainVioletBgColor.blue = 111;
+    mainRect.filled = true;
+    mainRect.fillColor = setMainVioletBgColor;
+    /*@ts-ignore*/
+    GetMyMainPurpleBgLayer.move(myMainArtworkLayer, ElementPlacement.PLACEATEND);
     var textRef = sourceDoc.textFrames.add();
     textRef.contents = appName;
-    textRef.textRange.characterAttributes.size = 178;
+    textRef.textRange.characterAttributes.size = 62;
+    textRef.textRange.characterAttributes.fillColor = colors[whiteIndex][0];
     CSTasks.setFont(textRef, desiredFont);
     //vertically align the baseline to be 64 px above the botom of the artboard
     var bottomEdge = sourceDoc.artboards[3].artboardRect[3] +
@@ -1044,22 +1062,20 @@ function mainExpressive() {
     // new purple bg
     // Add new layer above Guidelines and fill white
     var myArtworkLayer = mastDoc.layers.getByName('Layer 1');
-    var myWhiteBgLayer = mastDoc.layers.add();
-    myWhiteBgLayer.name = "White_BG_layer";
-    var GetMyWhiteBgLayer = mastDoc.layers.getByName('White_BG_layer');
-    // mastDoc.activeLayer = GetMyWhiteBgLayer;
+    var myPurpleBgLayer = mastDoc.layers.add();
+    myPurpleBgLayer.name = "Purple_BG_layer";
+    var GetMyPurpleBgLayer = mastDoc.layers.getByName('Purple_BG_layer');
+    // mastDoc.activeLayer = GetMyPurpleBgLayer;
     // mastDoc.activeLayer.hasSelectedArtwork = true;
-    var rect = GetMyWhiteBgLayer.pathItems.rectangle(-784, 0, 1024, 512);
+    var rect = GetMyPurpleBgLayer.pathItems.rectangle(0, 0, 1024, 512);
     var setColor = new RGBColor();
     setColor.red = 72;
     setColor.green = 8;
     setColor.blue = 111;
     rect.filled = true;
     rect.fillColor = setColor;
-    // mastDoc.selection = null;
     /*@ts-ignore*/
-    GetMyWhiteBgLayer.move(myArtworkLayer, ElementPlacement.PLACEATEND);
-    // mastDoc.selection = null;
+    GetMyPurpleBgLayer.move(myArtworkLayer, ElementPlacement.PLACEATEND);
     //save RGB EPS into the export folder
     var mastFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, ".eps");
     var mastDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(epsName)) + mastFilename);
@@ -1073,8 +1089,8 @@ function mainExpressive() {
     /************
     Final cleanup
     ************/
-    CSTasks.ungroupOnce(iconGroup);
-    CSTasks.ungroupOnce(mast);
+    // CSTasks.ungroupOnce(iconGroup);
+    // CSTasks.ungroupOnce(mast);
     // create purple bg on last artboard 
 }
 mainExpressive();
