@@ -59,6 +59,7 @@ let mastheadName = "Masthead";
 // Colors
 let rgbName = "RGB";
 let cmykName = "CMYK";
+let onWhiteName = "onFFF";
 //Folder creations
 let pngName = "png";
 let jpgName = "jpg";
@@ -493,6 +494,8 @@ let CSTasks = (function () {
          }
       }
       if (unmatchedColors.length > 0) {
+         // NOTE: Don't perform the Artboard Creation Work if there are unmatched colors.
+         return;
          alert(
             "One or more colors don't match the brand palette and weren't converted."
          );
@@ -754,7 +757,7 @@ function main() {
    let startWidthonFFF =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_onFFF.png`;
+      let filename = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[i]}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
       CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile, startWidthonFFF, exportSizes[i]);
    }
@@ -1057,7 +1060,7 @@ function mainExpressive() {
       sourceDoc.artboards.length == 3 &&
       sourceDoc.artboards[1].artboardRect[1] -
       sourceDoc.artboards[1].artboardRect[3] ==
-      256
+      512
    ) {
       rebuild = confirm(
          "It looks like your artwork already exists. This script will rebuild the masthead and export various EPS and PNG versions. Do you want to proceed?"
@@ -1105,6 +1108,46 @@ function mainExpressive() {
 
    //request a name for the icon, and place that as text on the masthead artboard
    let appName = prompt("What name do you want to put in second the masthead?");
+
+
+
+   // sourceDoc.activeLayer = myArtworkLayer;
+   // sourceDoc.activeLayer.hasSelectedArtwork = true;
+
+   // let rgbDoc2 = CSTasks.duplicateArtboardInNewDoc(
+   //    sourceDoc,
+   //    0,
+   //    DocumentColorSpace.RGB
+   // );
+   // rgbDoc2.swatches.removeAll();
+
+   // let rgbGroup2 = iconGroup.duplicate(
+   //    rgbDoc2.layers[0],
+   //    /*@ts-ignore*/
+   //    ElementPlacement.PLACEATEND
+   // );
+   // let rgbLoc2 = [
+   //    rgbDoc2.artboards[0].artboardRect[0] + iconOffset[0],
+   //    rgbDoc2.artboards[0].artboardRect[1] + iconOffset[1],
+   // ];
+   // CSTasks.translateObjectTo(rgbGroup2, rgbLoc2);
+
+   // CSTasks.ungroupOnce(rgbGroup2);
+
+   // //save all sizes of SVG into the export folder
+   // let svgCoreStartWidthonFFF =
+   //    rgbDoc2.artboards[0].artboardRect[2] - rgbDoc2.artboards[0].artboardRect[0];
+
+   // for (let i = 0; i < exportSizes.length; i++) {
+
+   //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_onFFF.svg`;
+   //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
+   //    CSTasks.scaleAndExportSVG(rgbDoc2, destFile, svgCoreStartWidthonFFF, exportSizes[i]);
+   // }
+   // //close and clean up
+   // rgbDoc2.close(SaveOptions.DONOTSAVECHANGES);
+   // rgbDoc2 = null;
+   // artworkLayer.locked;
 
    let textRef = sourceDoc.textFrames.add();
    textRef.contents = appName;
@@ -1199,7 +1242,7 @@ function mainExpressive() {
    let startWidth =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_${expressiveName}.png`;
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[i]}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
@@ -1207,7 +1250,7 @@ function mainExpressive() {
    let startWidthonFFF =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_onFFF_${expressiveName}.png`;
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${onWhiteName}_${exportSizes[i]}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile, startWidthonFFF, exportSizes[i]);
    }
@@ -1217,7 +1260,7 @@ function mainExpressive() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[1];
 
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_${expressiveName}.svg`;
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[i]}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[i]);
    }
@@ -1226,13 +1269,13 @@ function mainExpressive() {
    let jpegStartWidth =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[1];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_${expressiveName}.jpg`;
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[i]}.jpg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`) + filename);
       CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth, exportSizes[i]);
    }
 
    //save EPS into the export folder
-   let filename = `/${iconFilename}_${coreName}_${rgbName}_${expressiveName}.eps`;
+   let filename = `/${iconFilename}_${expressiveName}_${rgbName}.eps`;
    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + filename);
    let rgbSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
@@ -1248,20 +1291,20 @@ function mainExpressive() {
       colors[whiteIndex][0]
    );
 
-   let inverseFilename = `/${iconFilename}_${inverseName}_${rgbName}_${expressiveName}.eps`;
+   let inverseFilename = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}.eps`;
    let inverseFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + inverseFilename);
    rgbDoc.saveAs(inverseFile, rgbSaveOpts);
 
    //save inverse file in all the PNG sizes
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[i]}_${expressiveName}.png`;
+      let filename = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}_${exportSizes[i]}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
 
    //save inverse file in all the SVG sizes
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[i]}_${expressiveName}.svg`;
+      let filename = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}_${exportSizes[i]}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
@@ -1269,18 +1312,18 @@ function mainExpressive() {
    //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
    CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
 
-   let inactiveFilename = `/${iconFilename}_${inactiveName}_${rgbName}_${expressiveName}.eps`;
+   let inactiveFilename = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}.eps`;
    let inactiveFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + inactiveFilename);
    rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
 
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[i]}_${expressiveName}.png`;
+      let filename = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}_${exportSizes[i]}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
 
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[i]}_${expressiveName}.svg`;
+      let filename = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}_${exportSizes[i]}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
@@ -1317,7 +1360,7 @@ function mainExpressive() {
    CSTasks.convertToCMYK(cmykDoc, cmykDoc.pathItems, colors, colorIndex);
 
    //save EPS into the export folder
-   let cmykFilename = `/${iconFilename}_${coreName}_${cmykName}_${expressiveName}.eps`;
+   let cmykFilename = `/${iconFilename}_${expressiveName}_${cmykName}.eps`;
    let cmykDestFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + cmykFilename);
    let cmykSaveOpts = new EPSSaveOptions();
    cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
@@ -1329,7 +1372,7 @@ function mainExpressive() {
       colors[whiteIndex][1]
    );
 
-   let cmykInverseFilename = `/${iconFilename}_${inverseName}_${cmykName}_${expressiveName}.eps`;
+   let cmykInverseFilename = `/${iconFilename}_${expressiveName}_${inverseName}_${cmykName}.eps`;
    let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + cmykInverseFilename);
    cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
 
@@ -1340,7 +1383,6 @@ function mainExpressive() {
    /********************
    Masthead export (EPS)
    ********************/
-
    //open a new doc and copy and position the icon and the masthead text
    let mastDoc = CSTasks.duplicateArtboardInNewDoc(
       sourceDoc,
@@ -1372,9 +1414,37 @@ function mainExpressive() {
    ];
    CSTasks.translateObjectTo(mastText, mastTextLoc);
 
+
+
+   // new purple bg
+   // Add new layer above Guidelines and fill white
+   let myArtworkLayer = mastDoc.layers.getByName('Layer 1');
+   let myWhiteBgLayer = mastDoc.layers.add();
+   myWhiteBgLayer.name = "White_BG_layer";
+   let GetMyWhiteBgLayer = mastDoc.layers.getByName('White_BG_layer');
+   // mastDoc.activeLayer = GetMyWhiteBgLayer;
+   // mastDoc.activeLayer.hasSelectedArtwork = true;
+   let rect = GetMyWhiteBgLayer.pathItems.rectangle(
+      -784,
+      0,
+      1024,
+      512);
+   let setColor = new RGBColor();
+   setColor.red = 72;
+   setColor.green = 8;
+   setColor.blue = 111;
+   rect.filled = true;
+   rect.fillColor = setColor;
+   // mastDoc.selection = null;
+   /*@ts-ignore*/
+   GetMyWhiteBgLayer.move(myArtworkLayer, ElementPlacement.PLACEATEND);
+   // mastDoc.selection = null;
+
+
+
    //save RGB EPS into the export folder
-   let mastFilename = `/${iconFilename}_${mastheadName}_${rgbName}_${expressiveName}.eps`;
-   let mastDestFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + mastFilename);
+   let mastFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}.eps`;
+   let mastDestFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + mastFilename);
    let mastSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    mastSaveOpts.cmykPostScript = false;
@@ -1389,7 +1459,9 @@ function mainExpressive() {
    ************/
    CSTasks.ungroupOnce(iconGroup);
    CSTasks.ungroupOnce(mast);
-   sourceDoc.selection = null;
+
+
+   // create purple bg on last artboard 
 
 }
 
