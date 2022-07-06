@@ -838,10 +838,12 @@ function mainExpressive() {
     /*@ts-ignore*/
     var mast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
     var mastPos = [
-        sourceDoc.artboards[3].artboardRect[0] + iconOffset[0] * 5,
-        sourceDoc.artboards[3].artboardRect[1] + iconOffset[1] * 2,
+        sourceDoc.artboards[3].artboardRect[0] + iconOffset[0] * 24,
+        sourceDoc.artboards[3].artboardRect[1] + iconOffset[1] * 2.3,
     ];
     CSTasks.translateObjectTo(mast, mastPos);
+    mast.width = 460;
+    mast.height = 460;
     // new purple bg
     // Add new layer above Guidelines and fill white
     var myMainArtworkLayer = sourceDoc.layers.getByName('Art');
@@ -868,17 +870,14 @@ function mainExpressive() {
     CSTasks.setFont(textRef, desiredFont);
     //vertically align the baseline to be 64 px above the botom of the artboard
     var bottomEdge = sourceDoc.artboards[3].artboardRect[3] +
-        1.7 * sourceDoc.artboards[0].artboardRect[2] -
+        1.58 * sourceDoc.artboards[0].artboardRect[2] -
         sourceDoc.artboards[0].artboardRect[0]; //64px (0.25*256px) above the bottom edge of the artboard
     var vOffset = CSTasks.getOffset(textRef.anchor, [0, bottomEdge]);
     textRef.translate(0, -vOffset[1]);
     //create an outline of the text
     var textGroup = textRef.createOutline();
     //horizontally align the left edge of the text to be 96px to the right of the edge
-    var rightEdge = mast.position[0] +
-        mast.width +
-        12 / sourceDoc.artboards[0].artboardRect[2] -
-        sourceDoc.artboards[0].artboardRect[0]; //96px (0.375*256px) right of the icon
+    var rightEdge = 64;
     var hOffset = CSTasks.getOffset(textGroup.position, [rightEdge, 0]);
     textGroup.translate(-hOffset[0], 0);
     //resize the artboard to be only a little wider than the text
