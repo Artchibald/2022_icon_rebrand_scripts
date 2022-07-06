@@ -29,16 +29,29 @@ var RGBColorElements = [
     [201, 0, 172],
     [50, 127, 239],
     [58, 220, 201],
-    [255, 255, 255], // white
+    [255, 255, 255],
+    [128, 128, 128], // Dark grey (unused)
 ];
+// New CMYK values dont math rgb exatcly in new branding 2022 so we stopped the exact comparison part of the script.
+// Intent is different colors in print for optimum pop of colors
 var CMYKColorElements = [
-    [29, 70, 0, 30],
+    [65, 91, 0, 0],
     [0, 0, 0, 25],
-    [0, 100, 14, 21],
-    [79, 47, 0, 6],
-    [74, 0, 9, 14],
-    [0, 0, 0, 0], // white
+    [16, 96, 0, 0],
+    [78, 47, 0, 0],
+    [53, 0, 34, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 50], // Dark grey (unused)
 ];
+// old not needed, no longer match exactly
+// let CMYKColorElements = [
+//    [29, 70, 0, 30], //ultraviolet purple
+//    [0, 0, 0, 25], //Gray matter light grey
+//    [0, 100, 14, 21], // Fireworks magenta
+//    [79, 47, 0, 6], //Stratosphere blue
+//    [74, 0, 9, 14], // Inifinity turquoise  
+//    [0, 0, 0, 0], // white
+// ];
 var desiredFont = "Graphik-Regular";
 var exportSizes = [1024, 512, 256, 128, 64, 48, 32, 24, 16]; //sizes to export
 var violetIndex = 0; //these are for converting to inverse and inactive versions
@@ -81,7 +94,7 @@ var CSTasks = (function () {
         return corner;
     };
     //takes an array [x,y] for an item's position and an array [x,y] for the position of a reference point
-    //returns an aray [x,y] for the offset between the two points
+    //returns an array [x,y] for the offset between the two points
     tasks.getOffset = function (itemPos, referencePos) {
         var offset = [itemPos[0] - referencePos[0], itemPos[1] - referencePos[1]];
         return offset;
@@ -780,12 +793,11 @@ function mainExpressive() {
         sourceDoc.artboards[1].artboardRect[1] -
             sourceDoc.artboards[1].artboardRect[3] ==
             256) {
-        // alert("More than 2 artboards detected!");
         var firstRect = sourceDoc.artboards[1].artboardRect;
         sourceDoc.artboards.add(
         // CSTasks.newRect(firstRect[1] * 2.5 + gutter, firstRect[2], 2400, 256)
         // CSTasks.newRect(firstRect[1] * 0.5, firstRect[2], 2400, 256)
-        CSTasks.newRect(firstRect[1], firstRect[2] + 128, 2400, 256));
+        CSTasks.newRect(firstRect[1], firstRect[2] + 128, 1024, 512));
     }
     //if the masthead artboard is present, check if rebuilding or just exporting
     else if (sourceDoc.artboards.length == 3 &&
@@ -826,39 +838,6 @@ function mainExpressive() {
         sourceDoc.artboards[3].artboardRect[1] + iconOffset[1],
     ];
     CSTasks.translateObjectTo(mast, mastPos);
-    //request a name for the icon, and place that as text on the masthead artboard
-    var appName = prompt("What name do you want to put in second the masthead?");
-    // sourceDoc.activeLayer = myArtworkLayer;
-    // sourceDoc.activeLayer.hasSelectedArtwork = true;
-    // let rgbDoc2 = CSTasks.duplicateArtboardInNewDoc(
-    //    sourceDoc,
-    //    0,
-    //    DocumentColorSpace.RGB
-    // );
-    // rgbDoc2.swatches.removeAll();
-    // let rgbGroup2 = iconGroup.duplicate(
-    //    rgbDoc2.layers[0],
-    //    /*@ts-ignore*/
-    //    ElementPlacement.PLACEATEND
-    // );
-    // let rgbLoc2 = [
-    //    rgbDoc2.artboards[0].artboardRect[0] + iconOffset[0],
-    //    rgbDoc2.artboards[0].artboardRect[1] + iconOffset[1],
-    // ];
-    // CSTasks.translateObjectTo(rgbGroup2, rgbLoc2);
-    // CSTasks.ungroupOnce(rgbGroup2);
-    // //save all sizes of SVG into the export folder
-    // let svgCoreStartWidthonFFF =
-    //    rgbDoc2.artboards[0].artboardRect[2] - rgbDoc2.artboards[0].artboardRect[0];
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}_onFFF.svg`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
-    //    CSTasks.scaleAndExportSVG(rgbDoc2, destFile, svgCoreStartWidthonFFF, exportSizes[i]);
-    // }
-    // //close and clean up
-    // rgbDoc2.close(SaveOptions.DONOTSAVECHANGES);
-    // rgbDoc2 = null;
-    // artworkLayer.locked;
     // new purple bg
     // Add new layer above Guidelines and fill white
     var myMainArtworkLayer = sourceDoc.layers.getByName('Art');
@@ -876,6 +855,8 @@ function mainExpressive() {
     mainRect.fillColor = setMainVioletBgColor;
     /*@ts-ignore*/
     GetMyMainPurpleBgLayer.move(myMainArtworkLayer, ElementPlacement.PLACEATEND);
+    //request a name for the icon, and place that as text on the masthead artboard
+    var appName = prompt("What name do you want to put in second the masthead?");
     var textRef = sourceDoc.textFrames.add();
     textRef.contents = appName;
     textRef.textRange.characterAttributes.size = 62;
@@ -883,7 +864,7 @@ function mainExpressive() {
     CSTasks.setFont(textRef, desiredFont);
     //vertically align the baseline to be 64 px above the botom of the artboard
     var bottomEdge = sourceDoc.artboards[3].artboardRect[3] +
-        0.25 * sourceDoc.artboards[0].artboardRect[2] -
+        1.7 * sourceDoc.artboards[0].artboardRect[2] -
         sourceDoc.artboards[0].artboardRect[0]; //64px (0.25*256px) above the bottom edge of the artboard
     var vOffset = CSTasks.getOffset(textRef.anchor, [0, bottomEdge]);
     textRef.translate(0, -vOffset[1]);
@@ -892,7 +873,7 @@ function mainExpressive() {
     //horizontally align the left edge of the text to be 96px to the right of the edge
     var rightEdge = mast.position[0] +
         mast.width +
-        0.375 * sourceDoc.artboards[0].artboardRect[2] -
+        12 / sourceDoc.artboards[0].artboardRect[2] -
         sourceDoc.artboards[0].artboardRect[0]; //96px (0.375*256px) right of the icon
     var hOffset = CSTasks.getOffset(textGroup.position, [rightEdge, 0]);
     textGroup.translate(-hOffset[0], 0);
@@ -1059,7 +1040,7 @@ function mainExpressive() {
         mastDoc.artboards[0].artboardRect[1] + mastTextOffset[1],
     ];
     CSTasks.translateObjectTo(mastText, mastTextLoc);
-    // new purple bg
+    // new purple bg 
     // Add new layer above Guidelines and fill white
     var myArtworkLayer = mastDoc.layers.getByName('Layer 1');
     var myPurpleBgLayer = mastDoc.layers.add();
@@ -1091,6 +1072,5 @@ function mainExpressive() {
     ************/
     // CSTasks.ungroupOnce(iconGroup);
     // CSTasks.ungroupOnce(mast);
-    // create purple bg on last artboard 
 }
 mainExpressive();
