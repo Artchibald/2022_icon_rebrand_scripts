@@ -801,7 +801,9 @@ function mainExpressive() {
             256) {
         // IF there are already  3 artboards. Add a 4th one.
         var firstRect = sourceDoc.artboards[1].artboardRect;
-        sourceDoc.artboards.add(CSTasks.newRect(firstRect[1], firstRect[2] + 128, 1024, 512));
+        sourceDoc.artboards.add(
+        // this fires but then gets replaced further down
+        CSTasks.newRect(firstRect[1], firstRect[2] + 128, 1024, 512));
     }
     //if the masthead artboard is present, check if rebuilding or just exporting
     else if (sourceDoc.artboards.length == 3 &&
@@ -831,7 +833,7 @@ function mainExpressive() {
     app.executeMenuCommand('Colors9');
     if (sel.length == 0) {
         //if nothing is in the artboard
-        alert("Please try again with artwork on the main 256x256 artboard.");
+        alert("Please try again with artwork on the main second 256x256 artboard.");
         return;
     }
     var colors = CSTasks.initializeColors(RGBColorElements, CMYKColorElements); //initialize the colors from the brand palette
@@ -874,6 +876,19 @@ function mainExpressive() {
     setTextBoxBgColor.blue = 141;
     rectRef.filled = true;
     rectRef.fillColor = setTextBoxBgColor;
+    // svg wtw logo for new purple masthead
+    try {
+        var newLayer = sourceDoc.layers.add();
+        newLayer.name = "new layer";
+        var imagePlacedItem = newLayer.placedItems.add();
+        var svgFile = File("".concat(sourceDoc.path, "/../images/wtw_logo.ai"));
+        imagePlacedItem.file = svgFile;
+        imagePlacedItem.top = -1188;
+        imagePlacedItem.left = 62;
+    }
+    catch (e) {
+        alert("Issue with getting wtw logo svg, please place in new folder called images in parent folder. Please name exactly wtw_logo.ai", e.message);
+    }
     //request a name for the icon, and place that as text on the masthead artboard
     var appName = prompt("What name do you want to put in second the masthead?");
     var textRef = sourceDoc.textFrames.add();
@@ -1046,14 +1061,14 @@ function mainExpressive() {
     Masthead export (EPS)
     ********************/
     //open a new doc and copy and position the icon and the masthead text
-    var mastDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 1, DocumentColorSpace.RGB);
+    var mastDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 3, DocumentColorSpace.RGB);
     mastDoc.swatches.removeAll();
     var mastGroup = iconGroup.duplicate(mastDoc.layers[0], 
     /*@ts-ignore*/
     ElementPlacement.PLACEATEND);
     var mastLoc = [
-        mastDoc.artboards[0].artboardRect[0] + iconOffset[0],
-        mastDoc.artboards[0].artboardRect[1] + iconOffset[1],
+        mastDoc.artboards[0].artboardRect[0],
+        mastDoc.artboards[0].artboardRect[1],
     ];
     CSTasks.translateObjectTo(mastGroup, mastLoc);
     CSTasks.ungroupOnce(mastGroup);
@@ -1061,8 +1076,8 @@ function mainExpressive() {
     /*@ts-ignore*/
     ElementPlacement.PLACEATEND);
     var mastTextLoc = [
-        mastDoc.artboards[0].artboardRect[0] + mastTextOffset[0],
-        mastDoc.artboards[0].artboardRect[1] + mastTextOffset[1],
+        mastDoc.artboards[0].artboardRect[0],
+        mastDoc.artboards[0].artboardRect[1],
     ];
     CSTasks.translateObjectTo(mastText, mastTextLoc);
     // new purple bg 
