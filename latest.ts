@@ -1055,11 +1055,9 @@ function mainExpressive() {
       sourceDoc.artboards[1].artboardRect[3] ==
       256
    ) {
+      // IF there are already  3 artboards. Add a 4th one.
       let firstRect = sourceDoc.artboards[1].artboardRect;
       sourceDoc.artboards.add(
-         // CSTasks.newRect(firstRect[1] * 2.5 + gutter, firstRect[2], 2400, 256)
-         // CSTasks.newRect(firstRect[1] * 0.5, firstRect[2], 2400, 256)
-
          CSTasks.newRect(firstRect[1], firstRect[2] + 128, 1024, 512)
       );
    }
@@ -1083,6 +1081,13 @@ function mainExpressive() {
       alert("Please try again with 2 artboards that are 256x256px.");
       return;
    }
+
+   /* try {
+      sourceDoc.artboards.setActiveArtboardIndex(3);//change which artboard you want to crop
+      sourceDoc.artboards[3].artboardRect = new Rect(0, 0, 1024, 512);
+   } catch (error) {
+      alert(error);
+   } */
    //select the contents on artboard 1
    let sel = CSTasks.selectContentsOnArtboard(sourceDoc, 1);
 
@@ -1153,7 +1158,6 @@ function mainExpressive() {
 
    let textRef = sourceDoc.textFrames.add();
 
-
    //use the areaText method to create the text frame
    /*@ts-ignore*/
    textRef = sourceDoc.textFrames.areaText(rectRef);
@@ -1190,8 +1194,8 @@ function mainExpressive() {
    let resizedRect = CSTasks.newRect(
       sourceDoc.artboards[3].artboardRect[0],
       -sourceDoc.artboards[3].artboardRect[1],
-      newWidth,
-      256
+      1024,
+      512
    );
    sourceDoc.artboards[3].artboardRect = resizedRect;
 
@@ -1422,25 +1426,25 @@ function mainExpressive() {
 
    // new purple bg 
    // Add new layer above Guidelines and fill white
-   let myArtworkLayer = mastDoc.layers.getByName('Layer 1');
-   let myPurpleBgLayer = mastDoc.layers.add();
-   myPurpleBgLayer.name = "Purple_BG_layer";
-   let GetMyPurpleBgLayer = mastDoc.layers.getByName('Purple_BG_layer');
-   // mastDoc.activeLayer = GetMyPurpleBgLayer;
-   // mastDoc.activeLayer.hasSelectedArtwork = true;
-   let rect = GetMyPurpleBgLayer.pathItems.rectangle(
-      0,
-      0,
-      1024,
-      512);
-   let setColor = new RGBColor();
-   setColor.red = 72;
-   setColor.green = 8;
-   setColor.blue = 111;
-   rect.filled = true;
-   rect.fillColor = setColor;
-   /*@ts-ignore*/
-   GetMyPurpleBgLayer.move(myArtworkLayer, ElementPlacement.PLACEATEND);
+   // let myArtworkLayer = mastDoc.layers.getByName('Layer 1');
+   // let myPurpleBgLayer = mastDoc.layers.add();
+   // myPurpleBgLayer.name = "Purple_BG_layer";
+   // let GetMyPurpleBgLayer = mastDoc.layers.getByName('Purple_BG_layer');
+   // // mastDoc.activeLayer = GetMyPurpleBgLayer;
+   // // mastDoc.activeLayer.hasSelectedArtwork = true;
+   // let rect = GetMyPurpleBgLayer.pathItems.rectangle(
+   //    0,
+   //    0,
+   //    1024,
+   //    512);
+   // let setColor = new RGBColor();
+   // setColor.red = 72;
+   // setColor.green = 8;
+   // setColor.blue = 111;
+   // rect.filled = true;
+   // rect.fillColor = setColor;
+   // /*@ts-ignore*/
+   // GetMyPurpleBgLayer.move(myArtworkLayer, ElementPlacement.PLACEATEND);
 
    //save RGB EPS into the export folder
    let mastFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}.eps`;
