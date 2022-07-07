@@ -550,10 +550,10 @@ let CSTasks = (function () {
 })();
 
 /****************
- * MAIN SCRIPT START
+ * CORE SCRIPT START
  ***************/
 
-function main() {
+function mainCore() {
    /**********************************
   ** HIDE / SHOW SOME LAYERS NEEDED
   ***********************************/
@@ -1032,12 +1032,12 @@ PARKING FOR NOW Add white BG and save again, needs to go inside a new layer with
 
 }
 
-main();
+mainCore();
 
 
-// expressive
-
-
+/****************
+ * Expressive
+ ***************/
 function mainExpressive() {
 
    /******************
@@ -1045,7 +1045,7 @@ function mainExpressive() {
    ******************/
 
 
-   //if there are two artboards at 256x256, create the new third masthead artboard
+   //if there are threee artboards, create the new third masthead artboard
    if (
       sourceDoc.artboards.length == 3 &&
       sourceDoc.artboards[1].artboardRect[2] -
@@ -1090,6 +1090,7 @@ function mainExpressive() {
    } */
    //select the contents on artboard 1
    let sel = CSTasks.selectContentsOnArtboard(sourceDoc, 1);
+
 
    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
    app.executeMenuCommand('Colors9');

@@ -434,9 +434,9 @@ var CSTasks = (function () {
     return tasks;
 })();
 /****************
- * MAIN SCRIPT START
+ * CORE SCRIPT START
  ***************/
-function main() {
+function mainCore() {
     /**********************************
    ** HIDE / SHOW SOME LAYERS NEEDED
    ***********************************/
@@ -783,13 +783,15 @@ function main() {
     // rgbDoc2 = null;
     // // artworkLayer.locked;
 }
-main();
-// expressive
+mainCore();
+/****************
+ * Expressive
+ ***************/
 function mainExpressive() {
     /******************
     set up artboards
     ******************/
-    //if there are two artboards at 256x256, create the new third masthead artboard
+    //if there are threee artboards, create the new third masthead artboard
     if (sourceDoc.artboards.length == 3 &&
         sourceDoc.artboards[1].artboardRect[2] -
             sourceDoc.artboards[1].artboardRect[0] ==
