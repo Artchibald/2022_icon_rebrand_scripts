@@ -1140,22 +1140,37 @@ function mainExpressive() {
    /*@ts-ignore*/
    GetMyMainPurpleBgLayer.move(myMainArtworkLayer, ElementPlacement.PLACEATEND);
 
+   var rectRef = sourceDoc.pathItems.rectangle(-850, -800, 400, 300);
+   let setTextBoxBgColor = new RGBColor();
+   setTextBoxBgColor.red = 141;
+   setTextBoxBgColor.green = 141;
+   setTextBoxBgColor.blue = 141;
+   rectRef.filled = true;
+   rectRef.fillColor = setTextBoxBgColor;
+
    //request a name for the icon, and place that as text on the masthead artboard
    let appName = prompt("What name do you want to put in second the masthead?");
 
    let textRef = sourceDoc.textFrames.add();
+
+
+   //use the areaText method to create the text frame
+   /*@ts-ignore*/
+   textRef = sourceDoc.textFrames.areaText(rectRef);
+
    textRef.contents = appName;
    textRef.textRange.characterAttributes.size = 62;
+   // textRef.textRange.characterAttributes.horizontalScale = 2299;
    textRef.textRange.characterAttributes.fillColor = colors[whiteIndex][0];
    CSTasks.setFont(textRef, desiredFont);
 
    //vertically align the baseline to be 64 px above the botom of the artboard
-   let bottomEdge =
-      sourceDoc.artboards[3].artboardRect[3] +
-      1.58 * sourceDoc.artboards[0].artboardRect[2] -
-      sourceDoc.artboards[0].artboardRect[0]; //64px (0.25*256px) above the bottom edge of the artboard
-   let vOffset = CSTasks.getOffset(textRef.anchor, [0, bottomEdge]);
-   textRef.translate(0, -vOffset[1]);
+   // let bottomEdge =
+   //    sourceDoc.artboards[3].artboardRect[3] +
+   //    1.58 * sourceDoc.artboards[0].artboardRect[2] -
+   //    sourceDoc.artboards[0].artboardRect[0]; //64px (0.25*256px) above the bottom edge of the artboard
+   // let vOffset = CSTasks.getOffset(textRef.anchor, [0, bottomEdge]);
+   // textRef.translate(0, -vOffset[1]);
 
    //create an outline of the text
    let textGroup = textRef.createOutline();
