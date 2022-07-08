@@ -877,18 +877,13 @@ function mainExpressive() {
     rectRef.filled = true;
     rectRef.fillColor = setTextBoxBgColor;
     // svg wtw logo for new purple masthead
-    try {
-        var newLayer = sourceDoc.layers.add();
-        newLayer.name = "new layer";
-        var imagePlacedItem = newLayer.placedItems.add();
-        var svgFile = File("".concat(sourceDoc.path, "/../images/wtw_logo.ai"));
-        imagePlacedItem.file = svgFile;
-        imagePlacedItem.top = -1188;
-        imagePlacedItem.left = 62;
-    }
-    catch (e) {
-        alert("Issue with getting wtw logo svg, please place in new folder called images in parent folder. Please name exactly wtw_logo.ai", e.message);
-    }
+    var imagePlacedItem = myMainArtworkLayer.placedItems.add();
+    var svgFile = File("".concat(sourceDoc.path, "/../images/wtw_logo.ai"));
+    imagePlacedItem.file = svgFile;
+    imagePlacedItem.top = -1188;
+    imagePlacedItem.left = 62;
+    /*@ts-ignore*/
+    // svgFile.embed();
     //request a name for the icon, and place that as text on the masthead artboard
     var appName = prompt("What name do you want to put in second the masthead?");
     var textRef = sourceDoc.textFrames.add();
@@ -1061,14 +1056,17 @@ function mainExpressive() {
     Masthead export (EPS)
     ********************/
     //open a new doc and copy and position the icon and the masthead text
+    // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
     var mastDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 3, DocumentColorSpace.RGB);
     mastDoc.swatches.removeAll();
     var mastGroup = iconGroup.duplicate(mastDoc.layers[0], 
     /*@ts-ignore*/
     ElementPlacement.PLACEATEND);
+    mastGroup.width = 460;
+    mastGroup.height = 460;
     var mastLoc = [
-        mastDoc.artboards[0].artboardRect[0],
-        mastDoc.artboards[0].artboardRect[1],
+        mastDoc.artboards[0].artboardRect[0] + 571,
+        mastDoc.artboards[0].artboardRect[1] - 62,
     ];
     CSTasks.translateObjectTo(mastGroup, mastLoc);
     CSTasks.ungroupOnce(mastGroup);
@@ -1076,40 +1074,56 @@ function mainExpressive() {
     /*@ts-ignore*/
     ElementPlacement.PLACEATEND);
     var mastTextLoc = [
-        mastDoc.artboards[0].artboardRect[0],
-        mastDoc.artboards[0].artboardRect[1],
+        mastDoc.artboards[0].artboardRect[0] + 62,
+        mastDoc.artboards[0].artboardRect[1] - 62,
     ];
     CSTasks.translateObjectTo(mastText, mastTextLoc);
-    // new purple bg 
-    // Add new layer above Guidelines and fill white
-    // let myArtworkLayer = mastDoc.layers.getByName('Layer 1');
-    // let myPurpleBgLayer = mastDoc.layers.add();
-    // myPurpleBgLayer.name = "Purple_BG_layer";
-    // let GetMyPurpleBgLayer = mastDoc.layers.getByName('Purple_BG_layer');
-    // // mastDoc.activeLayer = GetMyPurpleBgLayer;
-    // // mastDoc.activeLayer.hasSelectedArtwork = true;
-    // let rect = GetMyPurpleBgLayer.pathItems.rectangle(
-    //    0,
-    //    0,
-    //    1024,
-    //    512);
-    // let setColor = new RGBColor();
-    // setColor.red = 72;
-    // setColor.green = 8;
-    // setColor.blue = 111;
-    // rect.filled = true;
-    // rect.fillColor = setColor;
-    // /*@ts-ignore*/
-    // GetMyPurpleBgLayer.move(myArtworkLayer, ElementPlacement.PLACEATEND);
+    // add new style purple banner elements
+    var myMainArtworkLayerMastDoc = mastDoc.layers.getByName('Layer 1');
+    var myMainPurpleBgLayerMastDoc = mastDoc.layers.add();
+    myMainPurpleBgLayerMastDoc.name = "Main_Purple_BG_layer";
+    var GetMyMainPurpleBgLayerMastDoc = mastDoc.layers.getByName('Main_Purple_BG_layer');
+    // mastDoc.activeLayer = GetMyMainPurpleBgLayerMastDoc;
+    // mastDoc.activeLayer.hasSelectedArtwork = true;
+    var mainRectMastDoc = GetMyMainPurpleBgLayerMastDoc.pathItems.rectangle(-781, 0, 1024, 512);
+    var setMainVioletBgColorMastDoc = new RGBColor();
+    setMainVioletBgColorMastDoc.red = 72;
+    setMainVioletBgColorMastDoc.green = 8;
+    setMainVioletBgColorMastDoc.blue = 111;
+    mainRectMastDoc.filled = true;
+    mainRectMastDoc.fillColor = setMainVioletBgColorMastDoc;
+    /*@ts-ignore*/
+    GetMyMainPurpleBgLayerMastDoc.move(myMainArtworkLayerMastDoc, ElementPlacement.PLACEATEND);
+    // svg wtw logo for new purple masthead
+    var imagePlacedItemMastDoc = myMainArtworkLayerMastDoc.placedItems.add();
+    var svgFile = File("".concat(sourceDoc.path, "/../images/wtw_logo.ai"));
+    imagePlacedItemMastDoc.file = svgFile;
+    imagePlacedItemMastDoc.top = -1181;
+    imagePlacedItemMastDoc.left = 62;
+    // embed wtw logo in eps
+    /*@ts-ignore*/
+    try {
+        var targetLayer = sourceDoc.layers.getByName("Layer 1");
+        var items = targetLayer.placedItems;
+        for (var i = 0, len = items.length; i < len; i--) {
+            items[i].embed();
+        }
+    }
+    catch (e) {
+        alert("Issues embedding the logo linked file in the eps export.");
+    }
+    // we need to make a clipping mask here for the artboard to crop expressive icons correctly.
     //save RGB EPS into the export folder
     var mastFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, ".eps");
     var mastDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(epsName)) + mastFilename);
     var mastSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/
     mastSaveOpts.cmykPostScript = false;
+    /*@ts-ignore*/
+    mastSaveOpts.embedLinkedFiles = true;
     mastDoc.saveAs(mastDestFile, mastSaveOpts);
     //close and clean up
-    mastDoc.close(SaveOptions.DONOTSAVECHANGES);
+    // mastDoc.close(SaveOptions.DONOTSAVECHANGES);
     mastDoc = null;
     /************
     Final cleanup

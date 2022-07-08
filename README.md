@@ -91,9 +91,11 @@ ABOVE UNPAID!
 - Wed 29 June, morning reorganise all exports into respective folders. Trying to fix RGB color bug.
 - Thu 30 Continued debugging script, progress in spreadsheet required exports, discovered CMYK - RGB mismatch bug
 - Fri 1 July continued debugging, call and present latest work, trying ot get SVG on white bg to export
-- Mon 4 July Found fix for PNG exports on white bg but not SVG, tried to create a Tpyescript interface for debugging but not possible in ECMA 3 exports using AI API so abandoned.
-- Tue 5 July more tests on the SVG background white square, it is taking to long to restructure the l;ayers but it is doable. In the afternoon I fixed a RGB color bug with Chris's help.
-
+- Mon 4 July Found fix for PNG exports on white bg but not SVG, tried to create a Typescript interface for debugging but not easy in ECMA 3 exports using AI API so parked it for now.
+- Tue 5 July more tests on the SVG background white square, it is taking to long to restructure the layers but it is doable, so parked it. In the afternoon I fixed a big RGB color bug with Chris's help.
+- Wed 6 colors no longer have to match exactly, script will not stop anymore if colors dont match. Uses the actual colors from the rebrand pdf in RGB and CMYK.
+- Thu 7 troubles with the 4th artboard dimensions that need changing. Had some extensive debugging to stop the fourth artboard from cropping to the size of the text within. Got expressive banner debugged. Just needs aligning in mastDoc.
+- Fri 8 new bug Michael Winter helped me with around clipping mask of Masthead eps export. Aligned MastDoc coordinates.
 
 
 <!-- # No license for graphik font, delete on completion -->
@@ -144,7 +146,7 @@ Graphic motif I use 100% STRIPE scaling(web)
 
  # Illustrator Edit > Assign profile > Must match sRGB IEC61966-2.1 or it won't work
 
- # Select each individual color shape and under Window > Colours make sure each shape color is set to rgb in burger menu or it wont work!
+ # Select each individual color shape and under Window > Colours make sure each shape color is set to rgb in burger menu or it won't work!
 
  # Presentation question them for folder structure
 
