@@ -902,7 +902,7 @@ function mainExpressive() {
     var firstRect2 = sourceDoc.artboards[1].artboardRect;
     sourceDoc.artboards.add(
     // this fires but then gets replaced further down
-    CSTasks.newRect(firstRect2[1], firstRect2[2] + 772, 800, 500));
+    CSTasks.newRect(firstRect2[1], firstRect2[2] + 772, 800, 400));
     /* try {
        sourceDoc.artboards.setActiveArtboardIndex(3);//change which artboard you want to crop
        sourceDoc.artboards[3].artboardRect = new Rect(0, 0, 1024, 512);
@@ -926,7 +926,7 @@ function mainExpressive() {
     var mast2 = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
     var mastPos2 = [
         sourceDoc.artboards[4].artboardRect[0] + iconOffset[0] * 18.5,
-        sourceDoc.artboards[4].artboardRect[1] + iconOffset[1] * 5.16,
+        sourceDoc.artboards[4].artboardRect[1] + iconOffset[1] * 1.6,
     ];
     CSTasks.translateObjectTo(mast2, mastPos2);
     mast2.width = 360;
@@ -939,7 +939,7 @@ function mainExpressive() {
     var GetMyMainPurpleBgLayer2 = sourceDoc.layers.getByName('Main_Purple_BG_layer_two');
     // mastDoc.activeLayer = GetMyMainPurpleBgLayer2;
     // mastDoc.activeLayer.hasSelectedArtwork = true;
-    var mainRect2 = GetMyMainPurpleBgLayer2.pathItems.rectangle(-1428, 0, 800, 500);
+    var mainRect2 = GetMyMainPurpleBgLayer2.pathItems.rectangle(-1428, 0, 800, 400);
     var setMainVioletBgColor2 = new RGBColor();
     setMainVioletBgColor2.red = 72;
     setMainVioletBgColor2.green = 8;
@@ -950,7 +950,7 @@ function mainExpressive() {
     GetMyMainPurpleBgLayer2.move(myMainArtworkLayer2, ElementPlacement.PLACEATEND);
     /*@ts-ignore*/
     // svgFile.embed();
-    var resizedRect2 = CSTasks.newRect(sourceDoc.artboards[4].artboardRect[0], -sourceDoc.artboards[4].artboardRect[1], 800, 500);
+    var resizedRect2 = CSTasks.newRect(sourceDoc.artboards[4].artboardRect[0], -sourceDoc.artboards[4].artboardRect[1], 800, 400);
     sourceDoc.artboards[4].artboardRect = resizedRect2;
     /*********************************************************************
     RGB export (EPS, PNGs at multiple sizes, inactive EPS and inverse EPS)

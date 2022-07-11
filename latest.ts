@@ -1251,7 +1251,7 @@ function mainExpressive() {
    let firstRect2 = sourceDoc.artboards[1].artboardRect;
    sourceDoc.artboards.add(
       // this fires but then gets replaced further down
-      CSTasks.newRect(firstRect2[1], firstRect2[2] + 772, 800, 500)
+      CSTasks.newRect(firstRect2[1], firstRect2[2] + 772, 800, 400)
    );
 
    /* try {
@@ -1283,7 +1283,7 @@ function mainExpressive() {
    let mast2 = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
    let mastPos2 = [
       sourceDoc.artboards[4].artboardRect[0] + iconOffset[0] * 18.5,
-      sourceDoc.artboards[4].artboardRect[1] + iconOffset[1] * 5.16,
+      sourceDoc.artboards[4].artboardRect[1] + iconOffset[1] * 1.6,
    ];
    CSTasks.translateObjectTo(mast2, mastPos2);
 
@@ -1302,7 +1302,7 @@ function mainExpressive() {
       -1428,
       0,
       800,
-      500);
+      400);
    let setMainVioletBgColor2 = new RGBColor();
    setMainVioletBgColor2.red = 72;
    setMainVioletBgColor2.green = 8;
@@ -1320,7 +1320,7 @@ function mainExpressive() {
       sourceDoc.artboards[4].artboardRect[0],
       -sourceDoc.artboards[4].artboardRect[1],
       800,
-      500
+      400
    );
    sourceDoc.artboards[4].artboardRect = resizedRect2;
 
