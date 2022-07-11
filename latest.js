@@ -1089,7 +1089,7 @@ function mainExpressive() {
     cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
     cmykDoc = null;
     /********************
-    Masthead export
+    Purple Masthead with text export export
     ********************/
     //open a new doc and copy and position the icon and the masthead text
     // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
@@ -1139,18 +1139,6 @@ function mainExpressive() {
     imagePlacedItemMastDoc.file = svgFileMastDoc;
     imagePlacedItemMastDoc.top = -1181;
     imagePlacedItemMastDoc.left = 62;
-    // embed wtw logo in eps
-    /*@ts-ignore*/
-    // try {
-    // let targetLayer = sourceDoc.layers.getByName("Layer 1");
-    // let items = targetLayer.placedItems;
-    // for (let i = 0, len = items.length; i < len; i--) {
-    //    items[i].embed();
-    // }
-    // }
-    // catch (e) {
-    //    alert("Issues embedding the logo linked file in the eps export.");
-    // }
     // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
     var myCroppingLayerMastDoc = mastDoc.layers.add();
     myCroppingLayerMastDoc.name = "crop";
@@ -1188,6 +1176,94 @@ function mainExpressive() {
     //close and clean up
     mastDoc.close(SaveOptions.DONOTSAVECHANGES);
     mastDoc = null;
+    /********************
+      Purple Masthead with text export export
+      ********************/
+    //open a new doc and copy and position the icon and the masthead text
+    // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
+    var mastDoc2 = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 3, DocumentColorSpace.RGB);
+    mastDoc2.swatches.removeAll();
+    var mastGroup2 = iconGroup.duplicate(mastDoc2.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
+    // new icon width in rebrand
+    mastGroup2.width = 460;
+    mastGroup2.height = 460;
+    // new icon position
+    var mastLoc2 = [
+        mastDoc2.artboards[0].artboardRect[0] + 576,
+        mastDoc2.artboards[0].artboardRect[1] - 62,
+    ];
+    CSTasks.translateObjectTo(mastGroup2, mastLoc2);
+    CSTasks.ungroupOnce(mastGroup2);
+    var mastText2 = textGroup.duplicate(mastDoc2.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
+    // text position
+    var mastTextLoc2 = [
+        mastDoc2.artboards[0].artboardRect[0] + 62,
+        mastDoc2.artboards[0].artboardRect[1] - 62,
+    ];
+    CSTasks.translateObjectTo(mastText2, mastTextLoc2);
+    // add new style purple banner elements
+    var myMainArtworkLayerMastDoc2 = mastDoc2.layers.getByName('Layer 1');
+    var myMainPurpleBgLayerMastDoc2 = mastDoc2.layers.add();
+    myMainPurpleBgLayerMastDoc2.name = "Main_Purple_BG_layer";
+    var GetMyMainPurpleBgLayerMastDoc2 = mastDoc2.layers.getByName('Main_Purple_BG_layer');
+    // mastDoc.activeLayer = GetMyMainPurpleBgLayerMastDoc2;
+    // mastDoc.activeLayer.hasSelectedArtwork = true;
+    var mainRectMastDoc2 = GetMyMainPurpleBgLayerMastDoc2.pathItems.rectangle(-781, 0, 1024, 512);
+    var setMainVioletBgColorMastDoc1 = new RGBColor();
+    setMainVioletBgColorMastDoc1.red = 72;
+    setMainVioletBgColorMastDoc1.green = 8;
+    setMainVioletBgColorMastDoc1.blue = 111;
+    mainRectMastDoc2.filled = true;
+    mainRectMastDoc2.fillColor = setMainVioletBgColorMastDoc1;
+    /*@ts-ignore*/
+    GetMyMainPurpleBgLayerMastDoc2.move(myMainArtworkLayerMastDoc2, ElementPlacement.PLACEATEND);
+    // svg wtw logo for new purple masthead
+    var imagePlacedItemMastDoc2 = myMainArtworkLayerMastDoc2.placedItems.add();
+    var svgFileMastDoc2 = File("".concat(sourceDoc.path, "/../images/wtw_logo.ai"));
+    imagePlacedItemMastDoc2.file = svgFileMastDoc2;
+    imagePlacedItemMastDoc2.top = -1181;
+    imagePlacedItemMastDoc2.left = 62;
+    // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
+    var myCroppingLayerMastDoc2 = mastDoc2.layers.add();
+    myCroppingLayerMastDoc2.name = "crop";
+    var GetMyCroppingLayerMastDoc2 = mastDoc2.layers.getByName('crop');
+    mastDoc2.activeLayer = GetMyCroppingLayerMastDoc2;
+    mastDoc2.activeLayer.hasSelectedArtwork = true;
+    // insert clipping rect here
+    var mainClipRectMastDoc2 = GetMyCroppingLayerMastDoc2.pathItems.rectangle(-781, 0, 1024, 512);
+    var setClipBgColorMastDoc2 = new RGBColor();
+    setClipBgColorMastDoc2.red = 0;
+    setClipBgColorMastDoc2.green = 255;
+    setClipBgColorMastDoc2.blue = 255;
+    mainClipRectMastDoc2.filled = true;
+    mainClipRectMastDoc2.fillColor = setClipBgColorMastDoc2;
+    // select all for clipping here
+    sourceDoc.selectObjectsOnActiveArtboard();
+    // clip!
+    app.executeMenuCommand('makeMask');
+    //save a banner PNG
+    var masterStartWidthMastDoc2 = 1024;
+    for (var i_10 = 0; i_10 < exportSizes.length; i_10++) {
+        var filename_4 = "/".concat(iconFilename, "______LASTBANNER.png");
+        var destFile_4 = new File(Folder("".concat(sourceDoc.path)) + filename_4);
+        CSTasks.scaleAndExportPNG(mastDoc2, destFile_4, masterStartWidthMastDoc2, exportSizes[0]);
+    }
+    //save RGB EPS into the export folder
+    var mastFilename2 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "______LASTBANNER.eps");
+    var mastDestFile2 = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(epsName)) + mastFilename2);
+    var mastSaveOpts2 = new EPSSaveOptions();
+    /*@ts-ignore*/
+    mastSaveOpts2.cmykPostScript = false;
+    /*@ts-ignore*/
+    mastSaveOpts2.embedLinkedFiles = true;
+    mastDoc2.saveAs(mastDestFile2, mastSaveOpts2);
+    //close and clean up
+    // mastDoc2.close(SaveOptions.DONOTSAVECHANGES);
+    // mastDoc2 = null;
     /************
     Final cleanup
     ************/
