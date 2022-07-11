@@ -1731,8 +1731,8 @@ function mainExpressive() {
 
    // new icon position
    let mastLoc2 = [
-      mastDoc2.artboards[0].artboardRect[0] + 676,
-      mastDoc2.artboards[0].artboardRect[1] - 106,
+      mastDoc2.artboards[0].artboardRect[0] + 444,
+      mastDoc2.artboards[0].artboardRect[1] - 44,
    ];
    CSTasks.translateObjectTo(mastGroup2, mastLoc2);
    CSTasks.ungroupOnce(mastGroup2);
@@ -1779,27 +1779,27 @@ function mainExpressive() {
    // imagePlacedItemMastDoc2.left = 62;
    // UNCOMMENT THIS!
    // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
-   // let myCroppingLayerMastDoc2 = mastDoc2.layers.add();
-   // myCroppingLayerMastDoc2.name = "crop";
-   // let GetMyCroppingLayerMastDoc2 = mastDoc2.layers.getByName('crop');
-   // mastDoc2.activeLayer = GetMyCroppingLayerMastDoc2;
-   // mastDoc2.activeLayer.hasSelectedArtwork = true;
-   // // insert clipping rect here
-   // let mainClipRectMastDoc2 = GetMyCroppingLayerMastDoc2.pathItems.rectangle(
-   //    -781,
-   //    0,
-   //    800,
-   //    400);
-   // let setClipBgColorMastDoc2 = new RGBColor();
-   // setClipBgColorMastDoc2.red = 0;
-   // setClipBgColorMastDoc2.green = 255;
-   // setClipBgColorMastDoc2.blue = 255;
-   // mainClipRectMastDoc2.filled = true;
-   // mainClipRectMastDoc2.fillColor = setClipBgColorMastDoc2;
-   // // select all for clipping here
-   // sourceDoc.selectObjectsOnActiveArtboard();
-   // // clip!
-   // app.executeMenuCommand('makeMask');
+   let myCroppingLayerMastDoc2 = mastDoc2.layers.add();
+   myCroppingLayerMastDoc2.name = "crop";
+   let GetMyCroppingLayerMastDoc2 = mastDoc2.layers.getByName('crop');
+   mastDoc2.activeLayer = GetMyCroppingLayerMastDoc2;
+   mastDoc2.activeLayer.hasSelectedArtwork = true;
+   // insert clipping rect here
+   let mainClipRectMastDoc2 = GetMyCroppingLayerMastDoc2.pathItems.rectangle(
+      -1428,
+      0,
+      800,
+      400);
+   let setClipBgColorMastDoc2 = new RGBColor();
+   setClipBgColorMastDoc2.red = 0;
+   setClipBgColorMastDoc2.green = 255;
+   setClipBgColorMastDoc2.blue = 255;
+   mainClipRectMastDoc2.filled = true;
+   mainClipRectMastDoc2.fillColor = setClipBgColorMastDoc2;
+   // select all for clipping here
+   mastDoc2.selectObjectsOnActiveArtboard();
+   // clip!
+   app.executeMenuCommand('makeMask');
 
 
    //save a banner PNG
@@ -1808,7 +1808,7 @@ function mainExpressive() {
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}______LASTBANNER.png`;
       let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
-      CSTasks.scaleAndExportPNG(mastDoc2, destFile, masterStartWidthMastDoc2, exportSizes[0]);
+      CSTasks.scaleAndExportPNG(mastDoc2, destFile, masterStartWidthMastDoc2, 800);
    }
    //save RGB EPS into the export folder
    let mastFilename2 = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}______LASTBANNER.eps`;
