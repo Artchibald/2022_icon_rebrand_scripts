@@ -1248,10 +1248,10 @@ function mainExpressive() {
    //if there are 3 artboards, create the new fourth masthead artboard
 
    // creat last artboard in file
-   let firstRect = sourceDoc.artboards[1].artboardRect;
+   let firstRect2 = sourceDoc.artboards[1].artboardRect;
    sourceDoc.artboards.add(
       // this fires but then gets replaced further down
-      CSTasks.newRect(firstRect[1], firstRect[2] + 772, 800, 500)
+      CSTasks.newRect(firstRect2[1], firstRect2[2] + 772, 800, 500)
    );
 
    /* try {
@@ -1280,15 +1280,15 @@ function mainExpressive() {
 
    //place icon on masthead
    /*@ts-ignore*/
-   let mast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
+   let mast2 = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
    let mastPos2 = [
-      sourceDoc.artboards[3].artboardRect[0] + iconOffset[0] * 19,
-      sourceDoc.artboards[3].artboardRect[1] + iconOffset[1] * 18.3,
+      sourceDoc.artboards[4].artboardRect[0] + iconOffset[0] * 18.5,
+      sourceDoc.artboards[4].artboardRect[1] + iconOffset[1] * 5.16,
    ];
-   CSTasks.translateObjectTo(mast, mastPos2);
+   CSTasks.translateObjectTo(mast2, mastPos2);
 
-   mast.width = 360;
-   mast.height = 360;
+   mast2.width = 360;
+   mast2.height = 360;
 
    // new purple bg
    // Add new layer above Guidelines and fill white
@@ -1299,7 +1299,7 @@ function mainExpressive() {
    // mastDoc.activeLayer = GetMyMainPurpleBgLayer2;
    // mastDoc.activeLayer.hasSelectedArtwork = true;
    let mainRect2 = GetMyMainPurpleBgLayer2.pathItems.rectangle(
-      -1492,
+      -1428,
       0,
       800,
       500);
@@ -1317,12 +1317,12 @@ function mainExpressive() {
 
 
    let resizedRect2 = CSTasks.newRect(
-      sourceDoc.artboards[3].artboardRect[0],
-      -sourceDoc.artboards[3].artboardRect[1],
+      sourceDoc.artboards[4].artboardRect[0],
+      -sourceDoc.artboards[4].artboardRect[1],
       800,
       500
    );
-   sourceDoc.artboards[3].artboardRect = resizedRect2;
+   sourceDoc.artboards[4].artboardRect = resizedRect2;
 
 
 

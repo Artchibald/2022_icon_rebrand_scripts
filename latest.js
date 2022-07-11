@@ -778,10 +778,10 @@ function mainExpressive() {
             sourceDoc.artboards[1].artboardRect[3] ==
             256) {
         // IF there are already  3 artboards. Add a 4th one.
-        var firstRect_1 = sourceDoc.artboards[1].artboardRect;
+        var firstRect = sourceDoc.artboards[1].artboardRect;
         sourceDoc.artboards.add(
         // this fires but then gets replaced further down
-        CSTasks.newRect(firstRect_1[1], firstRect_1[2] + 128, 1024, 512));
+        CSTasks.newRect(firstRect[1], firstRect[2] + 128, 1024, 512));
     }
     //if the masthead artboard is present, check if rebuilding or just exporting
     else if (sourceDoc.artboards.length == 3 &&
@@ -899,10 +899,10 @@ function mainExpressive() {
     ******************/
     //if there are 3 artboards, create the new fourth masthead artboard
     // creat last artboard in file
-    var firstRect = sourceDoc.artboards[1].artboardRect;
+    var firstRect2 = sourceDoc.artboards[1].artboardRect;
     sourceDoc.artboards.add(
     // this fires but then gets replaced further down
-    CSTasks.newRect(firstRect[1], firstRect[2] + 772, 800, 500));
+    CSTasks.newRect(firstRect2[1], firstRect2[2] + 772, 800, 500));
     /* try {
        sourceDoc.artboards.setActiveArtboardIndex(3);//change which artboard you want to crop
        sourceDoc.artboards[3].artboardRect = new Rect(0, 0, 1024, 512);
@@ -923,14 +923,14 @@ function mainExpressive() {
     *********************************/
     //place icon on masthead
     /*@ts-ignore*/
-    var mast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
+    var mast2 = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
     var mastPos2 = [
-        sourceDoc.artboards[3].artboardRect[0] + iconOffset[0] * 19,
-        sourceDoc.artboards[3].artboardRect[1] + iconOffset[1] * 18.3,
+        sourceDoc.artboards[4].artboardRect[0] + iconOffset[0] * 18.5,
+        sourceDoc.artboards[4].artboardRect[1] + iconOffset[1] * 5.16,
     ];
-    CSTasks.translateObjectTo(mast, mastPos2);
-    mast.width = 360;
-    mast.height = 360;
+    CSTasks.translateObjectTo(mast2, mastPos2);
+    mast2.width = 360;
+    mast2.height = 360;
     // new purple bg
     // Add new layer above Guidelines and fill white
     var myMainArtworkLayer2 = sourceDoc.layers.getByName('Art');
@@ -939,7 +939,7 @@ function mainExpressive() {
     var GetMyMainPurpleBgLayer2 = sourceDoc.layers.getByName('Main_Purple_BG_layer_two');
     // mastDoc.activeLayer = GetMyMainPurpleBgLayer2;
     // mastDoc.activeLayer.hasSelectedArtwork = true;
-    var mainRect2 = GetMyMainPurpleBgLayer2.pathItems.rectangle(-1492, 0, 800, 500);
+    var mainRect2 = GetMyMainPurpleBgLayer2.pathItems.rectangle(-1428, 0, 800, 500);
     var setMainVioletBgColor2 = new RGBColor();
     setMainVioletBgColor2.red = 72;
     setMainVioletBgColor2.green = 8;
@@ -950,8 +950,8 @@ function mainExpressive() {
     GetMyMainPurpleBgLayer2.move(myMainArtworkLayer2, ElementPlacement.PLACEATEND);
     /*@ts-ignore*/
     // svgFile.embed();
-    var resizedRect2 = CSTasks.newRect(sourceDoc.artboards[3].artboardRect[0], -sourceDoc.artboards[3].artboardRect[1], 800, 500);
-    sourceDoc.artboards[3].artboardRect = resizedRect2;
+    var resizedRect2 = CSTasks.newRect(sourceDoc.artboards[4].artboardRect[0], -sourceDoc.artboards[4].artboardRect[1], 800, 500);
+    sourceDoc.artboards[4].artboardRect = resizedRect2;
     /*********************************************************************
     RGB export (EPS, PNGs at multiple sizes, inactive EPS and inverse EPS)
     **********************************************************************/
