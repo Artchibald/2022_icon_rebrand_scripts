@@ -96,7 +96,9 @@ ABOVE UNPAID!
 - Wed 6 colors no longer have to match exactly, script will not stop anymore if colors dont match. Uses the actual colors from the rebrand pdf in RGB and CMYK.
 - Thu 7 troubles with the 4th artboard dimensions that need changing. Had some extensive debugging to stop the fourth artboard from cropping to the size of the text within. Got expressive banner debugged. Just needs aligning in mastDoc.
 - Fri 8 new bug Michael Winter helped me with around clipping mask of Masthead eps export. Aligned MastDoc coordinates.
-
+- Monday 11 July built out the last banner in the set 800x400 
+- Tuesday 12 july , call with Chris new bug discovered trialing different icons, Call and present with Katie, started documentaiton
+ 
 
 <!-- # No license for graphik font, delete on completion -->
 
@@ -160,3 +162,8 @@ Graphic motif I use 100% STRIPE scaling(web)
 
  - managed to fix with    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
    app.executeMenuCommand('Colors9');
+
+
+   do cropped 16 + 24
+   documentation - reusability for other devs
+
