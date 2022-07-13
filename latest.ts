@@ -22,8 +22,8 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 - CMYK EPS
 - CMYK inverse EPS
 ************************************************/
-alert("FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts \n\nVideo set up tutorial available here: XXXTBCXXX \n\n If you run the script again, you should probably delete the previous assets created. \n\nArtboard size must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guides (DO NOT MOVE)'. \n\nMake sure all layers and sublayers are invisible and unlocked to avoid bugs. <path>s (sub sub sub layers) should remain visible though in layers panel(this is standard). \n\nMake sure all icons are on sublayers inside the layer called 'icons' with correct naming. Make sure all colors are on sublayers inside the layer called 'colors' with correct naming. \n\nWhen the contact sheet is ready to be generated, you can edit the rows and columns. If you increase the columns, you should increase the rows, to avoid overlapping. There is also a separate version of just the contact-sheet script. You must have these 2 folders in the root, for it to work though: /sorted-by-type/SVG/. \n\nExported assets will be saved where the .ai file is saved. \n\nAny issues: archie@archibaldbutler.com.");
-/*********************************
+alert("FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts \n\nVideo set up tutorial available here: XXXTBCXXX \n\n If you run the script again, you should probably delete the previous assets created. \n\nArtboard size must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\n Icons must be on a layer called exactly 'Art'. \n\nMake sure all icons are unlocked to avoid bugs. \n\nWhen the contact sheet is ready to be generated, you can edit the rows and columns. If you increase the columns, you should increase the rows, to avoid overlapping. There is also a separate version of just the contact-sheet script. You must have these 2 folders in the root, for it to work though: /sorted-by-type/SVG/. \n\nExported assets will be saved where the .ai file is saved. \n\nAny issues: archie@archibaldbutler.com.");
+/********************************* 
 VARIABLES YOU MIGHT NEED TO CHANGE
 **********************************/
 let sourceDoc = app.activeDocument;
@@ -72,6 +72,8 @@ let inverseName = "Inverse";
 let inactiveName = "Inactive";
 // Masthead
 let mastheadName = "Masthead";
+let masthead1 = "Masthead1"
+let masthead2 = "Masthead2"
 // Colors
 let rgbName = "RGB";
 let cmykName = "CMYK";
@@ -1550,7 +1552,7 @@ function mainExpressive() {
    cmykDoc = null;
 
    /********************
-   Purple Masthead with text export export
+   Purple Masthead with text export 
    ********************/
    //open a new doc and copy and position the icon and the masthead text
    // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
@@ -1644,15 +1646,19 @@ function mainExpressive() {
 
 
    //save a banner PNG
-   let masterStartWidthMastDoc =
-      1024;
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_banner.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
-      CSTasks.scaleAndExportPNG(mastDoc, destFile, masterStartWidthMastDoc, exportSizes[0]);
+      let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead1}.png`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
+      CSTasks.scaleAndExportPNG(mastDoc, destFile, 400, 800);
+   }
+   //save a banner SVG 
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead1}.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
+      CSTasks.scaleAndExportSVG(mastDoc, destFile, 400, 800);
    }
    //save RGB EPS into the export folder
-   let mastFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}.eps`;
+   let mastFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead1}.eps`;
    let mastDestFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + mastFilename);
    let mastSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
@@ -1805,15 +1811,19 @@ function mainExpressive() {
 
 
    //save a banner PNG
-   let masterStartWidthMastDoc2 =
-      800;
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}______LASTBANNER.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
-      CSTasks.scaleAndExportPNG(mastDoc2, destFile, masterStartWidthMastDoc2, 800);
+      let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.png`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
+      CSTasks.scaleAndExportPNG(mastDoc2, destFile, 400, 800);
    }
-   //save RGB EPS into the export folder
-   let mastFilename2 = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}______LASTBANNER.eps`;
+   //save a banner SVG
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
+      CSTasks.scaleAndExportSVG(mastDoc2, destFile, 400, 800);
+   }
+   //save RGB EPS into the export folder 
+   let mastFilename2 = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.eps`;
    let mastDestFile2 = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + mastFilename2);
    let mastSaveOpts2 = new EPSSaveOptions();
    /*@ts-ignore*/

@@ -21,7 +21,7 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 - CMYK EPS
 - CMYK inverse EPS
 ************************************************/
-alert("FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts \n\nVideo set up tutorial available here: XXXTBCXXX \n\n If you run the script again, you should probably delete the previous assets created. \n\nArtboard size must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guides (DO NOT MOVE)'. \n\nMake sure all layers and sublayers are invisible and unlocked to avoid bugs. <path>s (sub sub sub layers) should remain visible though in layers panel(this is standard). \n\nMake sure all icons are on sublayers inside the layer called 'icons' with correct naming. Make sure all colors are on sublayers inside the layer called 'colors' with correct naming. \n\nWhen the contact sheet is ready to be generated, you can edit the rows and columns. If you increase the columns, you should increase the rows, to avoid overlapping. There is also a separate version of just the contact-sheet script. You must have these 2 folders in the root, for it to work though: /sorted-by-type/SVG/. \n\nExported assets will be saved where the .ai file is saved. \n\nAny issues: archie@archibaldbutler.com.");
+alert("FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts \n\nVideo set up tutorial available here: XXXTBCXXX \n\n If you run the script again, you should probably delete the previous assets created. \n\nArtboard size must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\n Icons must be on a layer called exactly 'Art'. \n\nMake sure all icons are unlocked to avoid bugs. \n\nWhen the contact sheet is ready to be generated, you can edit the rows and columns. If you increase the columns, you should increase the rows, to avoid overlapping. There is also a separate version of just the contact-sheet script. You must have these 2 folders in the root, for it to work though: /sorted-by-type/SVG/. \n\nExported assets will be saved where the .ai file is saved. \n\nAny issues: archie@archibaldbutler.com.");
 /*********************************
 VARIABLES YOU MIGHT NEED TO CHANGE
 **********************************/
@@ -69,6 +69,8 @@ var inverseName = "Inverse";
 var inactiveName = "Inactive";
 // Masthead
 var mastheadName = "Masthead";
+var masthead1 = "Masthead1";
+var masthead2 = "Masthead2";
 // Colors
 var rgbName = "RGB";
 var cmykName = "CMYK";
@@ -1082,7 +1084,7 @@ function mainExpressive() {
     cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
     cmykDoc = null;
     /********************
-    Purple Masthead with text export export
+    Purple Masthead with text export
     ********************/
     //open a new doc and copy and position the icon and the masthead text
     // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
@@ -1151,14 +1153,19 @@ function mainExpressive() {
     // clip!
     app.executeMenuCommand('makeMask');
     //save a banner PNG
-    var masterStartWidthMastDoc = 1024;
     for (var i_27 = 0; i_27 < exportSizes.length; i_27++) {
-        var filename_21 = "/".concat(iconFilename, "_banner.png");
-        var destFile_21 = new File(Folder("".concat(sourceDoc.path)) + filename_21);
-        CSTasks.scaleAndExportPNG(mastDoc, destFile_21, masterStartWidthMastDoc, exportSizes[0]);
+        var filename_21 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead1, ".png");
+        var destFile_21 = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(pngName)) + filename_21);
+        CSTasks.scaleAndExportPNG(mastDoc, destFile_21, 400, 800);
+    }
+    //save a banner SVG 
+    for (var i_28 = 0; i_28 < exportSizes.length; i_28++) {
+        var filename_22 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead1, ".svg");
+        var destFile_22 = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(svgName)) + filename_22);
+        CSTasks.scaleAndExportSVG(mastDoc, destFile_22, 400, 800);
     }
     //save RGB EPS into the export folder
-    var mastFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, ".eps");
+    var mastFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead1, ".eps");
     var mastDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(epsName)) + mastFilename);
     var mastSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/
@@ -1242,14 +1249,19 @@ function mainExpressive() {
     // clip!
     app.executeMenuCommand('makeMask');
     //save a banner PNG
-    var masterStartWidthMastDoc2 = 800;
-    for (var i_28 = 0; i_28 < exportSizes.length; i_28++) {
-        var filename_22 = "/".concat(iconFilename, "______LASTBANNER.png");
-        var destFile_22 = new File(Folder("".concat(sourceDoc.path)) + filename_22);
-        CSTasks.scaleAndExportPNG(mastDoc2, destFile_22, masterStartWidthMastDoc2, 800);
+    for (var i_29 = 0; i_29 < exportSizes.length; i_29++) {
+        var filename_23 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead2, ".png");
+        var destFile_23 = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(pngName)) + filename_23);
+        CSTasks.scaleAndExportPNG(mastDoc2, destFile_23, 400, 800);
     }
-    //save RGB EPS into the export folder
-    var mastFilename2 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "______LASTBANNER.eps");
+    //save a banner SVG
+    for (var i_30 = 0; i_30 < exportSizes.length; i_30++) {
+        var filename_24 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead2, ".svg");
+        var destFile_24 = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(svgName)) + filename_24);
+        CSTasks.scaleAndExportSVG(mastDoc2, destFile_24, 400, 800);
+    }
+    //save RGB EPS into the export folder 
+    var mastFilename2 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead2, ".eps");
     var mastDestFile2 = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(epsName)) + mastFilename2);
     var mastSaveOpts2 = new EPSSaveOptions();
     /*@ts-ignore*/
