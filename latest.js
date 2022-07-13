@@ -574,21 +574,19 @@ function mainCore() {
     CSTasks.translateObjectTo(rgbGroup, rgbLoc);
     CSTasks.ungroupOnce(rgbGroup);
     //save a master PNG
-    // let masterStartWidth =
-    //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}.png`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
-    //    CSTasks.scaleAndExportPNG(rgbDoc, destFile, masterStartWidth, exportSizes[2]);
-    // }
+    var masterStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_7 = 0; i_7 < exportSizes.length; i_7++) {
+        var filename_1 = "/".concat(iconFilename, "_").concat(coreName, ".png");
+        var destFile_1 = new File(Folder("".concat(sourceDoc.path)) + filename_1);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_1, masterStartWidth, exportSizes[2]);
+    }
     //save a master SVG 
-    // let svgMasterCoreStartWidth =
-    //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}.svg`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
-    //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgMasterCoreStartWidth, exportSizes[2]);
-    // }
+    var svgMasterCoreStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_8 = 0; i_8 < exportSizes.length; i_8++) {
+        var filename_2 = "/".concat(iconFilename, "_").concat(coreName, ".svg");
+        var destFile_2 = new File(Folder("".concat(sourceDoc.path)) + filename_2);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_2, svgMasterCoreStartWidth, exportSizes[2]);
+    }
     //save all sizes of PNG into the export folder
     // let startWidth =
     //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
@@ -974,21 +972,19 @@ function mainExpressive() {
     CSTasks.translateObjectTo(rgbGroup, rgbLoc);
     CSTasks.ungroupOnce(rgbGroup);
     //save a master PNG
-    // let masterStartWidth =
-    //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${expressiveName}.png`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
-    //    CSTasks.scaleAndExportPNG(rgbDoc, destFile, masterStartWidth, exportSizes[2]);
-    // }
+    var masterStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_9 = 0; i_9 < exportSizes.length; i_9++) {
+        var filename_3 = "/".concat(iconFilename, "_").concat(expressiveName, ".png");
+        var destFile_3 = new File(Folder("".concat(sourceDoc.path)) + filename_3);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_3, masterStartWidth, exportSizes[2]);
+    }
     //save a master SVG
-    // let svgMasterCoreStartWidth =
-    //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${expressiveName}.svg`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
-    //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgMasterCoreStartWidth, exportSizes[2]);
-    // }
+    var svgMasterCoreStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+    for (var i_10 = 0; i_10 < exportSizes.length; i_10++) {
+        var filename_4 = "/".concat(iconFilename, "_").concat(expressiveName, ".svg");
+        var destFile_4 = new File(Folder("".concat(sourceDoc.path)) + filename_4);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_4, svgMasterCoreStartWidth, exportSizes[2]);
+    }
     //save all sizes of PNG into the export folder
     // let startWidth =
     //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
