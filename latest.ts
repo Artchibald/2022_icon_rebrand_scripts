@@ -1669,7 +1669,7 @@ function mainExpressive() {
    myMainPurpleBgLayerMastDoc.name = "Main_Purple_BG_layer";
    let GetMyMainPurpleBgLayerMastDoc = mastDoc.layers.getByName('Main_Purple_BG_layer');
    let mainRectMastDoc = GetMyMainPurpleBgLayerMastDoc.pathItems.rectangle(
-      -785,
+      -784,
       0,
       1024,
       512);

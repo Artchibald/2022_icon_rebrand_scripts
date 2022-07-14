@@ -1238,7 +1238,7 @@ function mainExpressive() {
     var myMainPurpleBgLayerMastDoc = mastDoc.layers.add();
     myMainPurpleBgLayerMastDoc.name = "Main_Purple_BG_layer";
     var GetMyMainPurpleBgLayerMastDoc = mastDoc.layers.getByName('Main_Purple_BG_layer');
-    var mainRectMastDoc = GetMyMainPurpleBgLayerMastDoc.pathItems.rectangle(-785, 0, 1024, 512);
+    var mainRectMastDoc = GetMyMainPurpleBgLayerMastDoc.pathItems.rectangle(-784, 0, 1024, 512);
     var setMainVioletBgColorMastDoc = new RGBColor();
     setMainVioletBgColorMastDoc.red = 72;
     setMainVioletBgColorMastDoc.green = 8;
