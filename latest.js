@@ -875,7 +875,7 @@ function mainExpressive() {
         mastBannerIconOnText.resize(factor, factor);
     }
     placeIconMasthead1Correctly(mastBannerIconOnText, { W: 460, H: 460 });
-    // delete the landing zone
+    // delete the landing zone -- 
     // let docSelected = sourceDoc.layers.getByName('Art').groupItems.getByName("LandingZone");
     landingZoneSquare.remove();
     // mastBannerIconOnText.width = 460;
