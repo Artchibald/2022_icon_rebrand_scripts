@@ -274,7 +274,8 @@ let CSTasks = (function () {
 
       doc.exportFile(destFile, ExportType.PNG24, options);
    };
-
+   //takes a document, destination file, starting width and desired width
+   //scales the document proportionally to the desired width and exports as a NON TRANSPARENT PNG
    tasks.scaleAndExportNonTransparentPNG = function (doc, destFile, startWidth, desiredWidth) {
       let scaling = (100.0 * desiredWidth) / startWidth;
       let options = new ExportOptionsPNG24();
@@ -1400,6 +1401,25 @@ function mainExpressive() {
 
    CSTasks.ungroupOnce(rgbGroup);
 
+   //save all sizes of JPEG into the export folder
+   // let jpegStartWidth2 =
+   //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+   // for (let i = 0; i < exportSizes.length; i++) {
+   //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.jpg`;
+   //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filename);
+   //    CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth2, exportSizes[i]);
+   // }
+
+   //save a  JPG exp. set
+   let jpegStartWidth2 =
+      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${exportSizes[i]}.jpg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`) + filename);
+      CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth2, exportSizes[i]);
+   }
+
+
    //save a master PNG
    let masterStartWidth =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
@@ -1445,14 +1465,7 @@ function mainExpressive() {
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[i]);
    }
 
-   //save all sizes of JPEG into the export folder
-   let jpegStartWidth =
-      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[1];
-   for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[i]}.jpg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`) + filename);
-      CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth, exportSizes[i]);
-   }
+
 
    //save EPS into the export folder
    let filename = `/${iconFilename}_${expressiveName}_${rgbName}.eps`;
@@ -1904,8 +1917,8 @@ function mainExpressive() {
    /************
    Final cleanup
    ************/
-   CSTasks.ungroupOnce(iconGroup);
-   CSTasks.ungroupOnce(mast);
+   // CSTasks.ungroupOnce(iconGroup);
+   // CSTasks.ungroupOnce(mast);
 }
 
 mainExpressive();
