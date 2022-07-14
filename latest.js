@@ -977,12 +977,58 @@ function mainExpressive() {
     /*@ts-ignore*/
     var fourthBannerMast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
     var fourthBannerMastPos = [
-        sourceDoc.artboards[4].artboardRect[0] + iconOffset[0] * 18.5,
-        sourceDoc.artboards[4].artboardRect[1] + iconOffset[1] * 1.6,
+        sourceDoc.artboards[4].artboardRect[0] + iconOffset[0],
+        sourceDoc.artboards[4].artboardRect[1] + iconOffset[1],
     ];
     CSTasks.translateObjectTo(fourthBannerMast, fourthBannerMastPos);
-    fourthBannerMast.width = 360;
-    fourthBannerMast.height = 360;
+    /********************************
+    Custom function to create a landing square to place the icon correctly
+    Some icons have width or height less than 256 so it needed special centering geometrically
+    you can see the landing zone square by changing fill to true and uncommenting color
+    *********************************/
+    // create a landing zone square to place icon inside
+    //moved it outside the function itself so we can delete it after so it doesn't get exported
+    var getArtLayer2 = sourceDoc.layers.getByName('Art');
+    var landingZoneSquare2 = getArtLayer2.pathItems.rectangle(-1472, 444, 360, 360);
+    function placeIconMasthead1Correctly2(fourthBannerMast, maxSize) {
+        var setLandingZoneSquareColor = new RGBColor();
+        setLandingZoneSquareColor.red = 121;
+        setLandingZoneSquareColor.green = 128;
+        setLandingZoneSquareColor.blue = 131;
+        landingZoneSquare2.filled = true;
+        landingZoneSquare2.fillColor = setLandingZoneSquareColor;
+        landingZoneSquare2.name = "LandingZone2";
+        /*@ts-ignore*/
+        landingZoneSquare2.move(getArtLayer2, ElementPlacement.PLACEATEND);
+        // start moving expressive icon into our new square landing zone
+        var placedfourthBannerMast = fourthBannerMast;
+        var landingZone = sourceDoc.pathItems.getByName("LandingZone2");
+        var preferredWidth = (360);
+        var preferredHeight = (360);
+        // do the width
+        var widthRatio = (preferredWidth / placedfourthBannerMast.width) * 100;
+        if (placedfourthBannerMast.width != preferredWidth) {
+            placedfourthBannerMast.resize(widthRatio, widthRatio);
+        }
+        // now do the height
+        var heightRatio = (preferredHeight / placedfourthBannerMast.height) * 100;
+        if (placedfourthBannerMast.height != preferredHeight) {
+            placedfourthBannerMast.resize(heightRatio, heightRatio);
+        }
+        // now let's center the art on the landing zone
+        var centerArt = [placedfourthBannerMast.left + (placedfourthBannerMast.width / 2), placedfourthBannerMast.top + (placedfourthBannerMast.height / 2)];
+        var centerLz = [landingZone.left + (landingZone.width / 2), landingZone.top + (landingZone.height / 2)];
+        placedfourthBannerMast.translate(centerLz[0] - centerArt[0], centerLz[1] - centerArt[1]);
+        // need another centered proportioning to fix it exactly in correct position
+        var W = fourthBannerMast.width, H = fourthBannerMast.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
+        fourthBannerMast.resize(factor, factor);
+    }
+    placeIconMasthead1Correctly2(fourthBannerMast, { W: 360, H: 360 });
+    // delete the landing zone
+    // let docSelected = sourceDoc.layers.getByName('Art').groupItems.getByName("LandingZone");
+    //landingZoneSquare.remove();
+    // fourthBannerMast.width = 360;
+    // fourthBannerMast.height = 360;
     // new purple bg
     // Add new layer above Guidelines and fill white
     var secondMainArtworkLayer = sourceDoc.layers.getByName('Art');
@@ -1149,14 +1195,68 @@ function mainExpressive() {
     /*@ts-ignore*/
     ElementPlacement.PLACEATEND);
     // new icon width in rebrand
-    mastGroup.width = 460;
-    mastGroup.height = 460;
+    // mastGroup.width = 460;
+    // mastGroup.height = 460;
     // new icon position
     var mastLoc = [
         mastDoc.artboards[0].artboardRect[0] + 576,
         mastDoc.artboards[0].artboardRect[1] - 62,
     ];
     CSTasks.translateObjectTo(mastGroup, mastLoc);
+    /********************************
+    Custom function to create a landing square to place the icon correctly
+    Some icons have width or height less than 256 so it needed special centering geometrically
+    you can see the landing zone square by changing fill to true and uncommenting color
+    *********************************/
+    // create a landing zone square to place icon inside
+    //moved it outside the function itself so we can delete it after so it doesn't get exported
+    // let getArtLayer2 = sourceDoc.layers.getByName('Art');
+    // let landingZoneSquare2 = getArtLayer2.pathItems.rectangle(
+    //    -1472,
+    //    444,
+    //    360,
+    //    360);
+    // function placeIconMasthead1Correctly2(fourthBannerMast, maxSize) {
+    //    let setLandingZoneSquareColor = new RGBColor();
+    //    setLandingZoneSquareColor.red = 121;
+    //    setLandingZoneSquareColor.green = 128;
+    //    setLandingZoneSquareColor.blue = 131;
+    //    landingZoneSquare2.filled = true;
+    //    landingZoneSquare2.fillColor = setLandingZoneSquareColor;
+    //    landingZoneSquare2.name = "LandingZone2"
+    //    /*@ts-ignore*/
+    //    landingZoneSquare2.move(getArtLayer2, ElementPlacement.PLACEATEND);
+    //    // start moving expressive icon into our new square landing zone
+    //    let placedfourthBannerMast = fourthBannerMast;
+    //    let landingZone = sourceDoc.pathItems.getByName("LandingZone2");
+    //    let preferredWidth = (360);
+    //    let preferredHeight = (360);
+    //    // do the width
+    //    let widthRatio = (preferredWidth / placedfourthBannerMast.width) * 100;
+    //    if (placedfourthBannerMast.width != preferredWidth) {
+    //       placedfourthBannerMast.resize(widthRatio, widthRatio);
+    //    }
+    //    // now do the height
+    //    let heightRatio = (preferredHeight / placedfourthBannerMast.height) * 100;
+    //    if (placedfourthBannerMast.height != preferredHeight) {
+    //       placedfourthBannerMast.resize(heightRatio, heightRatio);
+    //    }
+    //    // now let's center the art on the landing zone
+    //    let centerArt = [placedfourthBannerMast.left + (placedfourthBannerMast.width / 2), placedfourthBannerMast.top + (placedfourthBannerMast.height / 2)];
+    //    let centerLz = [landingZone.left + (landingZone.width / 2), landingZone.top + (landingZone.height / 2)];
+    //    placedfourthBannerMast.translate(centerLz[0] - centerArt[0], centerLz[1] - centerArt[1]);
+    //    // need another centered proportioning to fix it exactly in correct position
+    //    let W = fourthBannerMast.width,
+    //       H = fourthBannerMast.height,
+    //       MW = maxSize.W,
+    //       MH = maxSize.H,
+    //       factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
+    //    fourthBannerMast.resize(factor, factor);
+    // }
+    // placeIconMasthead1Correctly2(fourthBannerMast, { W: 360, H: 360 });
+    // delete the landing zone
+    // let docSelected = sourceDoc.layers.getByName('Art').groupItems.getByName("LandingZone");
+    //landingZoneSquare.remove();
     CSTasks.ungroupOnce(mastGroup);
     var mastText = textGroup.duplicate(mastDoc.layers[0], 
     /*@ts-ignore*/
