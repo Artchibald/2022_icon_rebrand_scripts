@@ -6,7 +6,7 @@
     <img src="imagesInReadme/img.png" alt="Logo" width="180" height="180">
   </a>
 
-<h3 align="center">A Typescript file that converts into ECMA 3 target JS file for use in Adobe Illustrator 2022. JS script that automates icon export processes in Adobe Illustrator. More info TBC.</h3>
+<h3 align="center">STILL WRITING THIS! A Typescript file that converts into ECMA 3 target JS file for use in Adobe Illustrator 2022. JS script that automates icon export processes in Adobe Illustrator. More info TBC.</h3>
 
   <p align="center">
     Useful links 

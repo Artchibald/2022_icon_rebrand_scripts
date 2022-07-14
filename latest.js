@@ -21,7 +21,7 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 - CMYK EPS
 - CMYK inverse EPS
 ************************************************/
-// alert("FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts \n\n Make sure you have the Graphik font installed \n\nVideo set up tutorial available here: XXXTBCXXX \n\n If you run the script again, you should probably delete the previous assets created. \n\nArtboard size must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\n Icons must be on a layer called exactly 'Art'. \n\nMake sure all icons are unlocked to avoid bugs. \n\nWhen the contact sheet is ready to be generated, you can edit the rows and columns. If you increase the columns, you should increase the rows, to avoid overlapping. There is also a separate version of just the contact-sheet script. You must have these 2 folders in the root, for it to work though: /sorted-by-type/SVG/. \n\nExported assets will be saved where the .ai file is saved. \n\nAny issues: archie@archibaldbutler.com.");
+alert("I haven't finished writing this yet!  \n\nFULL README (unfinished): https://github.com/Artchibald/2022_icon_rebrand_scripts \n\nVideo set up tutorial available here: XXXTBCXXX \n\n Need to talk about logo WTW parent folder\n\n Need to talk about Windows freeze (Illustrator says not responding on PC but it will respond XD !)\n\nIf you run the script again, you should probably delete the previous assets created. They get intermixed and overwritten. \n\nBoth artboard sizes must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\n Icons must be on a layer called exactly 'Art'. \n\nMake sure all icons are unlocked to avoid bugs. \n\nExported assets will be saved where the .ai file is saved. \n\n  Please try to use underscore instead of spaces to avoid bugs in filenames. \n\nAny issues: archie@archibaldbutler.com.");
 /*********************************
 VARIABLES YOU MIGHT NEED TO CHANGE
 **********************************/
@@ -250,6 +250,8 @@ var CSTasks = (function () {
         options.horizontalScale = scaling;
         /*@ts-ignore*/
         options.verticalScale = scaling;
+        /*@ts-ignore*/
+        options.qualitySetting = 100;
         doc.exportFile(destFile, ExportType.JPEG, options);
     };
     //takes left x, top y, width, and height
