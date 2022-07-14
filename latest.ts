@@ -1765,7 +1765,7 @@ function mainExpressive() {
    //moved it outside the function itself so we can delete it after so it doesn't get exported
    let getArtLayer3 = mastDoc.layers.getByName('Layer 1');
    let landingZoneSquare3 = getArtLayer3.pathItems.rectangle(
-      -853,
+      -843,
       570,
       460,
       460);
@@ -1853,7 +1853,7 @@ function mainExpressive() {
    // mastDoc.activeLayer = GetMyMainPurpleBgLayerMastDoc;
    // mastDoc.activeLayer.hasSelectedArtwork = true;
    let mainRectMastDoc = GetMyMainPurpleBgLayerMastDoc.pathItems.rectangle(
-      -781,
+      -785,
       0,
       1024,
       512);
@@ -1881,7 +1881,7 @@ function mainExpressive() {
    mastDoc.activeLayer.hasSelectedArtwork = true;
    // insert clipping rect here
    let mainClipRectMastDoc = GetMyCroppingLayerMastDoc.pathItems.rectangle(
-      -781,
+      -784,
       0,
       1024,
       512);

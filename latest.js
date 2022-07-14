@@ -1211,7 +1211,7 @@ function mainExpressive() {
     // create a landing zone square to place icon inside
     //moved it outside the function itself so we can delete it after so it doesn't get exported
     var getArtLayer3 = mastDoc.layers.getByName('Layer 1');
-    var landingZoneSquare3 = getArtLayer3.pathItems.rectangle(-853, 570, 460, 460);
+    var landingZoneSquare3 = getArtLayer3.pathItems.rectangle(-843, 570, 460, 460);
     function placeIconMasthead1Correctly3(mastGroup, maxSize) {
         var setLandingZoneSquareColor = new RGBColor();
         setLandingZoneSquareColor.red = 121;
@@ -1266,7 +1266,7 @@ function mainExpressive() {
     var GetMyMainPurpleBgLayerMastDoc = mastDoc.layers.getByName('Main_Purple_BG_layer');
     // mastDoc.activeLayer = GetMyMainPurpleBgLayerMastDoc;
     // mastDoc.activeLayer.hasSelectedArtwork = true;
-    var mainRectMastDoc = GetMyMainPurpleBgLayerMastDoc.pathItems.rectangle(-781, 0, 1024, 512);
+    var mainRectMastDoc = GetMyMainPurpleBgLayerMastDoc.pathItems.rectangle(-785, 0, 1024, 512);
     var setMainVioletBgColorMastDoc = new RGBColor();
     setMainVioletBgColorMastDoc.red = 72;
     setMainVioletBgColorMastDoc.green = 8;
@@ -1288,7 +1288,7 @@ function mainExpressive() {
     mastDoc.activeLayer = GetMyCroppingLayerMastDoc;
     mastDoc.activeLayer.hasSelectedArtwork = true;
     // insert clipping rect here
-    var mainClipRectMastDoc = GetMyCroppingLayerMastDoc.pathItems.rectangle(-781, 0, 1024, 512);
+    var mainClipRectMastDoc = GetMyCroppingLayerMastDoc.pathItems.rectangle(-784, 0, 1024, 512);
     var setClipBgColorMastDoc = new RGBColor();
     setClipBgColorMastDoc.red = 0;
     setClipBgColorMastDoc.green = 255;
