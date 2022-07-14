@@ -837,9 +837,11 @@ function mainExpressive() {
     Some icons have width or height less than 256 so it needed special centering geometrically
     you can see the landing zone square by changing fill to true and uncommenting color
     *********************************/
-    function test() {
-        var getArtLayer = sourceDoc.layers.getByName('Art');
-        var landingZoneSquare = getArtLayer.pathItems.rectangle(-844, 571, 460, 460);
+    // create a landing zone square to place icon inside
+    //moved it outside the function itself so we can delete it after so it doesn't get exported
+    var getArtLayer = sourceDoc.layers.getByName('Art');
+    var landingZoneSquare = getArtLayer.pathItems.rectangle(-844, 571, 460, 460);
+    function placeIconMasthead1Correctly(mastBannerIconOnText, maxSize) {
         var setLandingZoneSquareColor = new RGBColor();
         setLandingZoneSquareColor.red = 12;
         setLandingZoneSquareColor.green = 28;
@@ -849,6 +851,7 @@ function mainExpressive() {
         landingZoneSquare.name = "LandingZone";
         /*@ts-ignore*/
         landingZoneSquare.move(getArtLayer, ElementPlacement.PLACEATEND);
+        // start moving expressive icon into our new square landing zone
         var placedmastBannerIconOnText = mastBannerIconOnText;
         var landingZone = sourceDoc.pathItems.getByName("LandingZone");
         var preferredWidth = (230);
@@ -867,60 +870,14 @@ function mainExpressive() {
         var centerArt = [placedmastBannerIconOnText.left + (placedmastBannerIconOnText.width / 2), placedmastBannerIconOnText.top + (placedmastBannerIconOnText.height / 2)];
         var centerLz = [landingZone.left + (landingZone.width / 2), landingZone.top + (landingZone.height / 2)];
         placedmastBannerIconOnText.translate(centerLz[0] - centerArt[0], centerLz[1] - centerArt[1]);
-    }
-    ;
-    test();
-    function scaleUpProportionally(mastBannerIconOnText, maxSize) {
+        // need another centered proportioning to fix it exactly in correct position
         var W = mastBannerIconOnText.width, H = mastBannerIconOnText.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
         mastBannerIconOnText.resize(factor, factor);
     }
-    ;
-    scaleUpProportionally(mastBannerIconOnText, { W: 460, H: 460 });
-    // if (mastBannerIconOnText.width < 460) {
-    //    alert("width is less than 460!");
-    //    mastBannerIconOnTextPos = [
-    //       (sourceDoc.artboards[3].artboardRect[0] + 571),
-    //       sourceDoc.artboards[3].artboardRect[1] - 52,
-    //    ];
-    // } else {
-    //    alert("width is more than 460!")
-    // }
-    // if (mastBannerIconOnText.height < 460) {
-    //    alert("height is less than 460!")
-    //    mastBannerIconOnTextPos = [
-    //       (sourceDoc.artboards[3].artboardRect[0] + 571),
-    //       (sourceDoc.artboards[3].artboardRect[1] - 52),
-    //    ];
-    // } else {
-    //    alert("height is more than 460!")
-    // }
-    // if (mastBannerIconOnText.width < 460) {
-    //    alert("width is less than 460!");
-    //    mastBannerIconOnTextPos = [
-    //       (sourceDoc.artboards[3].artboardRect[0] + 571),
-    //       sourceDoc.artboards[3].artboardRect[1] - 52,
-    //    ];
-    // } else {
-    //    alert("width is more than 460!")
-    // }
-    // if (mastBannerIconOnText.height < 460) {
-    //    alert("height is less than 460!")
-    //    mastBannerIconOnTextPos = [
-    //       (sourceDoc.artboards[3].artboardRect[0] + 571),
-    //       (sourceDoc.artboards[3].artboardRect[1] - 52),
-    //    ];
-    // } else {
-    //    alert("height is more than 460!")
-    // }
-    // function scaleUpProportionally(mastBannerIconOnText, maxSize) {
-    //    var W = mastBannerIconOnText.width,
-    //       H = mastBannerIconOnText.height,
-    //       MW = maxSize.W,
-    //       MH = maxSize.H,
-    //       factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
-    //    mastBannerIconOnText.resize(factor, factor);
-    // };
-    // scaleUpProportionally(mastBannerIconOnText, { W: 460, H: 460 });
+    placeIconMasthead1Correctly(mastBannerIconOnText, { W: 460, H: 460 });
+    // delete the landing zone
+    // let docSelected = sourceDoc.layers.getByName('Art').groupItems.getByName("LandingZone");
+    //landingZoneSquare.remove();
     // mastBannerIconOnText.width = 460;
     // mastBannerIconOnText.height = 460;
     // new purple bg
