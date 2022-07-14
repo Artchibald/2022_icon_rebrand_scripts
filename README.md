@@ -33,6 +33,26 @@ cc' >>>
 
 # 2022_icon_rebrand_scripts -->
 
+# Instructions
+
+This script only works locally not on a server
+I haven't finished writing this yet!  
+Don't forget to change .txt to .js on the script.
+FULL README (unfinished): https://github.com/Artchibald/2022_icon_rebrand_scripts 
+I can take this pop up out if you prefer. 
+Video set up tutorial available here: XXXTBCXXX 
+Open a .ai template provided in folders called test.
+Go to file > Scripts > Other Scripts > Import our new script.
+You must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets.
+Illustrator says (not responding) on PC but it will respond, give Bill Gates some time XD !) 
+If you run the script again, you should probably delete the previous assets created. They get intermixed and overwritten. 
+Both artboard sizes must be exactly 256px x 256px. 
+Guides must be on a layer called exactly 'Guidelines'. 
+Icons must be on a layer called exactly 'Art'. 
+Make sure all icons are unlocked to avoid bugs. 
+Exported assets will be saved where the .ai file is saved. 
+Please try to use underscore instead of spaces to avoid bugs in filenames. 
+Any issues: archie@archibaldbutler.com.
 
 # Initial call brief
 
