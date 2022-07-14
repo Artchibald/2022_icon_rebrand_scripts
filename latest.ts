@@ -1732,8 +1732,8 @@ function mainExpressive() {
 
    // new icon position
    let mastLoc = [
-      mastDoc.artboards[0].artboardRect[0] + 576,
-      mastDoc.artboards[0].artboardRect[1] - 62,
+      mastDoc.artboards[0].artboardRect[0],
+      mastDoc.artboards[0].artboardRect[1],
    ];
    CSTasks.translateObjectTo(mastGroup, mastLoc);
 
@@ -1763,54 +1763,54 @@ function mainExpressive() {
 
    // create a landing zone square to place icon inside
    //moved it outside the function itself so we can delete it after so it doesn't get exported
-   // let getArtLayer2 = sourceDoc.layers.getByName('Art');
-   // let landingZoneSquare2 = getArtLayer2.pathItems.rectangle(
-   //    -1472,
-   //    444,
-   //    360,
-   //    360);
+   let getArtLayer3 = mastDoc.layers.getByName('Layer 1');
+   let landingZoneSquare3 = getArtLayer3.pathItems.rectangle(
+      -853,
+      570,
+      460,
+      460);
 
 
-   // function placeIconMasthead1Correctly2(fourthBannerMast, maxSize) {
-   //    let setLandingZoneSquareColor = new RGBColor();
-   //    setLandingZoneSquareColor.red = 121;
-   //    setLandingZoneSquareColor.green = 128;
-   //    setLandingZoneSquareColor.blue = 131;
-   //    landingZoneSquare2.filled = true;
-   //    landingZoneSquare2.fillColor = setLandingZoneSquareColor;
-   //    landingZoneSquare2.name = "LandingZone2"
-   //    /*@ts-ignore*/
-   //    landingZoneSquare2.move(getArtLayer2, ElementPlacement.PLACEATEND);
+   function placeIconMasthead1Correctly3(mastGroup, maxSize) {
+      let setLandingZoneSquareColor = new RGBColor();
+      setLandingZoneSquareColor.red = 121;
+      setLandingZoneSquareColor.green = 128;
+      setLandingZoneSquareColor.blue = 131;
+      landingZoneSquare3.filled = true;
+      landingZoneSquare3.fillColor = setLandingZoneSquareColor;
+      landingZoneSquare3.name = "LandingZone3"
+      /*@ts-ignore*/
+      landingZoneSquare3.move(getArtLayer3, ElementPlacement.PLACEATEND);
 
-   //    // start moving expressive icon into our new square landing zone
-   //    let placedfourthBannerMast = fourthBannerMast;
-   //    let landingZone = sourceDoc.pathItems.getByName("LandingZone2");
-   //    let preferredWidth = (360);
-   //    let preferredHeight = (360);
-   //    // do the width
-   //    let widthRatio = (preferredWidth / placedfourthBannerMast.width) * 100;
-   //    if (placedfourthBannerMast.width != preferredWidth) {
-   //       placedfourthBannerMast.resize(widthRatio, widthRatio);
-   //    }
-   //    // now do the height
-   //    let heightRatio = (preferredHeight / placedfourthBannerMast.height) * 100;
-   //    if (placedfourthBannerMast.height != preferredHeight) {
-   //       placedfourthBannerMast.resize(heightRatio, heightRatio);
-   //    }
-   //    // now let's center the art on the landing zone
-   //    let centerArt = [placedfourthBannerMast.left + (placedfourthBannerMast.width / 2), placedfourthBannerMast.top + (placedfourthBannerMast.height / 2)];
-   //    let centerLz = [landingZone.left + (landingZone.width / 2), landingZone.top + (landingZone.height / 2)];
-   //    placedfourthBannerMast.translate(centerLz[0] - centerArt[0], centerLz[1] - centerArt[1]);
+      // start moving expressive icon into our new square landing zone
+      let placedmastGroup = mastGroup;
+      let landingZone = mastDoc.pathItems.getByName("LandingZone3");
+      let preferredWidth = (460);
+      let preferredHeight = (460);
+      // do the width
+      let widthRatio = (preferredWidth / placedmastGroup.width) * 100;
+      if (placedmastGroup.width != preferredWidth) {
+         placedmastGroup.resize(widthRatio, widthRatio);
+      }
+      // now do the height
+      let heightRatio = (preferredHeight / placedmastGroup.height) * 100;
+      if (placedmastGroup.height != preferredHeight) {
+         placedmastGroup.resize(heightRatio, heightRatio);
+      }
+      // now let's center the art on the landing zone
+      let centerArt = [placedmastGroup.left + (placedmastGroup.width / 2), placedmastGroup.top + (placedmastGroup.height / 2)];
+      let centerLz = [landingZone.left + (landingZone.width / 2), landingZone.top + (landingZone.height / 2)];
+      placedmastGroup.translate(centerLz[0] - centerArt[0], centerLz[1] - centerArt[1]);
 
-   //    // need another centered proportioning to fix it exactly in correct position
-   //    let W = fourthBannerMast.width,
-   //       H = fourthBannerMast.height,
-   //       MW = maxSize.W,
-   //       MH = maxSize.H,
-   //       factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
-   //    fourthBannerMast.resize(factor, factor);
-   // }
-   // placeIconMasthead1Correctly2(fourthBannerMast, { W: 360, H: 360 });
+      // need another centered proportioning to fix it exactly in correct position
+      let W = mastGroup.width,
+         H = mastGroup.height,
+         MW = maxSize.W,
+         MH = maxSize.H,
+         factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
+      mastGroup.resize(factor, factor);
+   }
+   placeIconMasthead1Correctly3(mastGroup, { W: 460, H: 460 });
 
    // delete the landing zone
    // let docSelected = sourceDoc.layers.getByName('Art').groupItems.getByName("LandingZone");
@@ -1920,7 +1920,7 @@ function mainExpressive() {
    mastDoc.saveAs(mastDestFile, mastSaveOpts);
 
    //close and clean up
-   mastDoc.close(SaveOptions.DONOTSAVECHANGES);
+   //mastDoc.close(SaveOptions.DONOTSAVECHANGES);
    mastDoc = null;
 
 
@@ -1973,120 +1973,120 @@ function mainExpressive() {
      ********************/
    //open a new doc and copy and position the icon and the masthead text
    // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
-   let mastDocNoText = CSTasks.duplicateArtboardInNewDoc(
-      sourceDoc,
-      4,
-      DocumentColorSpace.RGB
-   );
-   mastDocNoText.swatches.removeAll();
+   // let mastDocNoText = CSTasks.duplicateArtboardInNewDoc(
+   //    sourceDoc,
+   //    4,
+   //    DocumentColorSpace.RGB
+   // );
+   // mastDocNoText.swatches.removeAll();
 
-   let mastGroupNoText = iconGroup.duplicate(
-      mastDocNoText.layers[0],
-      /*@ts-ignore*/
-      ElementPlacement.PLACEATEND
-   );
-   // new icon width in rebrand
-   mastGroupNoText.width = 360;
-   mastGroupNoText.height = 360;
-
-   // new icon position
-   let mastLocNoText = [
-      mastDocNoText.artboards[0].artboardRect[0] + 444,
-      mastDocNoText.artboards[0].artboardRect[1] - 44,
-   ];
-   CSTasks.translateObjectTo(mastGroupNoText, mastLocNoText);
-   CSTasks.ungroupOnce(mastGroupNoText);
-
-   // let mastText2 = textGroup.duplicate(
+   // let mastGroupNoText = iconGroup.duplicate(
    //    mastDocNoText.layers[0],
    //    /*@ts-ignore*/
    //    ElementPlacement.PLACEATEND
    // );
-   // // text position
-   // let mastTextLoc2 = [
-   //    mastDocNoText.artboards[0].artboardRect[0] + 62,
-   //    mastDocNoText.artboards[0].artboardRect[1] - 62,
+   // // new icon width in rebrand
+   // mastGroupNoText.width = 360;
+   // mastGroupNoText.height = 360;
+
+   // // new icon position
+   // let mastLocNoText = [
+   //    mastDocNoText.artboards[0].artboardRect[0] + 444,
+   //    mastDocNoText.artboards[0].artboardRect[1] - 44,
    // ];
-   // CSTasks.translateObjectTo(mastText2, mastTextLoc2);
+   // CSTasks.translateObjectTo(mastGroupNoText, mastLocNoText);
+   // CSTasks.ungroupOnce(mastGroupNoText);
+
+   // // let mastText2 = textGroup.duplicate(
+   // //    mastDocNoText.layers[0],
+   // //    /*@ts-ignore*/
+   // //    ElementPlacement.PLACEATEND
+   // // );
+   // // // text position
+   // // let mastTextLoc2 = [
+   // //    mastDocNoText.artboards[0].artboardRect[0] + 62,
+   // //    mastDocNoText.artboards[0].artboardRect[1] - 62,
+   // // ];
+   // // CSTasks.translateObjectTo(mastText2, mastTextLoc2);
 
 
-   // add new style purple banner elements
-   let myMainArtworkLayerMastDocNoText = mastDocNoText.layers.getByName('Layer 1');
-   let myMainPurpleBgLayerMastDocNoText = mastDocNoText.layers.add();
-   myMainPurpleBgLayerMastDocNoText.name = "Main_Purple_BG_layer";
-   let GetMyMainPurpleBgLayerMastDocNoText = mastDocNoText.layers.getByName('Main_Purple_BG_layer');
-   // mastDoc.activeLayer = GetMyMainPurpleBgLayerMastDocNoText;
-   // mastDoc.activeLayer.hasSelectedArtwork = true;
-   let mainRectMastDocNoText = GetMyMainPurpleBgLayerMastDocNoText.pathItems.rectangle(
-      -1428,
-      0,
-      800,
-      400);
-   let setMainVioletBgColorMastDocNoText = new RGBColor();
-   setMainVioletBgColorMastDocNoText.red = 72;
-   setMainVioletBgColorMastDocNoText.green = 8;
-   setMainVioletBgColorMastDocNoText.blue = 111;
-   mainRectMastDocNoText.filled = true;
-   mainRectMastDocNoText.fillColor = setMainVioletBgColorMastDocNoText;
-   /*@ts-ignore*/
-   GetMyMainPurpleBgLayerMastDocNoText.move(myMainArtworkLayerMastDocNoText, ElementPlacement.PLACEATEND);
+   // // add new style purple banner elements
+   // let myMainArtworkLayerMastDocNoText = mastDocNoText.layers.getByName('Layer 1');
+   // let myMainPurpleBgLayerMastDocNoText = mastDocNoText.layers.add();
+   // myMainPurpleBgLayerMastDocNoText.name = "Main_Purple_BG_layer";
+   // let GetMyMainPurpleBgLayerMastDocNoText = mastDocNoText.layers.getByName('Main_Purple_BG_layer');
+   // // mastDoc.activeLayer = GetMyMainPurpleBgLayerMastDocNoText;
+   // // mastDoc.activeLayer.hasSelectedArtwork = true;
+   // let mainRectMastDocNoText = GetMyMainPurpleBgLayerMastDocNoText.pathItems.rectangle(
+   //    -1428,
+   //    0,
+   //    800,
+   //    400);
+   // let setMainVioletBgColorMastDocNoText = new RGBColor();
+   // setMainVioletBgColorMastDocNoText.red = 72;
+   // setMainVioletBgColorMastDocNoText.green = 8;
+   // setMainVioletBgColorMastDocNoText.blue = 111;
+   // mainRectMastDocNoText.filled = true;
+   // mainRectMastDocNoText.fillColor = setMainVioletBgColorMastDocNoText;
+   // /*@ts-ignore*/
+   // GetMyMainPurpleBgLayerMastDocNoText.move(myMainArtworkLayerMastDocNoText, ElementPlacement.PLACEATEND);
 
-   // svg wtw logo for new purple masthead
-   // let imagePlacedItemMastDocNoText = myMainArtworkLayerMastDocNoText.placedItems.add();
-   // let svgFileMastDocNoText = File(`${sourceDoc.path}/../images/wtw_logo.ai`);
-   // imagePlacedItemMastDocNoText.file = svgFileMastDocNoText;
-   // imagePlacedItemMastDocNoText.top = -1181;
-   // imagePlacedItemMastDocNoText.left = 62;
-   // UNCOMMENT THIS!
-   // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
-   let myCroppingLayerMastDocNoText = mastDocNoText.layers.add();
-   myCroppingLayerMastDocNoText.name = "crop";
-   let GetMyCroppingLayerMastDocNoText = mastDocNoText.layers.getByName('crop');
-   mastDocNoText.activeLayer = GetMyCroppingLayerMastDocNoText;
-   mastDocNoText.activeLayer.hasSelectedArtwork = true;
-   // insert clipping rect here
-   let mainClipRectMastDocNoText = GetMyCroppingLayerMastDocNoText.pathItems.rectangle(
-      -1428,
-      0,
-      800,
-      400);
-   let setClipBgColorMastDocNoText = new RGBColor();
-   setClipBgColorMastDocNoText.red = 0;
-   setClipBgColorMastDocNoText.green = 255;
-   setClipBgColorMastDocNoText.blue = 255;
-   mainClipRectMastDocNoText.filled = true;
-   mainClipRectMastDocNoText.fillColor = setClipBgColorMastDocNoText;
-   // select all for clipping here
-   mastDocNoText.selectObjectsOnActiveArtboard();
-   // clip!
-   app.executeMenuCommand('makeMask');
+   // // svg wtw logo for new purple masthead
+   // // let imagePlacedItemMastDocNoText = myMainArtworkLayerMastDocNoText.placedItems.add();
+   // // let svgFileMastDocNoText = File(`${sourceDoc.path}/../images/wtw_logo.ai`);
+   // // imagePlacedItemMastDocNoText.file = svgFileMastDocNoText;
+   // // imagePlacedItemMastDocNoText.top = -1181;
+   // // imagePlacedItemMastDocNoText.left = 62;
+   // // UNCOMMENT THIS!
+   // // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
+   // let myCroppingLayerMastDocNoText = mastDocNoText.layers.add();
+   // myCroppingLayerMastDocNoText.name = "crop";
+   // let GetMyCroppingLayerMastDocNoText = mastDocNoText.layers.getByName('crop');
+   // mastDocNoText.activeLayer = GetMyCroppingLayerMastDocNoText;
+   // mastDocNoText.activeLayer.hasSelectedArtwork = true;
+   // // insert clipping rect here
+   // let mainClipRectMastDocNoText = GetMyCroppingLayerMastDocNoText.pathItems.rectangle(
+   //    -1428,
+   //    0,
+   //    800,
+   //    400);
+   // let setClipBgColorMastDocNoText = new RGBColor();
+   // setClipBgColorMastDocNoText.red = 0;
+   // setClipBgColorMastDocNoText.green = 255;
+   // setClipBgColorMastDocNoText.blue = 255;
+   // mainClipRectMastDocNoText.filled = true;
+   // mainClipRectMastDocNoText.fillColor = setClipBgColorMastDocNoText;
+   // // select all for clipping here
+   // mastDocNoText.selectObjectsOnActiveArtboard();
+   // // clip!
+   // app.executeMenuCommand('makeMask');
 
 
-   //save a banner PNG
-   // for (let i = 0; i < exportSizes.length; i++) {
-   //    let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.png`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
-   //    CSTasks.scaleAndExportPNG(mastDocNoText, destFile, 400, 800);
-   // }
-   //save a banner SVG
-   // for (let i = 0; i < exportSizes.length; i++) {
-   //    let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.svg`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
-   //    CSTasks.scaleAndExportSVG(mastDocNoText, destFile, 400, 800);
-   // }
-   //save RGB EPS into the export folder 
-   let mastNoTextFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.eps`;
-   let mastNoTextDestFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + mastNoTextFilename);
-   let mastNoTextSaveOpts = new EPSSaveOptions();
-   /*@ts-ignore*/
-   mastNoTextSaveOpts.cmykPostScript = false;
-   /*@ts-ignore*/
-   mastNoTextSaveOpts.embedLinkedFiles = true;
-   mastDocNoText.saveAs(mastNoTextDestFile, mastNoTextSaveOpts);
+   // //save a banner PNG
+   // // for (let i = 0; i < exportSizes.length; i++) {
+   // //    let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.png`;
+   // //    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
+   // //    CSTasks.scaleAndExportPNG(mastDocNoText, destFile, 400, 800);
+   // // }
+   // //save a banner SVG
+   // // for (let i = 0; i < exportSizes.length; i++) {
+   // //    let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.svg`;
+   // //    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
+   // //    CSTasks.scaleAndExportSVG(mastDocNoText, destFile, 400, 800);
+   // // }
+   // //save RGB EPS into the export folder 
+   // let mastNoTextFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.eps`;
+   // let mastNoTextDestFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + mastNoTextFilename);
+   // let mastNoTextSaveOpts = new EPSSaveOptions();
+   // /*@ts-ignore*/
+   // mastNoTextSaveOpts.cmykPostScript = false;
+   // /*@ts-ignore*/
+   // mastNoTextSaveOpts.embedLinkedFiles = true;
+   // mastDocNoText.saveAs(mastNoTextDestFile, mastNoTextSaveOpts);
 
-   //close and clean up
-   mastDocNoText.close(SaveOptions.DONOTSAVECHANGES);
-   mastDocNoText = null;
+   // //close and clean up
+   // mastDocNoText.close(SaveOptions.DONOTSAVECHANGES);
+   // mastDocNoText = null;
 
 
    /************
