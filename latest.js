@@ -21,7 +21,7 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 - CMYK EPS
 - CMYK inverse EPS
 ************************************************/
-// alert("FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts \n\nVideo set up tutorial available here: XXXTBCXXX \n\n If you run the script again, you should probably delete the previous assets created. \n\nArtboard size must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\n Icons must be on a layer called exactly 'Art'. \n\nMake sure all icons are unlocked to avoid bugs. \n\nWhen the contact sheet is ready to be generated, you can edit the rows and columns. If you increase the columns, you should increase the rows, to avoid overlapping. There is also a separate version of just the contact-sheet script. You must have these 2 folders in the root, for it to work though: /sorted-by-type/SVG/. \n\nExported assets will be saved where the .ai file is saved. \n\nAny issues: archie@archibaldbutler.com.");
+// alert("FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts \n\n Make sure you have the Graphik font installed \n\nVideo set up tutorial available here: XXXTBCXXX \n\n If you run the script again, you should probably delete the previous assets created. \n\nArtboard size must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\n Icons must be on a layer called exactly 'Art'. \n\nMake sure all icons are unlocked to avoid bugs. \n\nWhen the contact sheet is ready to be generated, you can edit the rows and columns. If you increase the columns, you should increase the rows, to avoid overlapping. There is also a separate version of just the contact-sheet script. You must have these 2 folders in the root, for it to work though: /sorted-by-type/SVG/. \n\nExported assets will be saved where the .ai file is saved. \n\nAny issues: archie@archibaldbutler.com.");
 /*********************************
 VARIABLES YOU MIGHT NEED TO CHANGE
 **********************************/
@@ -877,7 +877,7 @@ function mainExpressive() {
     placeIconMasthead1Correctly(mastBannerIconOnText, { W: 460, H: 460 });
     // delete the landing zone
     // let docSelected = sourceDoc.layers.getByName('Art').groupItems.getByName("LandingZone");
-    //landingZoneSquare.remove();
+    landingZoneSquare.remove();
     // mastBannerIconOnText.width = 460;
     // mastBannerIconOnText.height = 460;
     // new purple bg
@@ -1026,7 +1026,7 @@ function mainExpressive() {
     placeIconMasthead1Correctly2(fourthBannerMast, { W: 360, H: 360 });
     // delete the landing zone
     // let docSelected = sourceDoc.layers.getByName('Art').groupItems.getByName("LandingZone");
-    //landingZoneSquare.remove();
+    landingZoneSquare2.remove();
     // fourthBannerMast.width = 360;
     // fourthBannerMast.height = 360;
     // new purple bg
@@ -1248,7 +1248,7 @@ function mainExpressive() {
     placeIconMasthead1Correctly3(mastGroup, { W: 460, H: 460 });
     // delete the landing zone
     // let docSelected = sourceDoc.layers.getByName('Art').groupItems.getByName("LandingZone");
-    //landingZoneSquare.remove();
+    landingZoneSquare3.remove();
     CSTasks.ungroupOnce(mastGroup);
     var mastText = textGroup.duplicate(mastDoc.layers[0], 
     /*@ts-ignore*/
@@ -1321,118 +1321,139 @@ function mainExpressive() {
     mastSaveOpts.embedLinkedFiles = true;
     mastDoc.saveAs(mastDestFile, mastSaveOpts);
     //close and clean up
-    //mastDoc.close(SaveOptions.DONOTSAVECHANGES);
+    mastDoc.close(SaveOptions.DONOTSAVECHANGES);
     mastDoc = null;
     /********************
-      Purple Masthead with text export export
+      Purple Masthead with no text export
       ********************/
-    //open a new doc and copy and position the icon and the masthead text
+    //open a new doc and copy and position the icon
     // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
-    // let mastDocNoText = CSTasks.duplicateArtboardInNewDoc(
-    //    sourceDoc,
-    //    4,
-    //    DocumentColorSpace.RGB
-    // );
-    // mastDocNoText.swatches.removeAll();
-    // let mastGroupNoText = iconGroup.duplicate(
-    //    mastDocNoText.layers[0],
-    //    /*@ts-ignore*/
-    //    ElementPlacement.PLACEATEND
-    // );
-    // // new icon width in rebrand
+    var mastDocNoText = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 4, DocumentColorSpace.RGB);
+    mastDocNoText.swatches.removeAll();
+    var mastGroupNoText = iconGroup.duplicate(mastDocNoText.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
+    // new icon width in rebrand
     // mastGroupNoText.width = 360;
     // mastGroupNoText.height = 360;
-    // // new icon position
-    // let mastLocNoText = [
-    //    mastDocNoText.artboards[0].artboardRect[0] + 444,
-    //    mastDocNoText.artboards[0].artboardRect[1] - 44,
-    // ];
-    // CSTasks.translateObjectTo(mastGroupNoText, mastLocNoText);
-    // CSTasks.ungroupOnce(mastGroupNoText);
-    // // let mastText2 = textGroup.duplicate(
-    // //    mastDocNoText.layers[0],
-    // //    /*@ts-ignore*/
-    // //    ElementPlacement.PLACEATEND
-    // // );
-    // // // text position
-    // // let mastTextLoc2 = [
-    // //    mastDocNoText.artboards[0].artboardRect[0] + 62,
-    // //    mastDocNoText.artboards[0].artboardRect[1] - 62,
-    // // ];
-    // // CSTasks.translateObjectTo(mastText2, mastTextLoc2);
-    // // add new style purple banner elements
-    // let myMainArtworkLayerMastDocNoText = mastDocNoText.layers.getByName('Layer 1');
-    // let myMainPurpleBgLayerMastDocNoText = mastDocNoText.layers.add();
-    // myMainPurpleBgLayerMastDocNoText.name = "Main_Purple_BG_layer";
-    // let GetMyMainPurpleBgLayerMastDocNoText = mastDocNoText.layers.getByName('Main_Purple_BG_layer');
-    // // mastDoc.activeLayer = GetMyMainPurpleBgLayerMastDocNoText;
-    // // mastDoc.activeLayer.hasSelectedArtwork = true;
-    // let mainRectMastDocNoText = GetMyMainPurpleBgLayerMastDocNoText.pathItems.rectangle(
-    //    -1428,
-    //    0,
-    //    800,
-    //    400);
-    // let setMainVioletBgColorMastDocNoText = new RGBColor();
-    // setMainVioletBgColorMastDocNoText.red = 72;
-    // setMainVioletBgColorMastDocNoText.green = 8;
-    // setMainVioletBgColorMastDocNoText.blue = 111;
-    // mainRectMastDocNoText.filled = true;
-    // mainRectMastDocNoText.fillColor = setMainVioletBgColorMastDocNoText;
-    // /*@ts-ignore*/
-    // GetMyMainPurpleBgLayerMastDocNoText.move(myMainArtworkLayerMastDocNoText, ElementPlacement.PLACEATEND);
-    // // svg wtw logo for new purple masthead
-    // // let imagePlacedItemMastDocNoText = myMainArtworkLayerMastDocNoText.placedItems.add();
-    // // let svgFileMastDocNoText = File(`${sourceDoc.path}/../images/wtw_logo.ai`);
-    // // imagePlacedItemMastDocNoText.file = svgFileMastDocNoText;
-    // // imagePlacedItemMastDocNoText.top = -1181;
-    // // imagePlacedItemMastDocNoText.left = 62;
-    // // UNCOMMENT THIS!
-    // // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
-    // let myCroppingLayerMastDocNoText = mastDocNoText.layers.add();
-    // myCroppingLayerMastDocNoText.name = "crop";
-    // let GetMyCroppingLayerMastDocNoText = mastDocNoText.layers.getByName('crop');
-    // mastDocNoText.activeLayer = GetMyCroppingLayerMastDocNoText;
-    // mastDocNoText.activeLayer.hasSelectedArtwork = true;
-    // // insert clipping rect here
-    // let mainClipRectMastDocNoText = GetMyCroppingLayerMastDocNoText.pathItems.rectangle(
-    //    -1428,
-    //    0,
-    //    800,
-    //    400);
-    // let setClipBgColorMastDocNoText = new RGBColor();
-    // setClipBgColorMastDocNoText.red = 0;
-    // setClipBgColorMastDocNoText.green = 255;
-    // setClipBgColorMastDocNoText.blue = 255;
-    // mainClipRectMastDocNoText.filled = true;
-    // mainClipRectMastDocNoText.fillColor = setClipBgColorMastDocNoText;
-    // // select all for clipping here
-    // mastDocNoText.selectObjectsOnActiveArtboard();
-    // // clip!
-    // app.executeMenuCommand('makeMask');
-    // //save a banner PNG
-    // // for (let i = 0; i < exportSizes.length; i++) {
-    // //    let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.png`;
-    // //    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
-    // //    CSTasks.scaleAndExportPNG(mastDocNoText, destFile, 400, 800);
-    // // }
-    // //save a banner SVG
-    // // for (let i = 0; i < exportSizes.length; i++) {
-    // //    let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.svg`;
-    // //    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
-    // //    CSTasks.scaleAndExportSVG(mastDocNoText, destFile, 400, 800);
-    // // }
-    // //save RGB EPS into the export folder 
-    // let mastNoTextFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.eps`;
-    // let mastNoTextDestFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + mastNoTextFilename);
-    // let mastNoTextSaveOpts = new EPSSaveOptions();
-    // /*@ts-ignore*/
-    // mastNoTextSaveOpts.cmykPostScript = false;
-    // /*@ts-ignore*/
-    // mastNoTextSaveOpts.embedLinkedFiles = true;
-    // mastDocNoText.saveAs(mastNoTextDestFile, mastNoTextSaveOpts);
-    // //close and clean up
-    // mastDocNoText.close(SaveOptions.DONOTSAVECHANGES);
-    // mastDocNoText = null;
+    // new icon position
+    var mastLocNoText = [
+        mastDocNoText.artboards[0].artboardRect[0],
+        mastDocNoText.artboards[0].artboardRect[1],
+    ];
+    CSTasks.translateObjectTo(mastGroupNoText, mastLocNoText);
+    /********************************
+      Custom function to create a landing square to place the icon correctly
+      Some icons have width or height less than 256 so it needed special centering geometrically
+      you can see the landing zone square by changing fill to true and uncommenting color
+      *********************************/
+    // create a landing zone square to place icon inside
+    //moved it outside the function itself so we can delete it after so it doesn't get exported
+    var getArtLayer4 = mastDocNoText.layers.getByName('Layer 1');
+    var landingZoneSquare4 = getArtLayer4.pathItems.rectangle(-1471, 443, 360, 360);
+    function placeIconMasthead1Correctly4(mastGroupNoText, maxSize) {
+        var setLandingZoneSquareColor = new RGBColor();
+        setLandingZoneSquareColor.red = 121;
+        setLandingZoneSquareColor.green = 128;
+        setLandingZoneSquareColor.blue = 131;
+        landingZoneSquare4.filled = true;
+        landingZoneSquare4.fillColor = setLandingZoneSquareColor;
+        landingZoneSquare4.name = "LandingZone4";
+        /*@ts-ignore*/
+        landingZoneSquare4.move(getArtLayer4, ElementPlacement.PLACEATEND);
+        // start moving expressive icon into our new square landing zone
+        var placedmastGroup = mastGroupNoText;
+        var landingZone = mastDocNoText.pathItems.getByName("LandingZone4");
+        var preferredWidth = (360);
+        var preferredHeight = (360);
+        // do the width
+        var widthRatio = (preferredWidth / placedmastGroup.width) * 100;
+        if (placedmastGroup.width != preferredWidth) {
+            placedmastGroup.resize(widthRatio, widthRatio);
+        }
+        // now do the height
+        var heightRatio = (preferredHeight / placedmastGroup.height) * 100;
+        if (placedmastGroup.height != preferredHeight) {
+            placedmastGroup.resize(heightRatio, heightRatio);
+        }
+        // now let's center the art on the landing zone
+        var centerArt = [placedmastGroup.left + (placedmastGroup.width / 2), placedmastGroup.top + (placedmastGroup.height / 2)];
+        var centerLz = [landingZone.left + (landingZone.width / 2), landingZone.top + (landingZone.height / 2)];
+        placedmastGroup.translate(centerLz[0] - centerArt[0], centerLz[1] - centerArt[1]);
+        // need another centered proportioning to fix it exactly in correct position
+        var W = mastGroupNoText.width, H = mastGroupNoText.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
+        mastGroupNoText.resize(factor, factor);
+    }
+    placeIconMasthead1Correctly4(mastGroupNoText, { W: 360, H: 360 });
+    // delete the landing zone
+    // let docSelected = sourceDoc.layers.getByName('Art').groupItems.getByName("LandingZone");
+    landingZoneSquare4.remove();
+    CSTasks.ungroupOnce(mastGroupNoText);
+    // add new style purple banner elements
+    var myMainArtworkLayerMastDocNoText = mastDocNoText.layers.getByName('Layer 1');
+    var myMainPurpleBgLayerMastDocNoText = mastDocNoText.layers.add();
+    myMainPurpleBgLayerMastDocNoText.name = "Main_Purple_BG_layer";
+    var GetMyMainPurpleBgLayerMastDocNoText = mastDocNoText.layers.getByName('Main_Purple_BG_layer');
+    // mastDoc.activeLayer = GetMyMainPurpleBgLayerMastDocNoText;
+    // mastDoc.activeLayer.hasSelectedArtwork = true;
+    var mainRectMastDocNoText = GetMyMainPurpleBgLayerMastDocNoText.pathItems.rectangle(-1428, 0, 800, 400);
+    var setMainVioletBgColorMastDocNoText = new RGBColor();
+    setMainVioletBgColorMastDocNoText.red = 72;
+    setMainVioletBgColorMastDocNoText.green = 8;
+    setMainVioletBgColorMastDocNoText.blue = 111;
+    mainRectMastDocNoText.filled = true;
+    mainRectMastDocNoText.fillColor = setMainVioletBgColorMastDocNoText;
+    /*@ts-ignore*/
+    GetMyMainPurpleBgLayerMastDocNoText.move(myMainArtworkLayerMastDocNoText, ElementPlacement.PLACEATEND);
+    // svg wtw logo for new purple masthead
+    // let imagePlacedItemMastDocNoText = myMainArtworkLayerMastDocNoText.placedItems.add();
+    // let svgFileMastDocNoText = File(`${sourceDoc.path}/../images/wtw_logo.ai`);
+    // imagePlacedItemMastDocNoText.file = svgFileMastDocNoText;
+    // imagePlacedItemMastDocNoText.top = -1181;
+    // imagePlacedItemMastDocNoText.left = 62;
+    // UNCOMMENT THIS!
+    // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
+    var myCroppingLayerMastDocNoText = mastDocNoText.layers.add();
+    myCroppingLayerMastDocNoText.name = "crop";
+    var GetMyCroppingLayerMastDocNoText = mastDocNoText.layers.getByName('crop');
+    mastDocNoText.activeLayer = GetMyCroppingLayerMastDocNoText;
+    mastDocNoText.activeLayer.hasSelectedArtwork = true;
+    // insert clipping rect here
+    var mainClipRectMastDocNoText = GetMyCroppingLayerMastDocNoText.pathItems.rectangle(-1428, 0, 800, 400);
+    var setClipBgColorMastDocNoText = new RGBColor();
+    setClipBgColorMastDocNoText.red = 0;
+    setClipBgColorMastDocNoText.green = 255;
+    setClipBgColorMastDocNoText.blue = 255;
+    mainClipRectMastDocNoText.filled = true;
+    mainClipRectMastDocNoText.fillColor = setClipBgColorMastDocNoText;
+    // select all for clipping here
+    mastDocNoText.selectObjectsOnActiveArtboard();
+    // clip!
+    app.executeMenuCommand('makeMask');
+    //save a banner PNG
+    // for (let i = 0; i < exportSizes.length; i++) {
+    //    let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.png`;
+    //    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
+    //    CSTasks.scaleAndExportPNG(mastDocNoText, destFile, 400, 800);
+    // }
+    //save a banner SVG
+    // for (let i = 0; i < exportSizes.length; i++) {
+    //    let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.svg`;
+    //    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
+    //    CSTasks.scaleAndExportSVG(mastDocNoText, destFile, 400, 800);
+    // }
+    //save RGB EPS into the export folder 
+    var mastNoTextFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead2, ".eps");
+    var mastNoTextDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(epsName)) + mastNoTextFilename);
+    var mastNoTextSaveOpts = new EPSSaveOptions();
+    /*@ts-ignore*/
+    mastNoTextSaveOpts.cmykPostScript = false;
+    /*@ts-ignore*/
+    mastNoTextSaveOpts.embedLinkedFiles = true;
+    mastDocNoText.saveAs(mastNoTextDestFile, mastNoTextSaveOpts);
+    //close and clean up
+    //mastDocNoText.close(SaveOptions.DONOTSAVECHANGES);
+    mastDocNoText = null;
     /************
     Final cleanup
     ************/
