@@ -54,6 +54,12 @@ Exported assets will be saved where the .ai file is saved.
 Please try to use underscore instead of spaces to avoid bugs in filenames. 
 Any issues: archie@archibaldbutler.com.
 
+# Run watch task to compile ts to js
+
+tsc -p /Users/fbisurveillancevan81/Desktop/WTW_v2/codebase/WTW_v2/tsconfig.json --watch 
+ 
+Or VS code main top nav menu > Terminal > Run Build Task > Watch
+
 # Initial call brief
 
 - 24/06/22
@@ -118,9 +124,10 @@ ABOVE UNPAID!
 - Fri 8 new bug Michael Winter helped me with around clipping mask of Masthead eps export. Aligned MastDoc coordinates.
 - Monday 11 July built out the last banner in the set 800x400 
 - Tuesday 12 july , call with Chris new bug discovered trialing different icons, Call and present with Katie, started documentaiton
- - Wed 13 July working major blocker, icon h is not same as icon w, trialling solutions, no success
- - Thu 14 July Delivery day, finally fixed calculation from day before, packaged, cleaning, documenting
- - Fri 15 July Working on how ot crop for cropped pngs 16 and 24 requested by Katie, discussed with Chris McDemott and implementing new stage for this in the js file, also fixed CMYK issue major blocker 
+- Wed 13 July working major blocker, icon h is not same as icon w, trialling solutions, no success
+- Thu 14 July Delivery day, finally fixed calculation from day before, packaged, cleaning, documenting
+- Fri 15 July Working on how ot crop for cropped pngs 16 and 24 requested by Katie, discussed with Chris McDemott and implementing new stage for this in the js file, also fixed CMYK issue major blocker
+
 
 <!-- # No license for graphik font, delete on completion -->
 
