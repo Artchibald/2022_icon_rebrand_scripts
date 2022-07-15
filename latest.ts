@@ -78,6 +78,8 @@ let masthead2 = "Masthead2"
 let rgbName = "RGB";
 let cmykName = "CMYK";
 let onWhiteName = "onFFF";
+// type
+let croppedName = "Cropped"
 //Folder creations
 let pngName = "png";
 let jpgName = "jpg";
@@ -907,16 +909,105 @@ function mainCore() {
    ];
    CSTasks.translateObjectTo(rgbGroupCropped, rgbLocCropped);
 
+   // remove padding here befor exporting
+
+   // create a landing zone square to place icon inside
+   //moved it outside the function itself so we can delete it after so it doesn't get exported
+
+
+
+   function placeIconMasthead1Correctly(rgbGroupCropped, maxSize) {
+
+
+      // // start moving expressive icon into our new square landing zone
+      // let placedmastBannerIconOnText = rgbGroupCropped;
+      // let landingZone = sourceDoc.pathItems.getByName("LandingZone");
+      // let preferredWidth = (256);
+      // let preferredHeight = (256);
+      // // do the width
+      // let widthRatio = (preferredWidth / placedmastBannerIconOnText.width) * 100;
+      // if (placedmastBannerIconOnText.width != preferredWidth) {
+      //    placedmastBannerIconOnText.resize(widthRatio, widthRatio);
+      // }
+      // // now do the height
+      // let heightRatio = (preferredHeight / placedmastBannerIconOnText.height) * 100;
+      // if (placedmastBannerIconOnText.height != preferredHeight) {
+      //    placedmastBannerIconOnText.resize(heightRatio, heightRatio);
+      // }
+      // // now let's center the art on the landing zone
+      // let centerArt = [placedmastBannerIconOnText.left + (placedmastBannerIconOnText.width / 2), placedmastBannerIconOnText.top + (placedmastBannerIconOnText.height / 2)];
+      // let centerLz = [landingZone.left + (landingZone.width / 2), landingZone.top + (landingZone.height / 2)];
+      // placedmastBannerIconOnText.translate(centerLz[0] - centerArt[0], centerLz[1] - centerArt[1]);
+
+      // need another centered proportioning to fix it exactly in correct position
+      let W = rgbGroupCropped.width,
+         H = rgbGroupCropped.height,
+         MW = maxSize.W,
+         MH = maxSize.H,
+         factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
+      rgbGroupCropped.resize(factor, factor);
+   }
+   placeIconMasthead1Correctly(rgbGroupCropped, { W: 256, H: 256 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    CSTasks.ungroupOnce(rgbGroupCropped);
 
-   // save all sizes of PNG into the export folder
+   // save 16 and 24 sizes of PNG into the export folder
    let startWidthCropped =
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
-   for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
-      CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFile, startWidthCropped, exportSizes[i]);
-   }
+   //24x24
+   let filenameCropped24Png = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[7]}.png`;
+   let destFileCropped24Png = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped24Png);
+   CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped24Png, startWidthCropped, exportSizes[7]);
+   //16x16
+   let filenameCropped16Png = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[8]}.png`;
+   let destFileCropped16Png = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped16Png);
+   CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16Png, startWidthCropped, exportSizes[8]);
+
+   // save 16 and 24 sizes of JPEG into the export folder
+   let jpegStartWidthCropped =
+      rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+   //24x24
+   let filenameCropped24Jpg = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[7]}.jpg`;
+   let destFileCropped24Jpg = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filenameCropped24Jpg);
+   CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped24Jpg, jpegStartWidthCropped, exportSizes[7]);
+   //16x16
+   let filenameCropped16Jpg = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[8]}.jpg`;
+   let destFileCropped16Jpg = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filenameCropped16Jpg);
+   CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped16Jpg, jpegStartWidthCropped, exportSizes[8]);
+
+   // Save a cropped SVG
+   let svgMasterCoreStartWidthCroppedSvg =
+      rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+   let filenameCroppedSvg = `/${iconFilename}_${expressiveName}_${exportSizes[8]}_${croppedName}.svg`;
+   let destFileCroppedSvg = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filenameCroppedSvg);
+   CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvg, svgMasterCoreStartWidthCroppedSvg, exportSizes[8]);
+
+
    // non transparent png exports
    // let startWidthonFFFCropped =
    //    rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
@@ -925,20 +1016,10 @@ function mainCore() {
    //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
    //    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFile, startWidthonFFFCropped, exportSizes[i]);
    // }
-   // save all sizes of JPEG into the export folder
-   // let jpegStartWidthCropped =
-   //    rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
-   // for (let i = 0; i < exportSizes.length; i++) {
-   //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.jpg`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filename);
-   //    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFile, jpegStartWidthCropped, exportSizes[i]);
-   // }
-
-
 
 
    //close and clean up
-   rgbDocCroppedVersion.close(SaveOptions.DONOTSAVECHANGES);
+   //rgbDocCroppedVersion.close(SaveOptions.DONOTSAVECHANGES);
    rgbDocCroppedVersion = null;
 
 
@@ -1243,7 +1324,7 @@ function mainExpressive() {
       // start moving expressive icon into our new square landing zone
       let placedmastBannerIconOnText = mastBannerIconOnText;
       let landingZone = sourceDoc.pathItems.getByName("LandingZone");
-      let preferredWidth = (230);
+      let preferredWidth = (460);
       let preferredHeight = (460);
       // do the width
       let widthRatio = (preferredWidth / placedmastBannerIconOnText.width) * 100;
