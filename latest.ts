@@ -108,7 +108,7 @@ Module for image manipulation tasks
 
 // then repeat export loops for SVG PNG JPG Here
 
-
+// this is a typescript feature to help debugging 
 interface Task {
    getArtboardCorner(artboard: any);
    getOffset(itemPos: any, referencePos: any);
@@ -591,7 +591,7 @@ function mainCore() {
       new Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`).create();
    } catch (e) {
       alert(
-         "Issues with creating setup folders.",
+         "Issues with creating setup folders. Check your file permission properties maybe.",
          e.message
       );
    }
@@ -852,9 +852,130 @@ function mainCore() {
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
 
+
    //close and clean up
    rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
    rgbDoc = null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /*********************************************************************
+   RGB cropped export (JPG, PNGs at 16 and 24 sizes), squares, cropped to artwork
+   **********************************************************************/
+   let rgbDocCroppedVersion = CSTasks.duplicateArtboardInNewDoc(
+      sourceDoc,
+      0,
+      DocumentColorSpace.RGB
+   );
+
+   rgbDocCroppedVersion.swatches.removeAll();
+
+   let rgbGroupCropped = iconGroup.duplicate(
+      rgbDocCroppedVersion.layers[0],
+      /*@ts-ignore*/
+      ElementPlacement.PLACEATEND
+   );
+   let rgbLocCropped = [
+      rgbDocCroppedVersion.artboards[0].artboardRect[0] + iconOffset[0],
+      rgbDocCroppedVersion.artboards[0].artboardRect[1] + iconOffset[1],
+   ];
+   CSTasks.translateObjectTo(rgbGroupCropped, rgbLocCropped);
+
+   CSTasks.ungroupOnce(rgbGroupCropped);
+
+   // save all sizes of PNG into the export folder
+   let startWidthCropped =
+      rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.png`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
+      CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFile, startWidthCropped, exportSizes[i]);
+   }
+   // non transparent png exports
+   // let startWidthonFFFCropped =
+   //    rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+   // for (let i = 0; i < exportSizes.length; i++) {
+   //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[i]}.png`;
+   //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
+   //    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFile, startWidthonFFFCropped, exportSizes[i]);
+   // }
+   // save all sizes of JPEG into the export folder
+   // let jpegStartWidthCropped =
+   //    rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+   // for (let i = 0; i < exportSizes.length; i++) {
+   //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.jpg`;
+   //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filename);
+   //    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFile, jpegStartWidthCropped, exportSizes[i]);
+   // }
+
+
+
+
+   //close and clean up
+   rgbDocCroppedVersion.close(SaveOptions.DONOTSAVECHANGES);
+   rgbDocCroppedVersion = null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1091,7 +1212,6 @@ function mainExpressive() {
       sourceDoc.artboards[3].artboardRect[1],
    ];
    CSTasks.translateObjectTo(mastBannerIconOnText, mastBannerIconOnTextPos);
-
 
    /********************************
    Custom function to create a landing square to place the icon correctly
@@ -1792,24 +1912,23 @@ function mainExpressive() {
 
    // create a landing zone square to place icon inside
    //moved it outside the function itself so we can delete it after so it doesn't get exported
-   let getArtLayer4 = mastDocNoText.layers.getByName('Layer 1');
-   let landingZoneSquare4 = getArtLayer4.pathItems.rectangle(
+   let getArtLayerIn4thArtboard = mastDocNoText.layers.getByName('Layer 1');
+   let landingZoneSquareInFourthArtboard = getArtLayerIn4thArtboard.pathItems.rectangle(
       -1471,
       443,
       360,
       360);
 
-
-   function placeIconMasthead1Correctly4(mastGroupNoText, maxSize) {
+   function placeIconMastheadCorrectlyIn4thDoc(mastGroupNoText, maxSize) {
       let setLandingZoneSquareColor = new RGBColor();
       setLandingZoneSquareColor.red = 121;
       setLandingZoneSquareColor.green = 128;
       setLandingZoneSquareColor.blue = 131;
-      landingZoneSquare4.filled = true;
-      landingZoneSquare4.fillColor = setLandingZoneSquareColor;
-      landingZoneSquare4.name = "LandingZone4"
+      landingZoneSquareInFourthArtboard.filled = true;
+      landingZoneSquareInFourthArtboard.fillColor = setLandingZoneSquareColor;
+      landingZoneSquareInFourthArtboard.name = "LandingZone4"
       /*@ts-ignore*/
-      landingZoneSquare4.move(getArtLayer4, ElementPlacement.PLACEATEND);
+      landingZoneSquareInFourthArtboard.move(getArtLayerIn4thArtboard, ElementPlacement.PLACEATEND);
 
       // start moving expressive icon into our new square landing zone
       let placedmastGroup = mastGroupNoText;
@@ -1839,10 +1958,10 @@ function mainExpressive() {
          factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
       mastGroupNoText.resize(factor, factor);
    }
-   placeIconMasthead1Correctly4(mastGroupNoText, { W: 360, H: 360 });
+   placeIconMastheadCorrectlyIn4thDoc(mastGroupNoText, { W: 360, H: 360 });
 
    // delete the landing zone
-   landingZoneSquare4.remove();
+   landingZoneSquareInFourthArtboard.remove();
 
    CSTasks.ungroupOnce(mastGroupNoText);
 
