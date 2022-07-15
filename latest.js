@@ -685,6 +685,17 @@ function mainCore() {
     }
     placeIconMasthead1Correctly(rgbGroupCropped, { W: 256, H: 256 });
     CSTasks.ungroupOnce(rgbGroupCropped);
+    // // non transparent png exports
+    var startWidthCroppedOnFFF = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+    //24x24
+    var filenameCropped24PngOnFFF = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(onWhiteName, "_").concat(exportSizes[7], ".png");
+    var destFileCropped24PngOnFFF = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filenameCropped24PngOnFFF);
+    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped24PngOnFFF, startWidthCroppedOnFFF, exportSizes[7]);
+    //16x16
+    var filenameCropped16PngOnFFF = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(onWhiteName, "_").concat(exportSizes[8], ".png");
+    var destFileCropped16PngOnFFF = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filenameCropped16PngOnFFF);
+    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped16PngOnFFF, startWidthCroppedOnFFF, exportSizes[8]);
+    //CSTasks.scaleAndExportNonTransparentPNG(filenameCropped16PngOnFFF, destFileCropped16OnFFF, startWidthoCroppedonFFF, exportSizes[8]);
     // save 16 and 24 sizes of PNG into the export folder
     var startWidthCropped = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
     //24x24
@@ -710,7 +721,7 @@ function mainCore() {
     var filenameCroppedSvg = "/".concat(iconFilename, "_").concat(coreName, "_").concat(exportSizes[8], "_").concat(croppedName, ".svg");
     var destFileCroppedSvg = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(svgName)) + filenameCroppedSvg);
     CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvg, svgMasterCoreStartWidthCroppedSvg, exportSizes[8]);
-    //convert violet to white and save as EPS
+    //convert color to white
     CSTasks.convertColorRGB(rgbDocCroppedVersion.pathItems, colors[violetIndex][0], colors[whiteIndex][0]);
     // save 16 and 24 sizes of PNG into the export folder
     var startWidthCroppedInversed = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];

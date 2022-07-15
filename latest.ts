@@ -947,6 +947,22 @@ function mainCore() {
 
 
    CSTasks.ungroupOnce(rgbGroupCropped);
+   // // non transparent png exports
+
+   let startWidthCroppedOnFFF =
+      rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+   //24x24
+   let filenameCropped24PngOnFFF = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[7]}.png`;
+   let destFileCropped24PngOnFFF = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped24PngOnFFF);
+   CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped24PngOnFFF, startWidthCroppedOnFFF, exportSizes[7]);
+   //16x16
+   let filenameCropped16PngOnFFF = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[8]}.png`;
+   let destFileCropped16PngOnFFF = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped16PngOnFFF);
+   CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped16PngOnFFF, startWidthCroppedOnFFF, exportSizes[8]);
+
+   //CSTasks.scaleAndExportNonTransparentPNG(filenameCropped16PngOnFFF, destFileCropped16OnFFF, startWidthoCroppedonFFF, exportSizes[8]);
+
+
 
    // save 16 and 24 sizes of PNG into the export folder
    let startWidthCropped =
@@ -979,7 +995,7 @@ function mainCore() {
    let destFileCroppedSvg = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filenameCroppedSvg);
    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvg, svgMasterCoreStartWidthCroppedSvg, exportSizes[8]);
 
-   //convert violet to white and save as EPS
+   //convert color to white
    CSTasks.convertColorRGB(
       rgbDocCroppedVersion.pathItems,
       colors[violetIndex][0],
@@ -1040,6 +1056,7 @@ function mainCore() {
    let filenameCroppedSvgInactive = `/${iconFilename}_${coreName}_${exportSizes[8]}_${inactiveName}_${croppedName}.svg`;
    let destFileCroppedSvgInactive = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filenameCroppedSvgInactive);
    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvgInactive, svgMasterCoreStartWidthCroppedSvgInactive, exportSizes[8]);
+
 
    //close and clean up
    rgbDocCroppedVersion.close(SaveOptions.DONOTSAVECHANGES);
