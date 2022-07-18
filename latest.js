@@ -445,8 +445,16 @@ var CSTasks = (function () {
     return tasks;
 })();
 /****************
- * CORE SCRIPT START
+ _________
+\_   ___ \  ___________   ____
+/    \  \/ /  _ \_  __ \_/ __ \
+\     \___(  <_> )  | \/\  ___/
+ \______  /\____/|__|    \___  >
+        \/                   \/
  ***************/
+/**********************************
+ Core
+***********************************/
 function mainCore() {
     /**********************************
    ** HIDE / SHOW SOME LAYERS NEEDED
@@ -685,6 +693,7 @@ function mainCore() {
     }
     placeIconMasthead1Correctly(rgbGroupCropped, { W: 256, H: 256 });
     CSTasks.ungroupOnce(rgbGroupCropped);
+    // below we export croped only versions
     // // non transparent png exports
     var startWidthCroppedOnFFF = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
     //24x24
@@ -696,7 +705,7 @@ function mainCore() {
     var destFileCropped16PngOnFFF = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filenameCropped16PngOnFFF);
     CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped16PngOnFFF, startWidthCroppedOnFFF, exportSizes[8]);
     //CSTasks.scaleAndExportNonTransparentPNG(filenameCropped16PngOnFFF, destFileCropped16OnFFF, startWidthoCroppedonFFF, exportSizes[8]);
-    // save 16 and 24 sizes of PNG into the export folder
+    // save cropped 16 and 24 sizes of PNG into the export folder
     var startWidthCropped = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
     //24x24
     var filenameCropped24Png = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[7], ".png");
@@ -706,7 +715,7 @@ function mainCore() {
     var filenameCropped16Png = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[8], ".png");
     var destFileCropped16Png = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filenameCropped16Png);
     CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16Png, startWidthCropped, exportSizes[8]);
-    // save 16 and 24 sizes of JPEG into the export folder
+    // save cropped 16 and 24 sizes of JPEG into the export folder
     var jpegStartWidthCropped = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
     //24x24
     var filenameCropped24Jpg = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(exportSizes[7], ".jpg");
@@ -723,7 +732,7 @@ function mainCore() {
     CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvg, svgMasterCoreStartWidthCroppedSvg, exportSizes[8]);
     //convert color to white
     CSTasks.convertColorRGB(rgbDocCroppedVersion.pathItems, colors[violetIndex][0], colors[whiteIndex][0]);
-    // save 16 and 24 sizes of PNG into the export folder
+    // save cropped 16 and 24 sizes of PNG into the export folder
     var startWidthCroppedInversed = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
     //24x24  
     var filenameCropped24PngInversed = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[7], ".png");
@@ -739,9 +748,9 @@ function mainCore() {
     var filenameCroppedSvgInversed = "/".concat(iconFilename, "_").concat(coreName, "_").concat(exportSizes[8], "_").concat(inverseName, "_").concat(croppedName, ".svg");
     var destFileCroppedSvgInversed = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(svgName)) + filenameCroppedSvgInversed);
     CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvgInversed, svgMasterCoreStartWidthCroppedSvgInversed, exportSizes[8]);
-    //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
+    //convert to inactive color
     CSTasks.convertAll(rgbDocCroppedVersion.pathItems, colors[grayIndex][0], 100);
-    // save 16 and 24 sizes of PNG into the export folder
+    // save cropped 16 and 24 sizes of PNG into the export folder
     var startWidthCroppedInactive = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
     //24x24  
     var filenameCropped24PngInactive = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[7], ".png");
@@ -751,7 +760,7 @@ function mainCore() {
     var filenameCropped16PngInactive = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[8], ".png");
     var destFileCropped16PngInactive = new File(Folder("".concat(sourceDoc.path, "/").concat(coreName, "/").concat(pngName)) + filenameCropped16PngInactive);
     CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16PngInactive, startWidthCropped, exportSizes[8]);
-    // save 16 and 24 sizes of JPEG into the export folder
+    // save cropped 16 and 24 sizes of JPEG into the export folder
     var jpegStartWidthCroppedInactive = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
     //24x24
     var filenameCropped24JpgInactive = "/".concat(iconFilename, "_").concat(coreName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[7], ".jpg");
@@ -874,6 +883,14 @@ function mainCore() {
 }
 mainCore();
 /****************
+___________                                          .__
+\_   _____/__  ________________   ____   ______ _____|__|__  __ ____
+ |    __)_\  \/  /\____ \_  __ \_/ __ \ /  ___//  ___/  \  \/ // __ \
+ |        \>    < |  |_> >  | \/\  ___/ \___ \ \___ \|  |\   /\  ___/
+/_______  /__/\_ \|   __/|__|    \___  >____  >____  >__| \_/  \___  >
+        \/      \/|__|               \/     \/     \/              \/
+ ***************/
+/****************
  * Expressive
  ***************/
 function mainExpressive() {
@@ -942,13 +959,13 @@ function mainExpressive() {
     var getArtLayer = sourceDoc.layers.getByName('Art');
     var landingZoneSquare = getArtLayer.pathItems.rectangle(-844, 571, 460, 460);
     function placeIconMasthead1Correctly(mastBannerIconOnText, maxSize) {
-        var setLandingZoneSquareColor = new RGBColor();
-        setLandingZoneSquareColor.red = 12;
-        setLandingZoneSquareColor.green = 28;
-        setLandingZoneSquareColor.blue = 151;
-        landingZoneSquare.filled = true;
-        landingZoneSquare.fillColor = setLandingZoneSquareColor;
+        // let setLandingZoneSquareColor = new RGBColor();
+        // setLandingZoneSquareColor.red = 12;
+        // setLandingZoneSquareColor.green = 28;
+        // setLandingZoneSquareColor.blue = 151;
+        // landingZoneSquare.fillColor = setLandingZoneSquareColor;
         landingZoneSquare.name = "LandingZone";
+        landingZoneSquare.filled = false;
         /*@ts-ignore*/
         landingZoneSquare.move(getArtLayer, ElementPlacement.PLACEATEND);
         // start moving expressive icon into our new square landing zone
@@ -1047,12 +1064,6 @@ function mainExpressive() {
     sourceDoc.artboards.add(
     // this fires but then gets replaced further down
     CSTasks.newRect(FourthMainArtboardFirstRect[1], FourthMainArtboardFirstRect[2] + 772, 800, 400));
-    /* try {
-       sourceDoc.artboards.setActiveArtboardIndex(3);//change which artboard you want to crop
-       sourceDoc.artboards[3].artboardRect = new Rect(0, 0, 1024, 512);
-    } catch (error) {
-       alert(error);
-    } */
     //select the contents on artboard 1
     var selFourthBanner = CSTasks.selectContentsOnArtboard(sourceDoc, 1);
     // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
@@ -1083,13 +1094,13 @@ function mainExpressive() {
     var getArtLayer2 = sourceDoc.layers.getByName('Art');
     var landingZoneSquare2 = getArtLayer2.pathItems.rectangle(-1472, 444, 360, 360);
     function placeIconMasthead1Correctly2(fourthBannerMast, maxSize) {
-        var setLandingZoneSquareColor = new RGBColor();
-        setLandingZoneSquareColor.red = 121;
-        setLandingZoneSquareColor.green = 128;
-        setLandingZoneSquareColor.blue = 131;
-        landingZoneSquare2.filled = true;
-        landingZoneSquare2.fillColor = setLandingZoneSquareColor;
+        // let setLandingZoneSquareColor = new RGBColor();
+        // setLandingZoneSquareColor.red = 121;
+        // setLandingZoneSquareColor.green = 128;
+        // setLandingZoneSquareColor.blue = 131;
+        // landingZoneSquare2.fillColor = setLandingZoneSquareColor;
         landingZoneSquare2.name = "LandingZone2";
+        landingZoneSquare2.filled = false;
         /*@ts-ignore*/
         landingZoneSquare2.move(getArtLayer2, ElementPlacement.PLACEATEND);
         // start moving expressive icon into our new square landing zone
@@ -1153,14 +1164,6 @@ function mainExpressive() {
     ];
     CSTasks.translateObjectTo(rgbGroup, rgbLoc);
     CSTasks.ungroupOnce(rgbGroup);
-    //save all sizes of JPEG into the export folder
-    // let jpegStartWidth2 =
-    //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    // for (let i = 0; i < exportSizes.length; i++) {
-    //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.jpg`;
-    //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filename);
-    //    CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth2, exportSizes[i]);
-    // }
     //save a  JPG exp. set
     var jpegStartWidth2 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
     for (var i_17 = 0; i_17 < exportSizes.length; i_17++) {
@@ -1306,13 +1309,13 @@ function mainExpressive() {
     var getArtLayer3 = mastDoc.layers.getByName('Layer 1');
     var landingZoneSquare3 = getArtLayer3.pathItems.rectangle(-843, 570, 460, 460);
     function placeIconMasthead1Correctly3(mastGroup, maxSize) {
-        var setLandingZoneSquareColor = new RGBColor();
-        setLandingZoneSquareColor.red = 121;
-        setLandingZoneSquareColor.green = 128;
-        setLandingZoneSquareColor.blue = 131;
-        landingZoneSquare3.filled = true;
-        landingZoneSquare3.fillColor = setLandingZoneSquareColor;
+        // let setLandingZoneSquareColor = new RGBColor();
+        // setLandingZoneSquareColor.red = 121;
+        // setLandingZoneSquareColor.green = 128;
+        // setLandingZoneSquareColor.blue = 131;
+        // landingZoneSquare3.fillColor = setLandingZoneSquareColor;
         landingZoneSquare3.name = "LandingZone3";
+        landingZoneSquare3.filled = false;
         /*@ts-ignore*/
         landingZoneSquare3.move(getArtLayer3, ElementPlacement.PLACEATEND);
         // start moving expressive icon into our new square landing zone
@@ -1442,13 +1445,13 @@ function mainExpressive() {
     var getArtLayerIn4thArtboard = mastDocNoText.layers.getByName('Layer 1');
     var landingZoneSquareInFourthArtboard = getArtLayerIn4thArtboard.pathItems.rectangle(-1471, 443, 360, 360);
     function placeIconMastheadCorrectlyIn4thDoc(mastGroupNoText, maxSize) {
-        var setLandingZoneSquareColor = new RGBColor();
-        setLandingZoneSquareColor.red = 121;
-        setLandingZoneSquareColor.green = 128;
-        setLandingZoneSquareColor.blue = 131;
-        landingZoneSquareInFourthArtboard.filled = true;
-        landingZoneSquareInFourthArtboard.fillColor = setLandingZoneSquareColor;
+        // let setLandingZoneSquareColor = new RGBColor();
+        // setLandingZoneSquareColor.red = 121;
+        // setLandingZoneSquareColor.green = 128;
+        // setLandingZoneSquareColor.blue = 131;
+        // landingZoneSquareInFourthArtboard.fillColor = setLandingZoneSquareColor;
         landingZoneSquareInFourthArtboard.name = "LandingZone4";
+        landingZoneSquareInFourthArtboard.filled = false;
         /*@ts-ignore*/
         landingZoneSquareInFourthArtboard.move(getArtLayerIn4thArtboard, ElementPlacement.PLACEATEND);
         // start moving expressive icon into our new square landing zone
