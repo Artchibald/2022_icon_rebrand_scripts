@@ -873,31 +873,6 @@ function mainCore() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
    /*********************************************************************
    Export an SVG on a white background
    **********************************************************************/
@@ -957,39 +932,6 @@ function mainCore() {
    //close and clean up
    rgbDocOnFFF.close(SaveOptions.DONOTSAVECHANGES);
    rgbDocOnFFF = null;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1670,6 +1612,74 @@ function mainExpressive() {
       400
    );
    sourceDoc.artboards[4].artboardRect = secondResizedRect;
+
+
+
+
+
+   /*********************************************************************
+   Export an SVG on a white background
+   **********************************************************************/
+   let rgbDocOnFFF = CSTasks.duplicateArtboardInNewDoc(
+      sourceDoc,
+      1,
+      DocumentColorSpace.RGB
+   );
+
+
+   rgbDocOnFFF.swatches.removeAll();
+   let rgbGroupOnFFF = iconGroup.duplicate(
+      rgbDocOnFFF.layers[0],
+      /*@ts-ignore*/
+      ElementPlacement.PLACEATBEGINNING
+   );
+   let rgbLocOnFFF = [
+      rgbDocOnFFF.artboards[0].artboardRect[0] + iconOffset[0],
+      rgbDocOnFFF.artboards[0].artboardRect[1] + iconOffset[1],
+   ];
+   CSTasks.translateObjectTo(rgbGroupOnFFF, rgbLocOnFFF);
+
+
+
+
+   CSTasks.ungroupOnce(rgbGroupOnFFF);
+   // Add a white square bg here to save svg on white
+   let getArtLayerOnFFF = rgbDocOnFFF.layers.getByName('Layer 1');
+   let myMainPurpleBgLayerOnFFF = rgbDocOnFFF.layers.add();
+   myMainPurpleBgLayerOnFFF.name = "Main_Purple_BG_layer";
+   let GetMyMainPurpleBgLayerOnFFF = rgbDocOnFFF.layers.getByName('Main_Purple_BG_layer');
+   let landingZoneSquareOnFFF = GetMyMainPurpleBgLayerOnFFF.pathItems.rectangle(
+      0,
+      400,
+      256,
+      256);
+   let setLandingZoneSquareOnFFFColor = new RGBColor();
+   setLandingZoneSquareOnFFFColor.red = 255;
+   setLandingZoneSquareOnFFFColor.green = 255;
+   setLandingZoneSquareOnFFFColor.blue = 255;
+   landingZoneSquareOnFFF.fillColor = setLandingZoneSquareOnFFFColor;
+   landingZoneSquareOnFFF.name = "bgSquareForSvgOnFF"
+   landingZoneSquareOnFFF.filled = true;
+   landingZoneSquareOnFFF.stroked = false;
+
+   /*@ts-ignore*/
+   GetMyMainPurpleBgLayerOnFFF.move(getArtLayerOnFFF, ElementPlacement.PLACEATEND);
+   //save a master SVG 
+   let svgMasterCoreStartWidthOnFFF =
+      rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${onWhiteName}.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
+      CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
+   }
+
+   //close and clean up
+   rgbDocOnFFF.close(SaveOptions.DONOTSAVECHANGES);
+   rgbDocOnFFF = null;
+
+
+
+
 
 
    /*********************************************************************
