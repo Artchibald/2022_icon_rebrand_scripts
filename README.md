@@ -93,7 +93,7 @@ Or VS code main top nav menu > Terminal > Run Build Task > Watch
 - CMYK EPS
 - CMYK inverse EPS
 
-- The script copies a selected artboard and duplicates the current selection and pastes in a new file, saves some exports and closes the 2nd file multiple times throughout. You would want to duplicate these chunks for new funcionality.
+- The script copies a selected artboard and duplicates the current selection and pastes in a new file, saves some exports and closes the 2nd file multiple times throughout. You would want to duplicate these chunks for new functionality.
 
 From
 ```
@@ -109,16 +109,14 @@ To
    //close and clean up
    someDoc.close(SaveOptions.DONOTSAVECHANGES);
    someDoc = null;
-
-
 ```
 
+# Script is 4 distinct blocks
 
-
-- Script starts with global var declarations
+- Script starts with global var declarations, standard.
 - Then reusable interface with reusable functions.
-- Then all the Core exports (artboard0)
-- Then all the expressive exports (artboard1)
+- Then all the Core exports (sourceDoc.artboards[0].XXXX)
+- Then all the expressive exports (sourceDoc.artboards[1].XXXX)
 
 # Initial call brief
 
