@@ -41,7 +41,7 @@ XXXXXXTBCXXXXXXXX
 
 - This script only works locally not on a server
 - Don't forget to change .txt to .js on the script.
-- FULL README (unfinished): https://github.com/Artchibald/2022_icon_rebrand_scripts 
+- FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts 
 - I can take this pop up out if you prefer. 
 - Video set up tutorial available here: XXXTBCXXX 
 - Open your own .ai template or the provided ones in folders called test.
@@ -58,7 +58,7 @@ XXXXXXTBCXXXXXXXX
 - Make sure you are using the correct swatches/colours. 
 - Illustrator check advanced colour mode is correct:  Edit > Assign profile > Must match sRGB IEC61966-2.1
 - Select each individual color shape and under Window > Colours make sure each shape colour is set to rgb in tiny top right burger menu.
-- Any issues: archie@archibaldbutler.com.
+- Any issues: archie AT archibaldbutler.com.
 
 # Run watch task to compile ts to js
 

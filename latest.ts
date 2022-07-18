@@ -22,7 +22,7 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 - CMYK EPS
 - CMYK inverse EPS
 ************************************************/
-alert("FULL README (unfinished): https://github.com/Artchibald/2022_icon_rebrand_scripts \n\nI can take this pop up out if you prefer. \n\nVideo set up tutorial available here: XXXTBCXXX \n\nYou must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets. \n\nIllustrator says (not responding) on PC but it will respond, give Bill Gates some time XD !) \n\nIf you run the script again, you should probably delete the previous assets created. They get intermixed and overwritten. \n\nBoth artboard sizes must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\nIcons must be on a layer called exactly 'Art'. \n\nMake sure all icons are unlocked to avoid bugs. \n\nExported assets will be saved where the .ai file is saved. \n\nPlease try to use underscore instead of spaces to avoid bugs in filenames. \n\nAny issues: archie@archibaldbutler.com.");
+alert("FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts \n\nVideo set up tutorial available here: XXXTBCXXX \n\nYou must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets. \n\nIllustrator says (not responding) on PC but it will respond, give Bill Gates some time XD !) \n\nIf you run the script again, you should probably delete the previous assets created. They get intermixed and overwritten. \n\nBoth artboard sizes must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\nIcons must be on a layer called exactly 'Art'. \n\nMake sure all icons are unlocked to avoid bugs. \n\nExported assets will be saved where the .ai file is saved. \n\nPlease try to use underscore instead of spaces to avoid bugs in filenames. \n\nAny issues: archie@archibaldbutler.com.");
 /********************************* 
 VARIABLES YOU MIGHT NEED TO CHANGE
 **********************************/
@@ -559,6 +559,40 @@ let CSTasks = (function () {
 
 })();
 
+/**********************************
+** HIDE / SHOW SOME LAYERS NEEDED
+***********************************/
+try {
+   guideLayer.visible = false;
+} catch (e) {
+   alert(
+      "Issue with layer hiding the Guidelines layer (do not change name from exactly Guidelines).",
+      e.message
+   );
+}
+/*****************************
+create export folder if needed
+******************************/
+try {
+   // Core folder
+   new Folder(`${sourceDoc.path}/${coreName}`).create();
+   new Folder(`${sourceDoc.path}/${coreName}/${epsName}`).create();
+   new Folder(`${sourceDoc.path}/${coreName}/${jpgName}`).create();
+   new Folder(`${sourceDoc.path}/${coreName}/${pngName}`).create();
+   new Folder(`${sourceDoc.path}/${coreName}/${svgName}`).create();
+   // Expressive folder
+   new Folder(`${sourceDoc.path}/${expressiveName}`).create();
+   new Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`).create();
+   new Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`).create();
+   new Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`).create();
+   new Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`).create();
+} catch (e) {
+   alert(
+      "Issues with creating setup folders. Check your file permission properties maybe.",
+      e.message
+   );
+}
+
 /****************
  _________                       
 \_   ___ \  ___________   ____  
@@ -572,39 +606,7 @@ let CSTasks = (function () {
 ***********************************/
 
 function mainCore() {
-   /**********************************
-  ** HIDE / SHOW SOME LAYERS NEEDED
-  ***********************************/
-   try {
-      guideLayer.visible = false;
-   } catch (e) {
-      alert(
-         "Issue with layer hiding the Guidelines layer (do not change name from exactly Guidelines).",
-         e.message
-      );
-   }
-   /*****************************
-   create export folder if needed
-   ******************************/
-   try {
-      // Core folder
-      new Folder(`${sourceDoc.path}/${coreName}`).create();
-      new Folder(`${sourceDoc.path}/${coreName}/${epsName}`).create();
-      new Folder(`${sourceDoc.path}/${coreName}/${jpgName}`).create();
-      new Folder(`${sourceDoc.path}/${coreName}/${pngName}`).create();
-      new Folder(`${sourceDoc.path}/${coreName}/${svgName}`).create();
-      // Expressive folder
-      new Folder(`${sourceDoc.path}/${expressiveName}`).create();
-      new Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`).create();
-      new Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`).create();
-      new Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`).create();
-      new Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`).create();
-   } catch (e) {
-      alert(
-         "Issues with creating setup folders. Check your file permission properties maybe.",
-         e.message
-      );
-   }
+
    /******************
    set up artboards
    ******************/
@@ -790,7 +792,7 @@ function mainCore() {
       CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile, startWidthonFFF, exportSizes[i]);
    }
 
-   //save all sizes of SVG into the export folder - THIS NEEDS WORK, viewbox is 256 across all
+   //save all sizes of SVG into the export folder - viewbox is 256 across all
    // we don't need to loop SVGs they are scaleable graphics, 1 size fits all
    // let svgCoreStartWidth =
    //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
@@ -867,6 +869,128 @@ function mainCore() {
    //close and clean up
    rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
    rgbDoc = null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /*********************************************************************
+   Export an SVG on a white background
+   **********************************************************************/
+   let rgbDocOnFFF = CSTasks.duplicateArtboardInNewDoc(
+      sourceDoc,
+      0,
+      DocumentColorSpace.RGB
+   );
+
+
+   rgbDocOnFFF.swatches.removeAll();
+   let rgbGroupOnFFF = iconGroup.duplicate(
+      rgbDocOnFFF.layers[0],
+      /*@ts-ignore*/
+      ElementPlacement.PLACEATBEGINNING
+   );
+   let rgbLocOnFFF = [
+      rgbDocOnFFF.artboards[0].artboardRect[0] + iconOffset[0],
+      rgbDocOnFFF.artboards[0].artboardRect[1] + iconOffset[1],
+   ];
+   CSTasks.translateObjectTo(rgbGroupOnFFF, rgbLocOnFFF);
+
+
+
+
+   CSTasks.ungroupOnce(rgbGroupOnFFF);
+   // Add a white square bg here to save svg on white
+   let getArtLayer = rgbDocOnFFF.layers.getByName('Layer 1');
+   let myMainPurpleBgLayerOnFFF = rgbDocOnFFF.layers.add();
+   myMainPurpleBgLayerOnFFF.name = "Main_Purple_BG_layer";
+   let GetMyMainPurpleBgLayerOnFFF = rgbDocOnFFF.layers.getByName('Main_Purple_BG_layer');
+   let landingZoneSquareOnFFF = GetMyMainPurpleBgLayerOnFFF.pathItems.rectangle(
+      0,
+      0,
+      256,
+      256);
+   let setLandingZoneSquareOnFFFColor = new RGBColor();
+   setLandingZoneSquareOnFFFColor.red = 255;
+   setLandingZoneSquareOnFFFColor.green = 255;
+   setLandingZoneSquareOnFFFColor.blue = 255;
+   landingZoneSquareOnFFF.fillColor = setLandingZoneSquareOnFFFColor;
+   landingZoneSquareOnFFF.name = "bgSquareForSvgOnFF"
+   landingZoneSquareOnFFF.filled = true;
+   landingZoneSquareOnFFF.stroked = false;
+
+   /*@ts-ignore*/
+   GetMyMainPurpleBgLayerOnFFF.move(getArtLayer, ElementPlacement.PLACEATEND);
+   //save a master SVG 
+   let svgMasterCoreStartWidthOnFFF =
+      rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${coreName}_${onWhiteName}.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
+      CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
+   }
+
+   //close and clean up
+   rgbDocOnFFF.close(SaveOptions.DONOTSAVECHANGES);
+   rgbDocOnFFF = null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
    /*********************************************************************
@@ -1197,7 +1321,7 @@ function mainExpressive() {
    ******************/
 
 
-   //if there are three artboards, create the new third masthead artboard
+   //if there are three artboards, create the new fourth(3rd in array) masthead artboard
    if (
       sourceDoc.artboards.length == 3 &&
       sourceDoc.artboards[1].artboardRect[2] -
