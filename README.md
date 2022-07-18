@@ -41,8 +41,7 @@ XXXXXXTBCXXXXXXXX
 
 - This script only works locally not on a server
 - Don't forget to change .txt to .js on the script.
-- FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts 
-- I can take this pop up out if you prefer. 
+- FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts  
 - Video set up tutorial available here: XXXTBCXXX 
 - Open your own .ai template or the provided ones in folders called test.
 - Go to file > Scripts > Other Scripts > Import our new script.
@@ -58,7 +57,7 @@ XXXXXXTBCXXXXXXXX
 - Make sure you are using the correct swatches/colours. 
 - Illustrator check advanced colour mode is correct:  Edit > Assign profile > Must match sRGB IEC61966-2.1
 - Select each individual color shape and under Window > Colours make sure each shape colour is set to rgb in tiny top right burger menu.
-- Any issues: archie AT archibaldbutler.com.
+- Any issues: archie ATsymbol archibaldbutler.com.
 
 # Run watch task to compile ts to js
 
@@ -74,9 +73,8 @@ Or VS code main top nav menu > Terminal > Run Build Task > Watch
 - Then a function for the expressive exports.
 - We target the different artboards using their positions in the array
 - There are code sections where we duplicate in a new artboard, save out exports, then close the new artboard. In this scenario the array of artboards will always be 0, whereas main doc has 2 artboards, 0 and 1, but also artboards, 2, 3 and 4 get created halfway down the script.
-
-Script to automate creating variations and exporting files for WTW icons
-Starting with an open AI file with a single icon on a single 256 x 256 artboard
+- Script to automate creating variations and exporting files for WTW icons
+- Starting with an open AI file with a single icon on a single 256 x 256 artboard
 – Creates a new artboard0 at 16x16
 - Creates a new artboard1 at 24x24
 - Creates a new artboard2 at 1400x128 for old banner style
@@ -95,7 +93,27 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 - CMYK EPS
 - CMYK inverse EPS
 
-- The script copies  a selected artboard and duplicates the current selection and pastes in a new file, saves some exports and closes the 2nd file multiple times throughout. You would want to duplicate these chunks for new funcionality.
+- The script copies a selected artboard and duplicates the current selection and pastes in a new file, saves some exports and closes the 2nd file multiple times throughout. You would want to duplicate these chunks for new funcionality.
+
+From
+```
+ let someDoc = CSTasks.duplicateArtboardInNewDoc(
+      sourceDoc,
+      3,
+      DocumentColorSpace.RGB
+   );
+```
+
+To
+```
+   //close and clean up
+   someDoc.close(SaveOptions.DONOTSAVECHANGES);
+   someDoc = null;
+
+
+```
+
+
 
 - Script starts with global var declarations
 - Then reusable interface with reusable functions.
@@ -167,8 +185,7 @@ Other work out of hours above
 - Wed 13 July working major blocker, icon h is not same as icon w, trialling solutions, no success
 - Thu 14 July Delivery day, finally fixed calculation from day before, packaged, cleaning, documenting
 - Fri 15 July Working on how to crop for cropped pngs 16 and 24 requested by Katie, discussed with Chris McDemott and implementing new stage for this in the js file, also fixed CMYK issue major blocker, implemented on inverse, inactive, onFFF too in Core. Still need to do expressive.
- 
- 
+- Mon 18 Jul, clean script more, doc cleanups more, added 2 new export assets as per spreadsheet, Core and Expressive SVG onFFF.
 <!-- # No license for graphik font, delete on completion -->
 
 # Shorten file names as per Jo request?
