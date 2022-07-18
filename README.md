@@ -6,9 +6,9 @@
     <img src="images/img.png" alt="Logo" width="180" height="180">
   </a>
 
-<h3 align="center">STILL WRITING THIS! A Typescript file that converts into ECMA 3 target JS file for use in Adobe Illustrator 2022. JS script that automates icon export processes in Adobe Illustrator. More info TBC.</h3>
+<h3 align="center">A Typescript file that converts into ECMA 3 target JS file for use in Adobe Illustrator 2022. JS script that takes 2 icons on 2 artboards @256x256 and exports them into a variety of banners and formats.</h3>
 
-  <p align="center">
+  <p align="center"> 
     Useful links 
     <br />
     <a href="https://github.com/Artchibald/2022_icon_rebrand_scripts"><strong>Explore the docs »</strong></a>
