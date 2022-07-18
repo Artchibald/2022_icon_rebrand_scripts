@@ -1250,6 +1250,111 @@ function mainExpressive() {
     //close and clean up
     rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
     rgbDoc = null;
+    /*********************************************************************
+    RGB cropped export (JPG, PNGs at 16 and 24 sizes), squares, cropped to artwork
+    **********************************************************************/
+    var rgbDocCroppedVersion = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 1, DocumentColorSpace.RGB);
+    rgbDocCroppedVersion.swatches.removeAll();
+    var rgbGroupCropped = iconGroup.duplicate(rgbDocCroppedVersion.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
+    var rgbLocCropped = [
+        rgbDocCroppedVersion.artboards[0].artboardRect[0] + iconOffset[0],
+        rgbDocCroppedVersion.artboards[0].artboardRect[1] + iconOffset[1],
+    ];
+    CSTasks.translateObjectTo(rgbGroupCropped, rgbLocCropped);
+    // remove padding here befor exporting
+    function resizeCroppedExpressiveIcon(rgbGroupCropped, maxSize) {
+        var W = rgbGroupCropped.width, H = rgbGroupCropped.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
+        rgbGroupCropped.resize(factor, factor);
+    }
+    resizeCroppedExpressiveIcon(rgbGroupCropped, { W: 256, H: 256 });
+    CSTasks.ungroupOnce(rgbGroupCropped);
+    // below we export croped only versions
+    // // non transparent png exports
+    var startWidthCroppedOnFFF = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+    //24x24
+    var filenameCropped24PngOnFFF = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, "_").concat(onWhiteName, "_").concat(exportSizes[7], ".png");
+    var destFileCropped24PngOnFFF = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(pngName)) + filenameCropped24PngOnFFF);
+    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped24PngOnFFF, startWidthCroppedOnFFF, exportSizes[7]);
+    //16x16
+    var filenameCropped16PngOnFFF = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(onWhiteName, "_").concat(exportSizes[8], ".png");
+    var destFileCropped16PngOnFFF = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(pngName)) + filenameCropped16PngOnFFF);
+    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped16PngOnFFF, startWidthCroppedOnFFF, exportSizes[8]);
+    //CSTasks.scaleAndExportNonTransparentPNG(filenameCropped16PngOnFFF, destFileCropped16OnFFF, startWidthoCroppedonFFF, exportSizes[8]);
+    // save cropped 16 and 24 sizes of PNG into the export folder
+    var startWidthCropped = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+    //24x24
+    var filenameCropped24Png = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(exportSizes[7], ".png");
+    var destFileCropped24Png = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(pngName)) + filenameCropped24Png);
+    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped24Png, startWidthCropped, exportSizes[7]);
+    //16x16
+    var filenameCropped16Png = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(exportSizes[8], ".png");
+    var destFileCropped16Png = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(pngName)) + filenameCropped16Png);
+    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16Png, startWidthCropped, exportSizes[8]);
+    // save cropped 16 and 24 sizes of JPEG into the export folder
+    var jpegStartWidthCropped = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+    //24x24
+    var filenameCropped24Jpg = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(exportSizes[7], ".jpg");
+    var destFileCropped24Jpg = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(jpgName)) + filenameCropped24Jpg);
+    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped24Jpg, jpegStartWidthCropped, exportSizes[7]);
+    //16x16
+    var filenameCropped16Jpg = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(exportSizes[8], ".jpg");
+    var destFileCropped16Jpg = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(jpgName)) + filenameCropped16Jpg);
+    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped16Jpg, jpegStartWidthCropped, exportSizes[8]);
+    // Save a cropped SVG 
+    var svgMasterCoreStartWidthCroppedSvg = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+    var filenameCroppedSvg = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(exportSizes[8], "_").concat(croppedName, ".svg");
+    var destFileCroppedSvg = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(svgName)) + filenameCroppedSvg);
+    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvg, svgMasterCoreStartWidthCroppedSvg, exportSizes[8]);
+    //convert color to white
+    CSTasks.convertColorRGB(rgbDocCroppedVersion.pathItems, colors[violetIndex][0], colors[whiteIndex][0]);
+    // save cropped 16 and 24 sizes of PNG into the export folder
+    var startWidthCroppedInversed = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+    //24x24  
+    var filenameCropped24PngInversed = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[7], ".png");
+    var destFileCropped24PngInversed = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(pngName)) + filenameCropped24PngInversed);
+    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped24PngInversed, startWidthCroppedInversed, exportSizes[7]);
+    //16x16
+    var filenameCropped16PngInversed = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[8], ".png");
+    var destFileCropped16PngInversed = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(pngName)) + filenameCropped16PngInversed);
+    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16PngInversed, startWidthCropped, exportSizes[8]);
+    // no point making an inversed jpg, it is white on white, so futile
+    // Save a cropped SVG
+    var svgMasterCoreStartWidthCroppedSvgInversed = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+    var filenameCroppedSvgInversed = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(exportSizes[8], "_").concat(inverseName, "_").concat(croppedName, ".svg");
+    var destFileCroppedSvgInversed = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(svgName)) + filenameCroppedSvgInversed);
+    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvgInversed, svgMasterCoreStartWidthCroppedSvgInversed, exportSizes[8]);
+    //convert to inactive color
+    CSTasks.convertAll(rgbDocCroppedVersion.pathItems, colors[grayIndex][0], 100);
+    // save cropped 16 and 24 sizes of PNG into the export folder
+    var startWidthCroppedInactive = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+    //24x24  
+    var filenameCropped24PngInactive = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[7], ".png");
+    var destFileCropped24PngInactive = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(pngName)) + filenameCropped24PngInactive);
+    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped24PngInactive, startWidthCroppedInactive, exportSizes[7]);
+    //16x16
+    var filenameCropped16PngInactive = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[8], ".png");
+    var destFileCropped16PngInactive = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(pngName)) + filenameCropped16PngInactive);
+    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16PngInactive, startWidthCropped, exportSizes[8]);
+    // save cropped 16 and 24 sizes of JPEG into the export folder
+    var jpegStartWidthCroppedInactive = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+    //24x24
+    var filenameCropped24JpgInactive = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[7], ".jpg");
+    var destFileCropped24JpgInactive = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(jpgName)) + filenameCropped24JpgInactive);
+    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped24JpgInactive, jpegStartWidthCroppedInactive, exportSizes[7]);
+    //16x16
+    var filenameCropped16JpgInactive = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[8], ".jpg");
+    var destFileCropped16JpgInactive = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(jpgName)) + filenameCropped16JpgInactive);
+    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped16JpgInactive, jpegStartWidthCroppedInactive, exportSizes[8]);
+    // Save a cropped SVG
+    var svgMasterCoreStartWidthCroppedSvgInactive = rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
+    var filenameCroppedSvgInactive = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(exportSizes[8], "_").concat(inactiveName, "_").concat(croppedName, ".svg");
+    var destFileCroppedSvgInactive = new File(Folder("".concat(sourceDoc.path, "/").concat(expressiveName, "/").concat(svgName)) + filenameCroppedSvgInactive);
+    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvgInactive, svgMasterCoreStartWidthCroppedSvgInactive, exportSizes[8]);
+    //close and clean up
+    rgbDocCroppedVersion.close(SaveOptions.DONOTSAVECHANGES);
+    rgbDocCroppedVersion = null;
     /****************
     CMYK export (EPS)
     ****************/
