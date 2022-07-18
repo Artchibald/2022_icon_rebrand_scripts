@@ -1720,7 +1720,7 @@ function mainExpressive() {
     /************
     Final cleanup
     ************/
-    // CSTasks.ungroupOnce(iconGroup);
-    // CSTasks.ungroupOnce(mast);
+    CSTasks.ungroupOnce(iconGroup);
+    CSTasks.ungroupOnce(mast);
 }
 mainExpressive();
