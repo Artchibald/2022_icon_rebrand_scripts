@@ -46,15 +46,6 @@ var CMYKColorElements = [
     [0, 0, 0, 0],
     [0, 0, 0, 50], // Dark grey (unused)
 ];
-// old not needed, no longer match exactly
-// let CMYKColorElements = [
-//    [29, 70, 0, 30], //ultraviolet purple
-//    [0, 0, 0, 25], //Gray matter light grey
-//    [0, 100, 14, 21], // Fireworks magenta
-//    [79, 47, 0, 6], //Stratosphere blue
-//    [74, 0, 9, 14], // Inifinity turquoise  
-//    [0, 0, 0, 0], // white
-// ];
 var desiredFont = "Graphik-Regular";
 var exportSizes = [1024, 512, 256, 128, 64, 48, 32, 24, 16]; //sizes to export
 var violetIndex = 0; //these are for converting to inverse and inactive versions

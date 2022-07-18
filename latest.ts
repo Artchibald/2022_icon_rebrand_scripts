@@ -48,16 +48,6 @@ let CMYKColorElements = [
    [0, 0, 0, 50], // Dark grey (unused)
 ];
 
-// old not needed, no longer match exactly
-// let CMYKColorElements = [
-//    [29, 70, 0, 30], //ultraviolet purple
-//    [0, 0, 0, 25], //Gray matter light grey
-//    [0, 100, 14, 21], // Fireworks magenta
-//    [79, 47, 0, 6], //Stratosphere blue
-//    [74, 0, 9, 14], // Inifinity turquoise  
-//    [0, 0, 0, 0], // white
-// ];
-
 let desiredFont = "Graphik-Regular";
 let exportSizes = [1024, 512, 256, 128, 64, 48, 32, 24, 16]; //sizes to export
 let violetIndex = 0; //these are for converting to inverse and inactive versions
@@ -97,19 +87,6 @@ let destFolder = Folder(sourceDoc.path + "/" + name);
 Module for image manipulation tasks 
 ***********************************/
 
-// create a white bg layer, send to bottom of layer stack 
-// let numberOfLayersToBeAdded = 1;
-
-// let artboardRef = sourceDoc.artboards[0];
-// let top = artboardRef.artboardRect[1];
-// let left = artboardRef.artboardRect[0];
-// let width = artboardRef.artboardRect[2] - artboardRef.artboardRect[0];
-// let height = artboardRef.artboardRect[1] - artboardRef.artboardRect[3];
-// let rect = sourceDoc.pathItems.rectangle(top, left, width, height);
-// rect.fillColor = rect.strokeColor = new NoColor();
-
-// then repeat export loops for SVG PNG JPG Here
-
 // this is a typescript feature to help debugging 
 interface Task {
    getArtboardCorner(artboard: any);
@@ -143,9 +120,7 @@ interface Task {
    indexRGBColors(pathItems: any, matchArray: any);
    convertToCMYK(doc: any, pathItems: any, colorArray: any, colorIndex: any);
    unique(a: any): any;
-
 }
-
 
 let CSTasks = (function () {
    let tasks: Task = {} as Task;
@@ -183,7 +158,6 @@ let CSTasks = (function () {
       doc.artboards.setActiveArtboardIndex(index);
       doc.selectObjectsOnActiveArtboard();
       let sel = doc.selection; // get selection
-
       for (i = 0; i < sel.length; i++) {
          sel[i].remove();
       }
@@ -240,7 +214,6 @@ let CSTasks = (function () {
       let newDoc = app.documents.addDocument(colorSpace, preset);
       newDoc.pageOrigin = sourceDoc.pageOrigin;
       newDoc.rulerOrigin = sourceDoc.rulerOrigin;
-
       return newDoc;
    };
 
@@ -273,7 +246,6 @@ let CSTasks = (function () {
       options.horizontalScale = scaling;
       /*@ts-ignore*/
       options.verticalScale = scaling;
-
       doc.exportFile(destFile, ExportType.PNG24, options);
    };
    //takes a document, destination file, starting width and desired width
@@ -291,7 +263,6 @@ let CSTasks = (function () {
       options.horizontalScale = scaling;
       /*@ts-ignore*/
       options.verticalScale = scaling;
-
       doc.exportFile(destFile, ExportType.PNG24, options);
    };
 
@@ -494,9 +465,6 @@ let CSTasks = (function () {
       return colorIndex;
    };
 
-
-
-
    //takes a doc, collection of pathItems, an array of specified colors and an array of colorIndices
    //converts the fill colors to the indexed CMYK colors and adds a text box with the unmatched colors
    //Note that this only makes sense if you've previously indexed the same path items and haven't shifted their positions in the pathItems array
@@ -610,7 +578,6 @@ function mainCore() {
    /******************
    set up artboards
    ******************/
-
 
    //if there are two artboards at 256x256, create the new third masthead artboard
    if (
@@ -871,8 +838,6 @@ function mainCore() {
    rgbDoc = null;
 
 
-
-
    /*********************************************************************
    Export an SVG on a white background
    **********************************************************************/
@@ -881,7 +846,6 @@ function mainCore() {
       0,
       DocumentColorSpace.RGB
    );
-
 
    rgbDocOnFFF.swatches.removeAll();
    let rgbGroupOnFFF = iconGroup.duplicate(
@@ -895,10 +859,8 @@ function mainCore() {
    ];
    CSTasks.translateObjectTo(rgbGroupOnFFF, rgbLocOnFFF);
 
-
-
-
    CSTasks.ungroupOnce(rgbGroupOnFFF);
+
    // Add a white square bg here to save svg on white
    let getArtLayer = rgbDocOnFFF.layers.getByName('Layer 1');
    let myMainPurpleBgLayerOnFFF = rgbDocOnFFF.layers.add();
@@ -932,7 +894,6 @@ function mainCore() {
    //close and clean up
    rgbDocOnFFF.close(SaveOptions.DONOTSAVECHANGES);
    rgbDocOnFFF = null;
-
 
 
    /*********************************************************************
@@ -982,10 +943,7 @@ function mainCore() {
    let filenameCropped16PngOnFFF = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[8]}.png`;
    let destFileCropped16PngOnFFF = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped16PngOnFFF);
    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped16PngOnFFF, startWidthCroppedOnFFF, exportSizes[8]);
-
    //CSTasks.scaleAndExportNonTransparentPNG(filenameCropped16PngOnFFF, destFileCropped16OnFFF, startWidthoCroppedonFFF, exportSizes[8]);
-
-
 
    // save cropped 16 and 24 sizes of PNG into the export folder
    let startWidthCropped =
@@ -1080,10 +1038,10 @@ function mainCore() {
    let destFileCroppedSvgInactive = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filenameCroppedSvgInactive);
    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvgInactive, svgMasterCoreStartWidthCroppedSvgInactive, exportSizes[8]);
 
-
    //close and clean up
    rgbDocCroppedVersion.close(SaveOptions.DONOTSAVECHANGES);
    rgbDocCroppedVersion = null;
+
 
    /****************
    CMYK export (EPS) (Inverse?)
@@ -1180,6 +1138,7 @@ function mainCore() {
    mastCMYKDoc.close(SaveOptions.DONOTSAVECHANGES);
    mastCMYKDoc = null;
 
+
    /********************
    Masthead export core RGB (EPS)
    ********************/
@@ -1238,13 +1197,6 @@ function mainCore() {
 mainCore();
 
 
-
-
-
-
-
-
-
 /****************
 ___________                                          .__              
 \_   _____/__  ________________   ____   ______ _____|__|__  __ ____  
@@ -1257,12 +1209,9 @@ ___________                                          .__
  * Expressive
  ***************/
 function mainExpressive() {
-
    /******************
    Set up purple artboard 3
    ******************/
-
-
    //if there are three artboards, create the new fourth(3rd in array) masthead artboard
    if (
       sourceDoc.artboards.length == 3 &&
@@ -1280,7 +1229,6 @@ function mainExpressive() {
          CSTasks.newRect(firstRect[1], firstRect[2] + 128, 1024, 512)
       );
    }
-
    //if the masthead artboard is present, check if rebuilding or just exporting
    else if (
       sourceDoc.artboards.length == 3 &&
@@ -1294,7 +1242,6 @@ function mainExpressive() {
       if (rebuild) CSTasks.clearArtboard(sourceDoc, 3);
       else return;
    }
-
    //otherwise abort
    else {
       alert("Please try again with 2 artboards that are 256x256px. Had trouble building artboard 3 (artb. 2 in js)");
@@ -1303,7 +1250,6 @@ function mainExpressive() {
 
    //select the contents on artboard 1
    let sel = CSTasks.selectContentsOnArtboard(sourceDoc, 1);
-
 
    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
    app.executeMenuCommand('Colors9');
@@ -1348,7 +1294,6 @@ function mainExpressive() {
       571,
       460,
       460);
-
 
    function placeIconMasthead1Correctly(mastBannerIconOnText, maxSize) {
       // let setLandingZoneSquareColor = new RGBColor();
@@ -1479,7 +1424,6 @@ function mainExpressive() {
    sourceDoc.artboards[3].artboardRect = resizedRect;
 
 
-
    /******************
    Set up purple artboard 4 in main file
    ******************/
@@ -1496,7 +1440,6 @@ function mainExpressive() {
    //select the contents on artboard 1
    let selFourthBanner = CSTasks.selectContentsOnArtboard(sourceDoc, 1);
 
-
    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
    app.executeMenuCommand('Colors9');
 
@@ -1505,7 +1448,6 @@ function mainExpressive() {
       alert("Please try again with artwork on the main second 256x256 artboard.");
       return;
    }
-
 
    /********************************
    Add elements to new fourth artboard with masthead
@@ -1534,7 +1476,6 @@ function mainExpressive() {
       444,
       360,
       360);
-
 
    function placeIconMasthead1Correctly2(fourthBannerMast, maxSize) {
       // let setLandingZoneSquareColor = new RGBColor();
@@ -1614,9 +1555,6 @@ function mainExpressive() {
    sourceDoc.artboards[4].artboardRect = secondResizedRect;
 
 
-
-
-
    /*********************************************************************
    Export an SVG on a white background
    **********************************************************************/
@@ -1625,7 +1563,6 @@ function mainExpressive() {
       1,
       DocumentColorSpace.RGB
    );
-
 
    rgbDocOnFFF.swatches.removeAll();
    let rgbGroupOnFFF = iconGroup.duplicate(
@@ -1638,9 +1575,6 @@ function mainExpressive() {
       rgbDocOnFFF.artboards[0].artboardRect[1] + iconOffset[1],
    ];
    CSTasks.translateObjectTo(rgbGroupOnFFF, rgbLocOnFFF);
-
-
-
 
    CSTasks.ungroupOnce(rgbGroupOnFFF);
    // Add a white square bg here to save svg on white
@@ -1676,10 +1610,6 @@ function mainExpressive() {
    //close and clean up
    rgbDocOnFFF.close(SaveOptions.DONOTSAVECHANGES);
    rgbDocOnFFF = null;
-
-
-
-
 
 
    /*********************************************************************
@@ -1870,8 +1800,6 @@ function mainExpressive() {
 
    //CSTasks.scaleAndExportNonTransparentPNG(filenameCropped16PngOnFFF, destFileCropped16OnFFF, startWidthoCroppedonFFF, exportSizes[8]);
 
-
-
    // save cropped 16 and 24 sizes of PNG into the export folder
    let startWidthCropped =
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
@@ -1971,7 +1899,6 @@ function mainExpressive() {
    rgbDocCroppedVersion = null;
 
 
-
    /****************
    CMYK export (EPS)
    ****************/
@@ -2063,7 +1990,6 @@ function mainExpressive() {
       460,
       460);
 
-
    function placeIconMasthead1Correctly3(mastGroup, maxSize) {
       // let setLandingZoneSquareColor = new RGBColor();
       // setLandingZoneSquareColor.red = 121;
@@ -2122,7 +2048,6 @@ function mainExpressive() {
    ];
    CSTasks.translateObjectTo(mastText, mastTextLoc);
 
-
    // add new style purple banner elements
    let myMainArtworkLayerMastDoc = mastDoc.layers.getByName('Layer 1');
    let myMainPurpleBgLayerMastDoc = mastDoc.layers.add();
@@ -2171,7 +2096,6 @@ function mainExpressive() {
    sourceDoc.selectObjectsOnActiveArtboard();
    // clip!
    app.executeMenuCommand('makeMask');
-
 
    //save a banner PNG
    for (let i = 0; i < exportSizes.length; i++) {
@@ -2358,7 +2282,6 @@ function mainExpressive() {
    //close and clean up
    mastDocNoText.close(SaveOptions.DONOTSAVECHANGES);
    mastDocNoText = null;
-
 
    /************
    Final cleanup
