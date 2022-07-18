@@ -68,6 +68,14 @@ Or VS code main top nav menu > Terminal > Run Build Task > Watch
 
 # Script overview
 
+- First we have global variables
+- Then reusable fuctions with a typescript interface
+- Then a function for the core exports
+- Then a function for the expressive exports.
+- We target the different artboards using their positions in the array
+- There are code sections where we duplicate in a new artboard, save out exports, then close the new artboard. In this scenario the array of artboards will always be 0, whereas main doc has 2 artboards, 0 and 1, but also artboards, 2, 3 and 4 get created halfway down the script.
+
+
 # Initial call brief
 
 - 24/06/22
@@ -137,7 +145,7 @@ ABOVE UNPAID!
  
 <!-- # No license for graphik font, delete on completion -->
 
-# Shorten file names as per Jo request
+# Shorten file names as per Jo request?
 
 # Add swatch to your swatches panel before starting with swtach .ai file. Swatch menu > Other Library...
 
@@ -158,6 +166,7 @@ Please let me know if you’d like to discuss live. (Example below shows that ex
 # To do
 
 - Change svg dimensions in their respective code?
+- Do we move our resize funcrions into reusable section at top of script?
 
 # Done
 
@@ -169,6 +178,7 @@ Please let me know if you’d like to discuss live. (Example below shows that ex
 - Inverse action works with old colours not new ones
 - do cropped 16 + 24
 - documentation - reusability for other devs
+- DONE CMYK and RGB don't match this time round! We blocked with a commented return.
 
 # Notes from design brief call 29june
 
@@ -185,8 +195,7 @@ Please let me know if you’d like to discuss live. (Example below shows that ex
 
  # Blockers
 
- DONE CMYK and RGB don't match this time round!
- SVG dimensions to be addressed
+ SVG dimensions in their code to be potentially addressed
 
  # Issue with swatches stopping colours being RGB, trying  Edit > Edit colors > Convert to RGB
 
