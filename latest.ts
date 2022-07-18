@@ -791,13 +791,14 @@ function mainCore() {
    }
 
    //save all sizes of SVG into the export folder - THIS NEEDS WORK, viewbox is 256 across all
-   let svgCoreStartWidth =
-      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-   for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
-      CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[i]);
-   }
+   // we don't need to loop SVGs they are scaleable graphics, 1 size fits all
+   // let svgCoreStartWidth =
+   //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+   // for (let i = 0; i < exportSizes.length; i++) {
+   //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.svg`;
+   //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
+   //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[i]);
+   // }
 
    //save all sizes of JPEG into the export folder
    let jpegStartWidth =
@@ -838,9 +839,9 @@ function mainCore() {
 
    //save inverse file in all the SVG sizes
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[i]}.svg`;
+      let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[2]}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
-      CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
+      CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[2]);
    }
 
    //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
@@ -857,9 +858,9 @@ function mainCore() {
    }
 
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[i]}.svg`;
+      let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[2]}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
-      CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
+      CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[2]);
    }
 
 
@@ -1617,13 +1618,14 @@ function mainExpressive() {
    }
 
    //save all sizes of SVG into the export folder
-   let svgCoreStartWidth =
-      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[1];
-   for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[i]}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
-      CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[i]);
-   }
+   // we dont need to loop svg, they are scaleable
+   // let svgCoreStartWidth =
+   //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[1];
+   // for (let i = 0; i < exportSizes.length; i++) {
+   //    let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[i]}.svg`;
+   //    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
+   //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[i]);
+   // }
 
    //save EPS into the export folder
    let filename = `/${iconFilename}_${expressiveName}_${rgbName}.eps`;
@@ -1655,9 +1657,9 @@ function mainExpressive() {
 
    //save inverse file in all the SVG sizes
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}_${exportSizes[i]}.svg`;
+      let filename = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}_${exportSizes[2]}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
-      CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
+      CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[2]);
    }
 
    //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
@@ -1674,25 +1676,14 @@ function mainExpressive() {
    }
 
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}_${exportSizes[i]}.svg`;
+      let filename = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}_${exportSizes[2]}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
-      CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[i]);
+      CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[2]);
    }
 
    //close and clean up
    rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
    rgbDoc = null;
-
-
-
-
-
-
-
-
-
-
-
 
 
    /*********************************************************************
@@ -1844,51 +1835,6 @@ function mainExpressive() {
    //close and clean up
    rgbDocCroppedVersion.close(SaveOptions.DONOTSAVECHANGES);
    rgbDocCroppedVersion = null;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
