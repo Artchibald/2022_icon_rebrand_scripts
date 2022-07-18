@@ -75,6 +75,32 @@ Or VS code main top nav menu > Terminal > Run Build Task > Watch
 - We target the different artboards using their positions in the array
 - There are code sections where we duplicate in a new artboard, save out exports, then close the new artboard. In this scenario the array of artboards will always be 0, whereas main doc has 2 artboards, 0 and 1, but also artboards, 2, 3 and 4 get created halfway down the script.
 
+Script to automate creating variations and exporting files for WTW icons
+Starting with an open AI file with a single icon on a single 256 x 256 artboard
+– Creates a new artboard0 at 16x16
+- Creates a new artboard1 at 24x24
+- Creates a new artboard2 at 1400x128 for old banner style
+- Adds a new artboard3 purple masthead with company logo and text 2 area.
+- Creates a artboard4 purple banner masthead with no text or logo just, the icon.
+- Adds resized copies of the icon to the artboards
+- Asks for the name of the icon and adds text to the masthead icon
+- Then asks for 2nd masthard text
+
+- Creates exports of the icon:
+- RGB EPS
+- RGB inverse EPS
+- RGB inactive EPS
+- PNGs at 1024, 256, 128, 64, 48, 32
+- RGB masthead
+- CMYK EPS
+- CMYK inverse EPS
+
+- The script copies  a selected artboard and duplicates the current selection and pastes in a new file, saves some exports and closes the 2nd file multiple times throughout. You would want to duplicate these chunks for new funcionality.
+
+- Script starts with global var declarations
+- Then reusable interface with reusable functions.
+- Then all the Core exports (artboard0)
+- Then all the expressive exports (artboard1)
 
 # Initial call brief
 
