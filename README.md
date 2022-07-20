@@ -39,24 +39,25 @@ XXXXXXTBCXXXXXXXX
 
 # Instructions
 
-- This script only works locally not on a server
+- This script only works locally not on a server.
 - Don't forget to change .txt to .js on the script.
 - FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts  
-- Video set up tutorial available here: XXXTBCXXX 
+- Video set up tutorial available here: XXXTBCXXX.
 - Open your own .ai template or the provided ones in folders called test.
 - Go to file > Scripts > Other Scripts > Import our new script.
-- You must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets.
-- Illustrator says (not responding) on PC but it will respond, give Bill Gates some time XD !) 
+- You must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets. Otherwise you will get an error that says "error = svgFile".
+- Illustrator says (not responding) on PC but it will respond, give Bill Gates some time XD !).
 - If you run the script again, you should probably delete the previous assets created. They get intermixed and overwritten. 
 - Both artboard sizes must be exactly 256px x 256px. 
 - Guides must be on a layer called exactly 'Guidelines'. 
 - Icons must be on a layer called exactly 'Art'. 
-- Make sure all icons are unlocked to avoid bugs. 
+- Make sure all layers are unlocked to avoid bugs. 
 - Exported assets will be saved where the .ai file is saved. 
 - Please try to use underscore instead of spaces to avoid bugs in filenames. 
 - Make sure you are using the correct swatches/colours. 
-- Illustrator check advanced colour mode is correct:  Edit > Assign profile > Must match sRGB IEC61966-2.1
-- Select each individual color shape and under Window > Colours make sure each shape colour is set to rgb in tiny top right burger menu.
+- Illustrator check advanced colour mode is correct:  Edit > Assign profile > Must match sRGB IEC61966-2.1.
+- Select each individual color shape and under Window > Colours make sure each shape colour is set to rgb in tiny top right burger menu if bugs encountered.
+- If it does not save exports as intended, check the file permissions of where the .ai file is saved (right click folder > Properties > Visibility > Read and write access? Also you can try "apply permissions to sub folders too" if you find that option) 
 - Any issues: archie ATsymbol archibaldbutler.com.
 
 # Run watch task to compile ts to js

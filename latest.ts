@@ -1,5 +1,5 @@
 // #target Illustrator 
-
+// Wait... You're saying I can write Typescript for Adobe Illustrator??!
 /************************************************
  * ** README https://github.com/Artchibald/2022_icon_rebrand_scripts
  
@@ -64,6 +64,7 @@ let coreName = "Core";
 let expressiveName = "Expressive";
 let inverseName = "Inverse";
 let inactiveName = "Inactive";
+let sourceDocName = sourceDoc.name.slice(0, -3);
 // Masthead
 let mastheadName = "Masthead";
 let masthead1 = "Masthead1"
@@ -546,18 +547,19 @@ try {
 create export folder if needed
 ******************************/
 try {
+   new Folder(`${sourceDoc.path}/${sourceDocName}`).create();
    // Core folder
-   new Folder(`${sourceDoc.path}/${coreName}`).create();
-   new Folder(`${sourceDoc.path}/${coreName}/${epsName}`).create();
-   new Folder(`${sourceDoc.path}/${coreName}/${jpgName}`).create();
-   new Folder(`${sourceDoc.path}/${coreName}/${pngName}`).create();
-   new Folder(`${sourceDoc.path}/${coreName}/${svgName}`).create();
-   // Expressive folder
-   new Folder(`${sourceDoc.path}/${expressiveName}`).create();
-   new Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`).create();
-   new Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`).create();
-   new Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`).create();
-   new Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`).create();
+   new Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}`).create();
+   new Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`).create();
+   new Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${jpgName}`).create();
+   new Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`).create();
+   new Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${svgName}`).create();
+   // Expressive folder 
+   new Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}`).create();
+   new Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`).create();
+   new Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`).create();
+   new Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`).create();
+   new Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`).create();
 } catch (e) {
    alert(
       "Issues with creating setup folders. Check your file permission properties maybe.",
@@ -733,7 +735,7 @@ function mainCore() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${coreName}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, masterStartWidth, exportSizes[2]);
    }
 
@@ -742,7 +744,7 @@ function mainCore() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${coreName}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgMasterCoreStartWidth, exportSizes[2]);
    }
 
@@ -751,7 +753,7 @@ function mainCore() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
    // non transparent png exports
@@ -759,7 +761,7 @@ function mainCore() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[i]}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
       CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile, startWidthonFFF, exportSizes[i]);
    }
 
@@ -769,7 +771,7 @@ function mainCore() {
    //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    // for (let i = 0; i < exportSizes.length; i++) {
    //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.svg`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
+   //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${svgName}`) + filename);
    //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[i]);
    // }
 
@@ -778,13 +780,13 @@ function mainCore() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.jpg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${jpgName}`) + filename);
       CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth, exportSizes[i]);
    }
 
    //save EPS into the export folder
    let filename = `/${iconFilename}_${coreName}_${rgbName}.eps`;
-   let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + filename);
+   let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + filename);
    let rgbSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    rgbSaveOpts.cmykPostScript = false;
@@ -800,20 +802,20 @@ function mainCore() {
    );
 
    let inverseFilename = `/${iconFilename}_${inverseName}_${rgbName}.eps`;
-   let inverseFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + inverseFilename);
+   let inverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + inverseFilename);
    rgbDoc.saveAs(inverseFile, rgbSaveOpts);
 
    //save inverse file in all the PNG sizes
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[i]}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
 
    //save inverse file in all the SVG sizes
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[2]}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[2]);
    }
 
@@ -821,18 +823,18 @@ function mainCore() {
    CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
 
    let inactiveFilename = `/${iconFilename}_${inactiveName}_${rgbName}.eps`;
-   let inactiveFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + inactiveFilename);
+   let inactiveFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + inactiveFilename);
    rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
 
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[i]}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
 
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[2]}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[2]);
    }
 
@@ -891,7 +893,7 @@ function mainCore() {
       rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${coreName}_${onWhiteName}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
    }
 
@@ -941,11 +943,11 @@ function mainCore() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24
    let filenameCropped24PngOnFFF = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[7]}.png`;
-   let destFileCropped24PngOnFFF = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped24PngOnFFF);
+   let destFileCropped24PngOnFFF = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped24PngOnFFF);
    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped24PngOnFFF, startWidthCroppedOnFFF, exportSizes[7]);
    //16x16
    let filenameCropped16PngOnFFF = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[8]}.png`;
-   let destFileCropped16PngOnFFF = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped16PngOnFFF);
+   let destFileCropped16PngOnFFF = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped16PngOnFFF);
    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped16PngOnFFF, startWidthCroppedOnFFF, exportSizes[8]);
    //CSTasks.scaleAndExportNonTransparentPNG(filenameCropped16PngOnFFF, destFileCropped16OnFFF, startWidthoCroppedonFFF, exportSizes[8]);
 
@@ -954,11 +956,11 @@ function mainCore() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24
    let filenameCropped24Png = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[7]}.png`;
-   let destFileCropped24Png = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped24Png);
+   let destFileCropped24Png = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped24Png);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped24Png, startWidthCropped, exportSizes[7]);
    //16x16
    let filenameCropped16Png = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[8]}.png`;
-   let destFileCropped16Png = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped16Png);
+   let destFileCropped16Png = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped16Png);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16Png, startWidthCropped, exportSizes[8]);
 
    // save cropped 16 and 24 sizes of JPEG into the export folder
@@ -966,18 +968,18 @@ function mainCore() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24
    let filenameCropped24Jpg = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[7]}.jpg`;
-   let destFileCropped24Jpg = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filenameCropped24Jpg);
+   let destFileCropped24Jpg = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${jpgName}`) + filenameCropped24Jpg);
    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped24Jpg, jpegStartWidthCropped, exportSizes[7]);
    //16x16
    let filenameCropped16Jpg = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[8]}.jpg`;
-   let destFileCropped16Jpg = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filenameCropped16Jpg);
+   let destFileCropped16Jpg = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${jpgName}`) + filenameCropped16Jpg);
    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped16Jpg, jpegStartWidthCropped, exportSizes[8]);
 
    // Save a cropped SVG 
    let svgMasterCoreStartWidthCroppedSvg =
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    let filenameCroppedSvg = `/${iconFilename}_${coreName}_${exportSizes[8]}_${croppedName}.svg`;
-   let destFileCroppedSvg = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filenameCroppedSvg);
+   let destFileCroppedSvg = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${svgName}`) + filenameCroppedSvg);
    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvg, svgMasterCoreStartWidthCroppedSvg, exportSizes[8]);
 
    //convert color to white
@@ -992,11 +994,11 @@ function mainCore() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24  
    let filenameCropped24PngInversed = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[7]}.png`;
-   let destFileCropped24PngInversed = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped24PngInversed);
+   let destFileCropped24PngInversed = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped24PngInversed);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped24PngInversed, startWidthCroppedInversed, exportSizes[7]);
    //16x16
    let filenameCropped16PngInversed = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[8]}.png`;
-   let destFileCropped16PngInversed = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped16PngInversed);
+   let destFileCropped16PngInversed = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped16PngInversed);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16PngInversed, startWidthCropped, exportSizes[8]);
 
    // no point making an inversed jpg, it is white on white, so futile
@@ -1005,7 +1007,7 @@ function mainCore() {
    let svgMasterCoreStartWidthCroppedSvgInversed =
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    let filenameCroppedSvgInversed = `/${iconFilename}_${coreName}_${exportSizes[8]}_${inverseName}_${croppedName}.svg`;
-   let destFileCroppedSvgInversed = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filenameCroppedSvgInversed);
+   let destFileCroppedSvgInversed = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${svgName}`) + filenameCroppedSvgInversed);
    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvgInversed, svgMasterCoreStartWidthCroppedSvgInversed, exportSizes[8]);
 
    //convert to inactive color
@@ -1016,11 +1018,11 @@ function mainCore() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24  
    let filenameCropped24PngInactive = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[7]}.png`;
-   let destFileCropped24PngInactive = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped24PngInactive);
+   let destFileCropped24PngInactive = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped24PngInactive);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped24PngInactive, startWidthCroppedInactive, exportSizes[7]);
    //16x16
    let filenameCropped16PngInactive = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[8]}.png`;
-   let destFileCropped16PngInactive = new File(Folder(`${sourceDoc.path}/${coreName}/${pngName}`) + filenameCropped16PngInactive);
+   let destFileCropped16PngInactive = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped16PngInactive);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16PngInactive, startWidthCropped, exportSizes[8]);
 
    // save cropped 16 and 24 sizes of JPEG into the export folder
@@ -1028,18 +1030,18 @@ function mainCore() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24
    let filenameCropped24JpgInactive = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[7]}.jpg`;
-   let destFileCropped24JpgInactive = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filenameCropped24JpgInactive);
+   let destFileCropped24JpgInactive = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${jpgName}`) + filenameCropped24JpgInactive);
    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped24JpgInactive, jpegStartWidthCroppedInactive, exportSizes[7]);
    //16x16
    let filenameCropped16JpgInactive = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[8]}.jpg`;
-   let destFileCropped16JpgInactive = new File(Folder(`${sourceDoc.path}/${coreName}/${jpgName}`) + filenameCropped16JpgInactive);
+   let destFileCropped16JpgInactive = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${jpgName}`) + filenameCropped16JpgInactive);
    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped16JpgInactive, jpegStartWidthCroppedInactive, exportSizes[8]);
 
    // Save a cropped SVG
    let svgMasterCoreStartWidthCroppedSvgInactive =
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    let filenameCroppedSvgInactive = `/${iconFilename}_${coreName}_${exportSizes[8]}_${inactiveName}_${croppedName}.svg`;
-   let destFileCroppedSvgInactive = new File(Folder(`${sourceDoc.path}/${coreName}/${svgName}`) + filenameCroppedSvgInactive);
+   let destFileCroppedSvgInactive = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${svgName}`) + filenameCroppedSvgInactive);
    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvgInactive, svgMasterCoreStartWidthCroppedSvgInactive, exportSizes[8]);
 
    //close and clean up
@@ -1076,7 +1078,7 @@ function mainCore() {
 
    //save EPS into the export folder
    let cmykFilename = `/${iconFilename}_${coreName}_${cmykName}.eps`;
-   let cmykDestFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + cmykFilename);
+   let cmykDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + cmykFilename);
    let cmykSaveOpts = new EPSSaveOptions();
    cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
 
@@ -1088,7 +1090,7 @@ function mainCore() {
    );
 
    let cmykInverseFilename = `/${iconFilename}_${inverseName}_${cmykName}.eps`;
-   let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + cmykInverseFilename);
+   let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + cmykInverseFilename);
    cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
 
    //close and clean up
@@ -1132,7 +1134,7 @@ function mainCore() {
 
    //save CMYK EPS into the export folder
    let mastCMYKFilename = `/${iconFilename}_${mastheadName}_${cmykName}.eps`;
-   let mastCMYKDestFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + mastCMYKFilename);
+   let mastCMYKDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + mastCMYKFilename);
    let mastCMYKSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    mastCMYKSaveOpts.cmykPostScript = false;
@@ -1180,7 +1182,7 @@ function mainCore() {
 
    //save RGB EPS into the export folder
    let mastFilename = `/${iconFilename}_${mastheadName}_${rgbName}.eps`;
-   let mastDestFile = new File(Folder(`${sourceDoc.path}/${coreName}/${epsName}`) + mastFilename);
+   let mastDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + mastFilename);
    let mastSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    mastSaveOpts.cmykPostScript = false;
@@ -1607,7 +1609,7 @@ function mainExpressive() {
       rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${onWhiteName}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
    }
 
@@ -1645,7 +1647,7 @@ function mainExpressive() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${exportSizes[i]}.jpg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
       CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth2, exportSizes[i]);
    }
 
@@ -1654,7 +1656,7 @@ function mainExpressive() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, masterStartWidth, exportSizes[2]);
    }
 
@@ -1663,7 +1665,7 @@ function mainExpressive() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgMasterCoreStartWidth, exportSizes[2]);
    }
 
@@ -1672,7 +1674,7 @@ function mainExpressive() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[i]}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
 
@@ -1681,7 +1683,7 @@ function mainExpressive() {
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${onWhiteName}_${exportSizes[i]}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile, startWidthonFFF, exportSizes[i]);
    }
 
@@ -1691,13 +1693,13 @@ function mainExpressive() {
    //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[1];
    // for (let i = 0; i < exportSizes.length; i++) {
    //    let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[i]}.svg`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
+   //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
    //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[i]);
    // }
 
    //save EPS into the export folder
    let filename = `/${iconFilename}_${expressiveName}_${rgbName}.eps`;
-   let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + filename);
+   let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + filename);
    let rgbSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    rgbSaveOpts.cmykPostScript = false;
@@ -1713,20 +1715,20 @@ function mainExpressive() {
    );
 
    let inverseFilename = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}.eps`;
-   let inverseFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + inverseFilename);
+   let inverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + inverseFilename);
    rgbDoc.saveAs(inverseFile, rgbSaveOpts);
 
    //save inverse file in all the PNG sizes
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}_${exportSizes[i]}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
 
    //save inverse file in all the SVG sizes
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}_${exportSizes[2]}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[2]);
    }
 
@@ -1734,18 +1736,18 @@ function mainExpressive() {
    CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
 
    let inactiveFilename = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}.eps`;
-   let inactiveFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + inactiveFilename);
+   let inactiveFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + inactiveFilename);
    rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
 
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}_${exportSizes[i]}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
    }
 
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}_${exportSizes[2]}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(rgbDoc, destFile, startWidth, exportSizes[2]);
    }
 
@@ -1795,11 +1797,11 @@ function mainExpressive() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24
    let filenameCropped24PngOnFFF = `/${iconFilename}_${expressiveName}_${rgbName}_${onWhiteName}_${exportSizes[7]}.png`;
-   let destFileCropped24PngOnFFF = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filenameCropped24PngOnFFF);
+   let destFileCropped24PngOnFFF = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filenameCropped24PngOnFFF);
    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped24PngOnFFF, startWidthCroppedOnFFF, exportSizes[7]);
    //16x16
    let filenameCropped16PngOnFFF = `/${iconFilename}_${expressiveName}_${rgbName}_${onWhiteName}_${exportSizes[8]}.png`;
-   let destFileCropped16PngOnFFF = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filenameCropped16PngOnFFF);
+   let destFileCropped16PngOnFFF = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filenameCropped16PngOnFFF);
    CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped16PngOnFFF, startWidthCroppedOnFFF, exportSizes[8]);
 
    //CSTasks.scaleAndExportNonTransparentPNG(filenameCropped16PngOnFFF, destFileCropped16OnFFF, startWidthoCroppedonFFF, exportSizes[8]);
@@ -1809,11 +1811,11 @@ function mainExpressive() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24
    let filenameCropped24Png = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[7]}.png`;
-   let destFileCropped24Png = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filenameCropped24Png);
+   let destFileCropped24Png = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filenameCropped24Png);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped24Png, startWidthCropped, exportSizes[7]);
    //16x16
    let filenameCropped16Png = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[8]}.png`;
-   let destFileCropped16Png = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filenameCropped16Png);
+   let destFileCropped16Png = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filenameCropped16Png);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16Png, startWidthCropped, exportSizes[8]);
 
    // save cropped 16 and 24 sizes of JPEG into the export folder
@@ -1821,18 +1823,18 @@ function mainExpressive() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24
    let filenameCropped24Jpg = `/${iconFilename}_${expressiveName}_${exportSizes[7]}.jpg`;
-   let destFileCropped24Jpg = new File(Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`) + filenameCropped24Jpg);
+   let destFileCropped24Jpg = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filenameCropped24Jpg);
    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped24Jpg, jpegStartWidthCropped, exportSizes[7]);
    //16x16
    let filenameCropped16Jpg = `/${iconFilename}_${expressiveName}_${exportSizes[8]}.jpg`;
-   let destFileCropped16Jpg = new File(Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`) + filenameCropped16Jpg);
+   let destFileCropped16Jpg = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filenameCropped16Jpg);
    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped16Jpg, jpegStartWidthCropped, exportSizes[8]);
 
    // Save a cropped SVG 
    let svgMasterCoreStartWidthCroppedSvg =
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    let filenameCroppedSvg = `/${iconFilename}_${expressiveName}_${exportSizes[8]}_${croppedName}.svg`;
-   let destFileCroppedSvg = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filenameCroppedSvg);
+   let destFileCroppedSvg = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filenameCroppedSvg);
    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvg, svgMasterCoreStartWidthCroppedSvg, exportSizes[8]);
 
    //convert color to white
@@ -1847,11 +1849,11 @@ function mainExpressive() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24  
    let filenameCropped24PngInversed = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}_${exportSizes[7]}.png`;
-   let destFileCropped24PngInversed = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filenameCropped24PngInversed);
+   let destFileCropped24PngInversed = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filenameCropped24PngInversed);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped24PngInversed, startWidthCroppedInversed, exportSizes[7]);
    //16x16
    let filenameCropped16PngInversed = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}_${exportSizes[8]}.png`;
-   let destFileCropped16PngInversed = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filenameCropped16PngInversed);
+   let destFileCropped16PngInversed = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filenameCropped16PngInversed);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16PngInversed, startWidthCropped, exportSizes[8]);
 
    // no point making an inversed jpg, it is white on white, so futile
@@ -1860,7 +1862,7 @@ function mainExpressive() {
    let svgMasterCoreStartWidthCroppedSvgInversed =
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    let filenameCroppedSvgInversed = `/${iconFilename}_${expressiveName}_${exportSizes[8]}_${inverseName}_${croppedName}.svg`;
-   let destFileCroppedSvgInversed = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filenameCroppedSvgInversed);
+   let destFileCroppedSvgInversed = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filenameCroppedSvgInversed);
    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvgInversed, svgMasterCoreStartWidthCroppedSvgInversed, exportSizes[8]);
 
    //convert to inactive color
@@ -1871,11 +1873,11 @@ function mainExpressive() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24  
    let filenameCropped24PngInactive = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}_${exportSizes[7]}.png`;
-   let destFileCropped24PngInactive = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filenameCropped24PngInactive);
+   let destFileCropped24PngInactive = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filenameCropped24PngInactive);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped24PngInactive, startWidthCroppedInactive, exportSizes[7]);
    //16x16
    let filenameCropped16PngInactive = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}_${exportSizes[8]}.png`;
-   let destFileCropped16PngInactive = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filenameCropped16PngInactive);
+   let destFileCropped16PngInactive = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filenameCropped16PngInactive);
    CSTasks.scaleAndExportPNG(rgbDocCroppedVersion, destFileCropped16PngInactive, startWidthCropped, exportSizes[8]);
 
    // save cropped 16 and 24 sizes of JPEG into the export folder
@@ -1883,18 +1885,18 @@ function mainExpressive() {
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24
    let filenameCropped24JpgInactive = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}_${exportSizes[7]}.jpg`;
-   let destFileCropped24JpgInactive = new File(Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`) + filenameCropped24JpgInactive);
+   let destFileCropped24JpgInactive = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filenameCropped24JpgInactive);
    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped24JpgInactive, jpegStartWidthCroppedInactive, exportSizes[7]);
    //16x16
    let filenameCropped16JpgInactive = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}_${exportSizes[8]}.jpg`;
-   let destFileCropped16JpgInactive = new File(Folder(`${sourceDoc.path}/${expressiveName}/${jpgName}`) + filenameCropped16JpgInactive);
+   let destFileCropped16JpgInactive = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filenameCropped16JpgInactive);
    CSTasks.scaleAndExportJPEG(rgbDocCroppedVersion, destFileCropped16JpgInactive, jpegStartWidthCroppedInactive, exportSizes[8]);
 
    // Save a cropped SVG
    let svgMasterCoreStartWidthCroppedSvgInactive =
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    let filenameCroppedSvgInactive = `/${iconFilename}_${expressiveName}_${exportSizes[8]}_${inactiveName}_${croppedName}.svg`;
-   let destFileCroppedSvgInactive = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filenameCroppedSvgInactive);
+   let destFileCroppedSvgInactive = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filenameCroppedSvgInactive);
    CSTasks.scaleAndExportSVG(rgbDocCroppedVersion, destFileCroppedSvgInactive, svgMasterCoreStartWidthCroppedSvgInactive, exportSizes[8]);
 
 
@@ -1932,7 +1934,7 @@ function mainExpressive() {
 
    //save EPS into the export folder
    let cmykFilename = `/${iconFilename}_${expressiveName}_${cmykName}.eps`;
-   let cmykDestFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + cmykFilename);
+   let cmykDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + cmykFilename);
    let cmykSaveOpts = new EPSSaveOptions();
    cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
 
@@ -1944,7 +1946,7 @@ function mainExpressive() {
    );
 
    let cmykInverseFilename = `/${iconFilename}_${expressiveName}_${inverseName}_${cmykName}.eps`;
-   let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + cmykInverseFilename);
+   let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + cmykInverseFilename);
    cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
 
    //close and clean up
@@ -2104,18 +2106,18 @@ function mainExpressive() {
    //save a banner PNG
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead1}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(mastDoc, destFile, 400, 800);
    }
    //save a banner SVG 
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead1}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(mastDoc, destFile, 400, 800);
    }
    //save RGB EPS into the export folder
    let mastFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead1}.eps`;
-   let mastDestFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + mastFilename);
+   let mastDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + mastFilename);
    let mastSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    mastSaveOpts.cmykPostScript = false;
@@ -2264,18 +2266,18 @@ function mainExpressive() {
    //save a banner PNG
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.png`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${pngName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(mastDocNoText, destFile, 400, 800);
    }
    //save a banner SVG
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${svgName}`) + filename);
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(mastDocNoText, destFile, 400, 800);
    }
    //save RGB EPS into the export folder 
    let mastNoTextFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.eps`;
-   let mastNoTextDestFile = new File(Folder(`${sourceDoc.path}/${expressiveName}/${epsName}`) + mastNoTextFilename);
+   let mastNoTextDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + mastNoTextFilename);
    let mastNoTextSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
    mastNoTextSaveOpts.cmykPostScript = false;
