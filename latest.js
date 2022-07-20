@@ -1,5 +1,4 @@
 // #target Illustrator 
-// Wait... You're saying I can write Typescript for Adobe Illustrator??!
 /************************************************
  * ** README https://github.com/Artchibald/2022_icon_rebrand_scripts
  
@@ -1727,3 +1726,6 @@ function mainExpressive() {
     CSTasks.ungroupOnce(mast);
 }
 mainExpressive();
+// this opens the folder where the assets are saved
+var scriptsFolder = Folder(sourceDoc.path + "/");
+scriptsFolder.execute();
