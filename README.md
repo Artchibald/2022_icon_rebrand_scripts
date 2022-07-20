@@ -35,7 +35,7 @@ cc' >>>
 
 # Video tutorial
 
-XXXXXXTBCXXXXXXXX
+https://youtu.be/yxtrt7nkOjA
 
 # Instructions
 
