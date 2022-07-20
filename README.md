@@ -42,7 +42,7 @@ https://youtu.be/yxtrt7nkOjA
 - This script only works locally not on a server.
 - Don't forget to change .txt to .js on the script.
 - FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts  
-- Video set up tutorial available here: XXXTBCXXX.
+- Video set up tutorial available here: https://youtu.be/yxtrt7nkOjA.
 - Open your own .ai template or the provided ones in folders called test.
 - Go to file > Scripts > Other Scripts > Import our new script.
 - You must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets. Otherwise you will get an error that says "error = svgFile".
