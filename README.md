@@ -163,11 +163,7 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 
 # TUBS
 
-- 2 hours amends Diane
-- Friday 24 June 1 hour call and set up
-- Sat 25 June 3 hours docs review, repo set up, set up typescript installation, remove all errors from original js script copy as TS
 
-Other work out of hours above
 
 - Monday 27 June 8 hours, start script edits, convert to typescript without breaking, multiple tests, artboard division breakthrough, separate new file into 2 artboards, core & expressive. Move masthead over to position artboard 3 with JS maths. Lots of reading old script and ai script docs. Drew diagram of intended funcitonalty and passed onto team for review.
 - Tue 28 June Reviewed and commented back on expectations spreadsheet. Read up on favicon.ico. Code bugs resolved: Hid guidelines layer before expots start, create expressive folder, move masthead down vertically, successfully add graphik font to script.
@@ -188,6 +184,14 @@ Other work out of hours above
 - Tues 19 July Amends and feedback from the design US team implemented, more documentation and video tutrial created
 - Wednesday 1/2 day, calls, review, packaging and handoff 
 <!-- # No license for graphik font, delete on completion -->
+
+
+UNPAID BELOW
+
+- 2 hours amends Diane Thu 23 June to first icon script (on colour blocks)
+- Friday 24 June 1 hour call and set up
+- Sat 25 June 3 hours docs review, repo set up, set up typescript installation, remove all errors from original js script copy as TS
+- 26 July 2 hours, Katie requested removing expressive jpgs and pngs under 512. Had to repackage and retest.
 
 # Shorten file names as per Jo request?
 
