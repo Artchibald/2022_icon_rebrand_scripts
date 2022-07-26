@@ -185,6 +185,8 @@ Other work out of hours above
 - Thu 14 July Delivery day, finally fixed calculation from day before, packaged, cleaning, documenting
 - Fri 15 July Working on how to crop for cropped pngs 16 and 24 requested by Katie, discussed with Chris McDemott and implementing new stage for this in the js file, also fixed CMYK issue major blocker, implemented on inverse, inactive, onFFF too in Core. Still need to do expressive.
 - Mon 18 Jul, clean script more, doc cleanups more, added 2 new export assets as per spreadsheet, Core and Expressive SVG onFFF.
+- Tues 19 July Amends and feedback from the design US team implemented, more documentation and video tutrial created
+- Wednesday 1/2 day, calls, review, packaging and handoff 
 <!-- # No license for graphik font, delete on completion -->
 
 # Shorten file names as per Jo request?
