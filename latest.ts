@@ -1368,13 +1368,13 @@ function mainExpressive() {
    /*@ts-ignore*/
    GetMyMainPurpleBgLayer.move(myMainArtworkLayer, ElementPlacement.PLACEATEND);
 
-   let rectRef = sourceDoc.pathItems.rectangle(-850, -800, 400, 300);
-   let setTextBoxBgColor = new RGBColor();
-   setTextBoxBgColor.red = 141;
-   setTextBoxBgColor.green = 141;
-   setTextBoxBgColor.blue = 141;
-   rectRef.filled = true;
-   rectRef.fillColor = setTextBoxBgColor;
+   // let rectRef = sourceDoc.pathItems.rectangle(-850, -800, 400, 300);
+   // let setTextBoxBgColor = new RGBColor();
+   // setTextBoxBgColor.red = 141;
+   // setTextBoxBgColor.green = 141;
+   // setTextBoxBgColor.blue = 141;
+   // rectRef.filled = true;
+   // rectRef.fillColor = setTextBoxBgColor;
 
    // svg wtw logo for new purple masthead
 
@@ -1392,11 +1392,14 @@ function mainExpressive() {
    let textRef = sourceDoc.textFrames.add();
 
    //use the areaText method to create the text frame
+   var pathRef = sourceDoc.pathItems.rectangle(-850, -800, 480, 400);
    /*@ts-ignore*/
-   textRef = sourceDoc.textFrames.areaText(rectRef);
+   textRef = sourceDoc.textFrames.areaText(pathRef);
 
    textRef.contents = appName;
    textRef.textRange.characterAttributes.size = 62;
+
+   textRef.textRange.paragraphAttributes.hyphenation = false;
    // textRef.textRange.characterAttributes.horizontalScale = 2299;
    textRef.textRange.characterAttributes.fillColor = colors[whiteIndex][0];
    CSTasks.setFont(textRef, desiredFont);
