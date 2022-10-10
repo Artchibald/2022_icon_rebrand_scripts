@@ -252,3 +252,58 @@ Please let me know if you’d like to discuss live. (Example below shows that ex
 
 
 
+# New amends 10/10/22
+
+CORE:
+
+Just core and expressive
+
+No top level icons
+
+Cropped
+
+Naming stuff
+
+Masthead becomes lockup
+
+EPS CMYK inverse Core is missing
+
+Remove jpg inactive from core
+
+SVG scale down
+
+SVG core  they want 2 onluy
+
+core cropped and core
+
+EPS
+
+Delete inverse CMYK
+
+EXPRESSIVE:
+
+EPS
+
+New name
+
+ask_benix_expressive_RGB_1024x512
+ask_benix_expressive_RGB_800x400
+ask_benix_expressive_RGB
+ask_benix_expressive_CMYK
+
+All expresiive remove all inactive and expressive, not in core
+
+Expressive jpg
+
+only 2, 512 and 1024, delete the jpg expressive folder
+
+IN JPG Should be the same as EPS in jpg
+
+Same for PNG, EPS should be in png folder too
+
+In root folder, top level needs 2 things
+
+ask benix core 1 png 1 svg
+
+ask benix expressive 1 png 1 svg
+
