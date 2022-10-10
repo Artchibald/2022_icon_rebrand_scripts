@@ -10,14 +10,14 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 (if these artboards already exist, optionally clears and rebuilds these artboards instead)
 
 - Adds resized copies of the icon to the artboards
-- Asks for the name of the icon and adds text to the masthead icon
+- Asks for the name of the icon and adds text to the lockup icon
 
 - Creates exports of the icon:
 - RGB EPS
 - RGB inverse EPS
 - RGB inactive EPS
 - PNGs at 1024, 256, 128, 64, 48, 32
-- RGB masthead
+- RGB lockup
 - CMYK EPS 
 - CMYK inverse EPS
 ************************************************/
@@ -61,10 +61,10 @@ let expressiveName = "Expressive";
 let inverseName = "Inverse";
 let inactiveName = "Inactive";
 let sourceDocName = sourceDoc.name.slice(0, -3);
-// Masthead
-let mastheadName = "Masthead";
-let masthead1 = "Masthead1"
-let masthead2 = "Masthead2"
+// Lockups
+let lockupName = "Lockup";
+let lockup1 = "Lockup1"
+let lockup2 = "Lockup2"
 // Colors
 let rgbName = "RGB";
 let cmykName = "CMYK";
@@ -583,7 +583,7 @@ function mainCore() {
    set up artboards
    ******************/
 
-   //if there are two artboards at 256x256, create the new third masthead artboard
+   //if there are two artboards at 256x256, create the new third lockup artboard
    if (
       sourceDoc.artboards.length == 2 &&
       sourceDoc.artboards[0].artboardRect[2] -
@@ -603,7 +603,7 @@ function mainCore() {
       );
    }
 
-   //if the masthead artboard is present, check if rebuilding or just exporting
+   //if the lockup artboard is present, check if rebuilding or just exporting
    else if (
       sourceDoc.artboards.length == 3 &&
       sourceDoc.artboards[1].artboardRect[1] -
@@ -611,7 +611,7 @@ function mainCore() {
       256
    ) {
       rebuild = confirm(
-         "It looks like your artwork already exists. This script will rebuild the masthead and export various EPS and PNG versions. Do you want to proceed?"
+         "It looks like your artwork already exists. This script will rebuild the lockup and export various EPS and PNG versions. Do you want to proceed?"
       );
       if (rebuild) CSTasks.clearArtboard(sourceDoc, 1);
       else return;
@@ -642,10 +642,10 @@ function mainCore() {
    );
 
    /********************************
-   Create new artboard with masthead
+   Create new artboard with lockup
    *********************************/
 
-   //place icon on masthead
+   //place icon on lockup
    /*@ts-ignore*/
    let mast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
    let mastPos = [
@@ -654,8 +654,8 @@ function mainCore() {
    ];
    CSTasks.translateObjectTo(mast, mastPos);
 
-   //request a name for the icon, and place that as text on the masthead artboard
-   let appName = prompt("What name do you want to put in the masthead?");
+   //request a name for the icon, and place that as text on the lockup artboard
+   let appName = prompt("What name do you want to put in the lockup?");
 
    let textRef = sourceDoc.textFrames.add();
    textRef.contents = appName;
@@ -887,13 +887,13 @@ function mainCore() {
    /*@ts-ignore*/
    GetMyMainPurpleBgLayerOnFFF.move(getArtLayer, ElementPlacement.PLACEATEND);
    //save a master SVG 
-   let svgMasterCoreStartWidthOnFFF =
-      rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
-   for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${coreName}_${onWhiteName}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
-      CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
-   }
+   // let svgMasterCoreStartWidthOnFFF =
+   //    rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
+   // for (let i = 0; i < exportSizes.length; i++) {
+   //    let filename = `/${iconFilename}_${coreName}_${onWhiteName}.svg`;
+   //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
+   //    CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
+   // }
 
    //close and clean up
    rgbDocOnFFF.close(SaveOptions.DONOTSAVECHANGES);
@@ -923,7 +923,7 @@ function mainCore() {
    CSTasks.translateObjectTo(rgbGroupCropped, rgbLocCropped);
 
    // remove padding here befor exporting
-   function placeIconMasthead1Correctly(rgbGroupCropped, maxSize) {
+   function placeIconLockup1Correctly(rgbGroupCropped, maxSize) {
 
       let W = rgbGroupCropped.width,
          H = rgbGroupCropped.height,
@@ -932,7 +932,7 @@ function mainCore() {
          factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
       rgbGroupCropped.resize(factor, factor);
    }
-   placeIconMasthead1Correctly(rgbGroupCropped, { W: 256, H: 256 });
+   placeIconLockup1Correctly(rgbGroupCropped, { W: 256, H: 256 });
 
    CSTasks.ungroupOnce(rgbGroupCropped);
    // below we export croped only versions
@@ -1087,9 +1087,9 @@ function mainCore() {
       colors[whiteIndex][1]
    );
 
-   let cmykInverseFilename = `/${iconFilename}_${inverseName}_${cmykName}.eps`;
-   let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + cmykInverseFilename);
-   cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
+   // let cmykInverseFilename = `/${iconFilename}_${inverseName}_${cmykName}.eps`;
+   // let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + cmykInverseFilename);
+   // cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
 
    //close and clean up
    cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
@@ -1097,9 +1097,9 @@ function mainCore() {
 
 
    /********************
-   Masthead export core CMYK (EPS)
+   Lockup export core CMYK (EPS)
    ********************/
-   //open a new doc and copy and position the icon and the masthead text
+   //open a new doc and copy and position the icon and the lockup text
    let mastCMYKDoc = CSTasks.duplicateArtboardInNewDoc(
       sourceDoc,
       1,
@@ -1131,7 +1131,7 @@ function mainCore() {
    CSTasks.translateObjectTo(mastCMYKText, mastCMYKTextLoc);
 
    //save CMYK EPS into the export folder
-   let mastCMYKFilename = `/${iconFilename}_${mastheadName}_${cmykName}.eps`;
+   let mastCMYKFilename = `/${iconFilename}_${lockupName}_${cmykName}.eps`;
    let mastCMYKDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + mastCMYKFilename);
    let mastCMYKSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
@@ -1144,10 +1144,10 @@ function mainCore() {
 
 
    /********************
-   Masthead export core RGB (EPS)
+   Lockup export core RGB (EPS)
    ********************/
 
-   //open a new doc and copy and position the icon and the masthead text
+   //open a new doc and copy and position the icon and the lockup text
    let mastDoc = CSTasks.duplicateArtboardInNewDoc(
       sourceDoc,
       1,
@@ -1179,7 +1179,7 @@ function mainCore() {
    CSTasks.translateObjectTo(mastText, mastTextLoc);
 
    //save RGB EPS into the export folder
-   let mastFilename = `/${iconFilename}_${mastheadName}_${rgbName}.eps`;
+   let mastFilename = `/${iconFilename}_${lockupName}_${rgbName}.eps`;
    let mastDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + mastFilename);
    let mastSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
@@ -1216,7 +1216,7 @@ function mainExpressive() {
    /******************
    Set up purple artboard 3
    ******************/
-   //if there are three artboards, create the new fourth(3rd in array) masthead artboard
+   //if there are three artboards, create the new fourth(3rd in array) lockup artboard
    if (
       sourceDoc.artboards.length == 3 &&
       sourceDoc.artboards[1].artboardRect[2] -
@@ -1233,7 +1233,7 @@ function mainExpressive() {
          CSTasks.newRect(firstRect[1], firstRect[2] + 128, 1024, 512)
       );
    }
-   //if the masthead artboard is present, check if rebuilding or just exporting
+   //if the lockup artboard is present, check if rebuilding or just exporting
    else if (
       sourceDoc.artboards.length == 3 &&
       sourceDoc.artboards[1].artboardRect[1] -
@@ -1241,7 +1241,7 @@ function mainExpressive() {
       512
    ) {
       rebuild = confirm(
-         "It looks like your artwork already exists. This script will rebuild the masthead and export various EPS and PNG versions. Do you want to proceed?"
+         "It looks like your artwork already exists. This script will rebuild the lockup and export various EPS and PNG versions. Do you want to proceed?"
       );
       if (rebuild) CSTasks.clearArtboard(sourceDoc, 3);
       else return;
@@ -1272,7 +1272,7 @@ function mainExpressive() {
    );
 
    /********************************
-   Create new expressive artboard with masthead and text
+   Create new expressive artboard with lockup and text
    *********************************/
 
    /*@ts-ignore*/
@@ -1299,7 +1299,7 @@ function mainExpressive() {
       460,
       460);
 
-   function placeIconMasthead1Correctly(mastBannerIconOnText, maxSize) {
+   function placeIconLockup1Correctly(mastBannerIconOnText, maxSize) {
       // let setLandingZoneSquareColor = new RGBColor();
       // setLandingZoneSquareColor.red = 12;
       // setLandingZoneSquareColor.green = 28;
@@ -1338,7 +1338,7 @@ function mainExpressive() {
          factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
       mastBannerIconOnText.resize(factor, factor);
    }
-   placeIconMasthead1Correctly(mastBannerIconOnText, { W: 460, H: 460 });
+   placeIconLockup1Correctly(mastBannerIconOnText, { W: 460, H: 460 });
 
    // delete the landing zone
    landingZoneSquare.remove();
@@ -1376,7 +1376,7 @@ function mainExpressive() {
    // rectRef.filled = true;
    // rectRef.fillColor = setTextBoxBgColor;
 
-   // svg wtw logo for new purple masthead
+   // svg wtw logo for new purple lockup
 
    let imagePlacedItem = myMainArtworkLayer.placedItems.add();
    let svgFile = File(`${sourceDoc.path}/../images/wtw_logo.ai`);
@@ -1386,8 +1386,8 @@ function mainExpressive() {
    /*@ts-ignore*/
    // svgFile.embed();
 
-   //request a name for the icon, and place that as text on the masthead artboard
-   let appName = prompt("What name do you want to put in second the masthead?");
+   //request a name for the icon, and place that as text on the lockup artboard
+   let appName = prompt("What name do you want to put in second the lockup?");
 
    let textRef = sourceDoc.textFrames.add();
 
@@ -1435,7 +1435,7 @@ function mainExpressive() {
    Set up purple artboard 4 in main file
    ******************/
 
-   //if there are 3 artboards, create the new fourth masthead artboard
+   //if there are 3 artboards, create the new fourth lockup artboard
 
    // creat last artboard in file
    let FourthMainArtboardFirstRect = sourceDoc.artboards[1].artboardRect;
@@ -1457,10 +1457,10 @@ function mainExpressive() {
    }
 
    /********************************
-   Add elements to new fourth artboard with masthead
+   Add elements to new fourth artboard with lockup
    *********************************/
 
-   //place icon on masthead
+   //place icon on lockup
    /*@ts-ignore*/
    let fourthBannerMast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
    let fourthBannerMastPos = [
@@ -1484,7 +1484,7 @@ function mainExpressive() {
       360,
       360);
 
-   function placeIconMasthead1Correctly2(fourthBannerMast, maxSize) {
+   function placeIconLockup1Correctly2(fourthBannerMast, maxSize) {
       // let setLandingZoneSquareColor = new RGBColor();
       // setLandingZoneSquareColor.red = 121;
       // setLandingZoneSquareColor.green = 128;
@@ -1523,7 +1523,7 @@ function mainExpressive() {
          factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
       fourthBannerMast.resize(factor, factor);
    }
-   placeIconMasthead1Correctly2(fourthBannerMast, { W: 360, H: 360 });
+   placeIconLockup1Correctly2(fourthBannerMast, { W: 360, H: 360 });
 
    // delete the landing zone
    landingZoneSquare2.remove();
@@ -1606,13 +1606,13 @@ function mainExpressive() {
    /*@ts-ignore*/
    GetMyMainPurpleBgLayerOnFFF.move(getArtLayerOnFFF, ElementPlacement.PLACEATEND);
    //save a master SVG 
-   let svgMasterCoreStartWidthOnFFF =
-      rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
-   for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${onWhiteName}.svg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
-      CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
-   }
+   // let svgMasterCoreStartWidthOnFFF =
+   //    rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
+   // for (let i = 0; i < exportSizes.length; i++) {
+   //    let filename = `/${iconFilename}_${expressiveName}_${onWhiteName}.svg`;
+   //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
+   //    CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
+   // }
 
    //close and clean up
    rgbDocOnFFF.close(SaveOptions.DONOTSAVECHANGES);
@@ -1924,9 +1924,9 @@ function mainExpressive() {
    cmykDoc = null;
 
    /********************
-   Purple Masthead with text export 
+   Purple Lockup with text export 
    ********************/
-   //open a new doc and copy and position the icon and the masthead text
+   //open a new doc and copy and position the icon and the lockup text
    // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
    let mastDoc = CSTasks.duplicateArtboardInNewDoc(
       sourceDoc,
@@ -1966,7 +1966,7 @@ function mainExpressive() {
       460,
       460);
 
-   function placeIconMasthead1Correctly3(mastGroup, maxSize) {
+   function placeIconLockup1Correctly3(mastGroup, maxSize) {
       // let setLandingZoneSquareColor = new RGBColor();
       // setLandingZoneSquareColor.red = 121;
       // setLandingZoneSquareColor.green = 128;
@@ -2005,7 +2005,7 @@ function mainExpressive() {
          factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
       mastGroup.resize(factor, factor);
    }
-   placeIconMasthead1Correctly3(mastGroup, { W: 460, H: 460 });
+   placeIconLockup1Correctly3(mastGroup, { W: 460, H: 460 });
 
    // delete the landing zone
    landingZoneSquare3.remove();
@@ -2043,7 +2043,7 @@ function mainExpressive() {
    /*@ts-ignore*/
    GetMyMainPurpleBgLayerMastDoc.move(myMainArtworkLayerMastDoc, ElementPlacement.PLACEATEND);
 
-   // svg wtw logo for new purple masthead
+   // svg wtw logo for new purple lockup
    let imagePlacedItemMastDoc = myMainArtworkLayerMastDoc.placedItems.add();
    let svgFileMastDoc = File(`${sourceDoc.path}/../images/wtw_logo.ai`);
    imagePlacedItemMastDoc.file = svgFileMastDoc;
@@ -2075,18 +2075,18 @@ function mainExpressive() {
 
    //save a banner PNG
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead1}.png`;
+      let filename = `/${iconFilename}_${expressiveName}_${lockupName}_${rgbName}_${lockup1}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(mastDoc, destFile, 400, 800);
    }
    //save a banner SVG 
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead1}.svg`;
+      let filename = `/${iconFilename}_${expressiveName}_${lockupName}_${rgbName}_${lockup1}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(mastDoc, destFile, 400, 800);
    }
    //save RGB EPS into the export folder
-   let mastFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead1}.eps`;
+   let mastFilename = `/${iconFilename}_${expressiveName}_${lockupName}_${rgbName}_${lockup1}.eps`;
    let mastDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + mastFilename);
    let mastSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
@@ -2101,7 +2101,7 @@ function mainExpressive() {
 
 
    /********************
-     Purple Masthead with no text export
+     Purple Lockup with no text export
      ********************/
    //open a new doc and copy and position the icon
    // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
@@ -2144,7 +2144,7 @@ function mainExpressive() {
       360,
       360);
 
-   function placeIconMastheadCorrectlyIn4thDoc(mastGroupNoText, maxSize) {
+   function placeIconLockupCorrectlyIn4thDoc(mastGroupNoText, maxSize) {
       // let setLandingZoneSquareColor = new RGBColor();
       // setLandingZoneSquareColor.red = 121;
       // setLandingZoneSquareColor.green = 128;
@@ -2183,7 +2183,7 @@ function mainExpressive() {
          factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
       mastGroupNoText.resize(factor, factor);
    }
-   placeIconMastheadCorrectlyIn4thDoc(mastGroupNoText, { W: 360, H: 360 });
+   placeIconLockupCorrectlyIn4thDoc(mastGroupNoText, { W: 360, H: 360 });
 
    // delete the landing zone
    landingZoneSquareInFourthArtboard.remove();
@@ -2235,18 +2235,18 @@ function mainExpressive() {
 
    //save a banner PNG
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.png`;
+      let filename = `/${iconFilename}_${expressiveName}_${lockupName}_${rgbName}_${lockup2}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(mastDocNoText, destFile, 400, 800);
    }
    //save a banner SVG
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.svg`;
+      let filename = `/${iconFilename}_${expressiveName}_${lockupName}_${rgbName}_${lockup2}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(mastDocNoText, destFile, 400, 800);
    }
    //save RGB EPS into the export folder 
-   let mastNoTextFilename = `/${iconFilename}_${expressiveName}_${mastheadName}_${rgbName}_${masthead2}.eps`;
+   let mastNoTextFilename = `/${iconFilename}_${expressiveName}_${lockupName}_${rgbName}_${lockup2}.eps`;
    let mastNoTextDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + mastNoTextFilename);
    let mastNoTextSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/

@@ -10,14 +10,14 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 (if these artboards already exist, optionally clears and rebuilds these artboards instead)
 
 - Adds resized copies of the icon to the artboards
-- Asks for the name of the icon and adds text to the masthead icon
+- Asks for the name of the icon and adds text to the lockup icon
 
 - Creates exports of the icon:
 - RGB EPS
 - RGB inverse EPS
 - RGB inactive EPS
 - PNGs at 1024, 256, 128, 64, 48, 32
-- RGB masthead
+- RGB lockup
 - CMYK EPS
 - CMYK inverse EPS
 ************************************************/
@@ -59,10 +59,10 @@ var expressiveName = "Expressive";
 var inverseName = "Inverse";
 var inactiveName = "Inactive";
 var sourceDocName = sourceDoc.name.slice(0, -3);
-// Masthead
-var mastheadName = "Masthead";
-var masthead1 = "Masthead1";
-var masthead2 = "Masthead2";
+// Lockups
+var lockupName = "Lockup";
+var lockup1 = "Lockup1";
+var lockup2 = "Lockup2";
 // Colors
 var rgbName = "RGB";
 var cmykName = "CMYK";
@@ -481,7 +481,7 @@ function mainCore() {
     /******************
     set up artboards
     ******************/
-    //if there are two artboards at 256x256, create the new third masthead artboard
+    //if there are two artboards at 256x256, create the new third lockup artboard
     if (sourceDoc.artboards.length == 2 &&
         sourceDoc.artboards[0].artboardRect[2] -
             sourceDoc.artboards[0].artboardRect[0] ==
@@ -496,12 +496,12 @@ function mainCore() {
         // CSTasks.newRect(firstRect[1] * 0.5, firstRect[2], 2400, 256)
         CSTasks.newRect(firstRect[1], firstRect[2] + 128, 2400, 256));
     }
-    //if the masthead artboard is present, check if rebuilding or just exporting
+    //if the lockup artboard is present, check if rebuilding or just exporting
     else if (sourceDoc.artboards.length == 3 &&
         sourceDoc.artboards[1].artboardRect[1] -
             sourceDoc.artboards[1].artboardRect[3] ==
             256) {
-        rebuild = confirm("It looks like your artwork already exists. This script will rebuild the masthead and export various EPS and PNG versions. Do you want to proceed?");
+        rebuild = confirm("It looks like your artwork already exists. This script will rebuild the lockup and export various EPS and PNG versions. Do you want to proceed?");
         if (rebuild)
             CSTasks.clearArtboard(sourceDoc, 1);
         else
@@ -525,9 +525,9 @@ function mainCore() {
     var iconGroup = CSTasks.createGroup(sourceDoc, sel); //group the selection (easier to work with)
     var iconOffset = CSTasks.getOffset(iconGroup.position, CSTasks.getArtboardCorner(sourceDoc.artboards[0]));
     /********************************
-    Create new artboard with masthead
+    Create new artboard with lockup
     *********************************/
-    //place icon on masthead
+    //place icon on lockup
     /*@ts-ignore*/
     var mast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
     var mastPos = [
@@ -535,8 +535,8 @@ function mainCore() {
         sourceDoc.artboards[2].artboardRect[1] + iconOffset[1],
     ];
     CSTasks.translateObjectTo(mast, mastPos);
-    //request a name for the icon, and place that as text on the masthead artboard
-    var appName = prompt("What name do you want to put in the masthead?");
+    //request a name for the icon, and place that as text on the lockup artboard
+    var appName = prompt("What name do you want to put in the lockup?");
     var textRef = sourceDoc.textFrames.add();
     textRef.contents = appName;
     textRef.textRange.characterAttributes.size = 178;
@@ -699,12 +699,13 @@ function mainCore() {
     /*@ts-ignore*/
     GetMyMainPurpleBgLayerOnFFF.move(getArtLayer, ElementPlacement.PLACEATEND);
     //save a master SVG 
-    var svgMasterCoreStartWidthOnFFF = rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
-    for (var i_16 = 0; i_16 < exportSizes.length; i_16++) {
-        var filename_10 = "/".concat(iconFilename, "_").concat(coreName, "_").concat(onWhiteName, ".svg");
-        var destFile_10 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName)) + filename_10);
-        CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile_10, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
-    }
+    // let svgMasterCoreStartWidthOnFFF =
+    //    rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
+    // for (let i = 0; i < exportSizes.length; i++) {
+    //    let filename = `/${iconFilename}_${coreName}_${onWhiteName}.svg`;
+    //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
+    //    CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
+    // }
     //close and clean up
     rgbDocOnFFF.close(SaveOptions.DONOTSAVECHANGES);
     rgbDocOnFFF = null;
@@ -722,11 +723,11 @@ function mainCore() {
     ];
     CSTasks.translateObjectTo(rgbGroupCropped, rgbLocCropped);
     // remove padding here befor exporting
-    function placeIconMasthead1Correctly(rgbGroupCropped, maxSize) {
+    function placeIconLockup1Correctly(rgbGroupCropped, maxSize) {
         var W = rgbGroupCropped.width, H = rgbGroupCropped.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
         rgbGroupCropped.resize(factor, factor);
     }
-    placeIconMasthead1Correctly(rgbGroupCropped, { W: 256, H: 256 });
+    placeIconLockup1Correctly(rgbGroupCropped, { W: 256, H: 256 });
     CSTasks.ungroupOnce(rgbGroupCropped);
     // below we export croped only versions
     // // non transparent png exports
@@ -837,16 +838,16 @@ function mainCore() {
     cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
     //convert violet to white and save as EPS
     CSTasks.convertColorCMYK(cmykDoc.pathItems, colors[violetIndex][1], colors[whiteIndex][1]);
-    var cmykInverseFilename = "/".concat(iconFilename, "_").concat(inverseName, "_").concat(cmykName, ".eps");
-    var cmykInverseFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(coreName, "/").concat(epsName)) + cmykInverseFilename);
-    cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
+    // let cmykInverseFilename = `/${iconFilename}_${inverseName}_${cmykName}.eps`;
+    // let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + cmykInverseFilename);
+    // cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
     //close and clean up
     cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
     cmykDoc = null;
     /********************
-    Masthead export core CMYK (EPS)
+    Lockup export core CMYK (EPS)
     ********************/
-    //open a new doc and copy and position the icon and the masthead text
+    //open a new doc and copy and position the icon and the lockup text
     var mastCMYKDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 1, DocumentColorSpace.CMYK);
     mastCMYKDoc.swatches.removeAll();
     var mastCMYKGroup = iconGroup.duplicate(mastCMYKDoc.layers[0], 
@@ -867,7 +868,7 @@ function mainCore() {
     ];
     CSTasks.translateObjectTo(mastCMYKText, mastCMYKTextLoc);
     //save CMYK EPS into the export folder
-    var mastCMYKFilename = "/".concat(iconFilename, "_").concat(mastheadName, "_").concat(cmykName, ".eps");
+    var mastCMYKFilename = "/".concat(iconFilename, "_").concat(lockupName, "_").concat(cmykName, ".eps");
     var mastCMYKDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(coreName, "/").concat(epsName)) + mastCMYKFilename);
     var mastCMYKSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/
@@ -877,9 +878,9 @@ function mainCore() {
     mastCMYKDoc.close(SaveOptions.DONOTSAVECHANGES);
     mastCMYKDoc = null;
     /********************
-    Masthead export core RGB (EPS)
+    Lockup export core RGB (EPS)
     ********************/
-    //open a new doc and copy and position the icon and the masthead text
+    //open a new doc and copy and position the icon and the lockup text
     var mastDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 1, DocumentColorSpace.RGB);
     mastDoc.swatches.removeAll();
     var mastGroup = iconGroup.duplicate(mastDoc.layers[0], 
@@ -900,7 +901,7 @@ function mainCore() {
     ];
     CSTasks.translateObjectTo(mastText, mastTextLoc);
     //save RGB EPS into the export folder
-    var mastFilename = "/".concat(iconFilename, "_").concat(mastheadName, "_").concat(rgbName, ".eps");
+    var mastFilename = "/".concat(iconFilename, "_").concat(lockupName, "_").concat(rgbName, ".eps");
     var mastDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(coreName, "/").concat(epsName)) + mastFilename);
     var mastSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/
@@ -932,7 +933,7 @@ function mainExpressive() {
     /******************
     Set up purple artboard 3
     ******************/
-    //if there are three artboards, create the new fourth(3rd in array) masthead artboard
+    //if there are three artboards, create the new fourth(3rd in array) lockup artboard
     if (sourceDoc.artboards.length == 3 &&
         sourceDoc.artboards[1].artboardRect[2] -
             sourceDoc.artboards[1].artboardRect[0] ==
@@ -946,12 +947,12 @@ function mainExpressive() {
         // this fires but then gets replaced further down
         CSTasks.newRect(firstRect[1], firstRect[2] + 128, 1024, 512));
     }
-    //if the masthead artboard is present, check if rebuilding or just exporting
+    //if the lockup artboard is present, check if rebuilding or just exporting
     else if (sourceDoc.artboards.length == 3 &&
         sourceDoc.artboards[1].artboardRect[1] -
             sourceDoc.artboards[1].artboardRect[3] ==
             512) {
-        rebuild = confirm("It looks like your artwork already exists. This script will rebuild the masthead and export various EPS and PNG versions. Do you want to proceed?");
+        rebuild = confirm("It looks like your artwork already exists. This script will rebuild the lockup and export various EPS and PNG versions. Do you want to proceed?");
         if (rebuild)
             CSTasks.clearArtboard(sourceDoc, 3);
         else
@@ -975,7 +976,7 @@ function mainExpressive() {
     var iconGroup = CSTasks.createGroup(sourceDoc, sel); //group the selection (easier to work with)
     var iconOffset = CSTasks.getOffset(iconGroup.position, CSTasks.getArtboardCorner(sourceDoc.artboards[1]));
     /********************************
-    Create new expressive artboard with masthead and text
+    Create new expressive artboard with lockup and text
     *********************************/
     /*@ts-ignore*/
     var mastBannerIconOnText = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
@@ -993,7 +994,7 @@ function mainExpressive() {
     //moved it outside the function itself so we can delete it after so it doesn't get exported
     var getArtLayer = sourceDoc.layers.getByName('Art');
     var landingZoneSquare = getArtLayer.pathItems.rectangle(-844, 571, 460, 460);
-    function placeIconMasthead1Correctly(mastBannerIconOnText, maxSize) {
+    function placeIconLockup1Correctly(mastBannerIconOnText, maxSize) {
         // let setLandingZoneSquareColor = new RGBColor();
         // setLandingZoneSquareColor.red = 12;
         // setLandingZoneSquareColor.green = 28;
@@ -1026,7 +1027,7 @@ function mainExpressive() {
         var W = mastBannerIconOnText.width, H = mastBannerIconOnText.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
         mastBannerIconOnText.resize(factor, factor);
     }
-    placeIconMasthead1Correctly(mastBannerIconOnText, { W: 460, H: 460 });
+    placeIconLockup1Correctly(mastBannerIconOnText, { W: 460, H: 460 });
     // delete the landing zone
     landingZoneSquare.remove();
     // mastBannerIconOnText.width = 460;
@@ -1055,7 +1056,7 @@ function mainExpressive() {
     // setTextBoxBgColor.blue = 141;
     // rectRef.filled = true;
     // rectRef.fillColor = setTextBoxBgColor;
-    // svg wtw logo for new purple masthead
+    // svg wtw logo for new purple lockup
     var imagePlacedItem = myMainArtworkLayer.placedItems.add();
     var svgFile = File("".concat(sourceDoc.path, "/../images/wtw_logo.ai"));
     imagePlacedItem.file = svgFile;
@@ -1063,8 +1064,8 @@ function mainExpressive() {
     imagePlacedItem.left = 62;
     /*@ts-ignore*/
     // svgFile.embed();
-    //request a name for the icon, and place that as text on the masthead artboard
-    var appName = prompt("What name do you want to put in second the masthead?");
+    //request a name for the icon, and place that as text on the lockup artboard
+    var appName = prompt("What name do you want to put in second the lockup?");
     var textRef = sourceDoc.textFrames.add();
     //use the areaText method to create the text frame
     var pathRef = sourceDoc.pathItems.rectangle(-850, -800, 480, 400);
@@ -1095,7 +1096,7 @@ function mainExpressive() {
     /******************
     Set up purple artboard 4 in main file
     ******************/
-    //if there are 3 artboards, create the new fourth masthead artboard
+    //if there are 3 artboards, create the new fourth lockup artboard
     // creat last artboard in file
     var FourthMainArtboardFirstRect = sourceDoc.artboards[1].artboardRect;
     sourceDoc.artboards.add(
@@ -1111,9 +1112,9 @@ function mainExpressive() {
         return;
     }
     /********************************
-    Add elements to new fourth artboard with masthead
+    Add elements to new fourth artboard with lockup
     *********************************/
-    //place icon on masthead
+    //place icon on lockup
     /*@ts-ignore*/
     var fourthBannerMast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
     var fourthBannerMastPos = [
@@ -1130,7 +1131,7 @@ function mainExpressive() {
     //moved it outside the function itself so we can delete it after so it doesn't get exported
     var getArtLayer2 = sourceDoc.layers.getByName('Art');
     var landingZoneSquare2 = getArtLayer2.pathItems.rectangle(-1472, 444, 360, 360);
-    function placeIconMasthead1Correctly2(fourthBannerMast, maxSize) {
+    function placeIconLockup1Correctly2(fourthBannerMast, maxSize) {
         // let setLandingZoneSquareColor = new RGBColor();
         // setLandingZoneSquareColor.red = 121;
         // setLandingZoneSquareColor.green = 128;
@@ -1163,7 +1164,7 @@ function mainExpressive() {
         var W = fourthBannerMast.width, H = fourthBannerMast.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
         fourthBannerMast.resize(factor, factor);
     }
-    placeIconMasthead1Correctly2(fourthBannerMast, { W: 360, H: 360 });
+    placeIconLockup1Correctly2(fourthBannerMast, { W: 360, H: 360 });
     // delete the landing zone
     landingZoneSquare2.remove();
     // fourthBannerMast.width = 360;
@@ -1218,12 +1219,13 @@ function mainExpressive() {
     /*@ts-ignore*/
     GetMyMainPurpleBgLayerOnFFF.move(getArtLayerOnFFF, ElementPlacement.PLACEATEND);
     //save a master SVG 
-    var svgMasterCoreStartWidthOnFFF = rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
-    for (var i_17 = 0; i_17 < exportSizes.length; i_17++) {
-        var filename_11 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(onWhiteName, ".svg");
-        var destFile_11 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName)) + filename_11);
-        CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile_11, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
-    }
+    // let svgMasterCoreStartWidthOnFFF =
+    //    rgbDocOnFFF.artboards[0].artboardRect[2] - rgbDocOnFFF.artboards[0].artboardRect[0];
+    // for (let i = 0; i < exportSizes.length; i++) {
+    //    let filename = `/${iconFilename}_${expressiveName}_${onWhiteName}.svg`;
+    //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}`) + filename);
+    //    CSTasks.scaleAndExportSVG(rgbDocOnFFF, destFile, svgMasterCoreStartWidthOnFFF, exportSizes[2]);
+    // }
     //close and clean up
     rgbDocOnFFF.close(SaveOptions.DONOTSAVECHANGES);
     rgbDocOnFFF = null;
@@ -1243,59 +1245,59 @@ function mainExpressive() {
     CSTasks.ungroupOnce(rgbGroup);
     //save a 1024 JPG
     var jpegStartWidth1024 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_18 = 0; i_18 < exportSizes.length; i_18++) {
-        var filename_12 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(exportSizes[0], ".jpg");
-        var destFile_12 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filename_12);
-        CSTasks.scaleAndExportJPEG(rgbDoc, destFile_12, jpegStartWidth1024, exportSizes[0]);
+    for (var i_16 = 0; i_16 < exportSizes.length; i_16++) {
+        var filename_10 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(exportSizes[0], ".jpg");
+        var destFile_10 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filename_10);
+        CSTasks.scaleAndExportJPEG(rgbDoc, destFile_10, jpegStartWidth1024, exportSizes[0]);
     }
     //save a 512 JPG
     var jpegStartWidth512 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_19 = 0; i_19 < exportSizes.length; i_19++) {
-        var filename_13 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(exportSizes[1], ".jpg");
-        var destFile_13 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filename_13);
-        CSTasks.scaleAndExportJPEG(rgbDoc, destFile_13, jpegStartWidth512, exportSizes[1]);
+    for (var i_17 = 0; i_17 < exportSizes.length; i_17++) {
+        var filename_11 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(exportSizes[1], ".jpg");
+        var destFile_11 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filename_11);
+        CSTasks.scaleAndExportJPEG(rgbDoc, destFile_11, jpegStartWidth512, exportSizes[1]);
     }
     //save a master PNG
     var masterStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_20 = 0; i_20 < exportSizes.length; i_20++) {
-        var filename_14 = "/".concat(iconFilename, "_").concat(expressiveName, ".png");
-        var destFile_14 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName)) + filename_14);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_14, masterStartWidth, exportSizes[2]);
+    for (var i_18 = 0; i_18 < exportSizes.length; i_18++) {
+        var filename_12 = "/".concat(iconFilename, "_").concat(expressiveName, ".png");
+        var destFile_12 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName)) + filename_12);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_12, masterStartWidth, exportSizes[2]);
     }
     //save a master SVG
     var svgMasterCoreStartWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_21 = 0; i_21 < exportSizes.length; i_21++) {
-        var filename_15 = "/".concat(iconFilename, "_").concat(expressiveName, ".svg");
-        var destFile_15 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName)) + filename_15);
-        CSTasks.scaleAndExportSVG(rgbDoc, destFile_15, svgMasterCoreStartWidth, exportSizes[2]);
+    for (var i_19 = 0; i_19 < exportSizes.length; i_19++) {
+        var filename_13 = "/".concat(iconFilename, "_").concat(expressiveName, ".svg");
+        var destFile_13 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName)) + filename_13);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_13, svgMasterCoreStartWidth, exportSizes[2]);
     }
     // png 1024
     var startWidth1024 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_22 = 0; i_22 < exportSizes.length; i_22++) {
-        var filename_16 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(exportSizes[0], ".png");
-        var destFile_16 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_16);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_16, startWidth1024, exportSizes[0]);
+    for (var i_20 = 0; i_20 < exportSizes.length; i_20++) {
+        var filename_14 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(exportSizes[0], ".png");
+        var destFile_14 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_14);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_14, startWidth1024, exportSizes[0]);
     }
     // png 512
     var startWidth512 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_23 = 0; i_23 < exportSizes.length; i_23++) {
-        var filename_17 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(exportSizes[1], ".png");
-        var destFile_17 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_17);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_17, startWidth512, exportSizes[1]);
+    for (var i_21 = 0; i_21 < exportSizes.length; i_21++) {
+        var filename_15 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(exportSizes[1], ".png");
+        var destFile_15 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_15);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_15, startWidth512, exportSizes[1]);
     }
     // non transparent 1024 png export
     var startWidthonFFF1024 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_24 = 0; i_24 < exportSizes.length; i_24++) {
-        var filename_18 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(onWhiteName, "_").concat(exportSizes[0], ".png");
-        var destFile_18 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_18);
-        CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile_18, startWidthonFFF1024, exportSizes[0]);
+    for (var i_22 = 0; i_22 < exportSizes.length; i_22++) {
+        var filename_16 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(onWhiteName, "_").concat(exportSizes[0], ".png");
+        var destFile_16 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_16);
+        CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile_16, startWidthonFFF1024, exportSizes[0]);
     }
     // non transparent 512 png export
     var startWidthonFFF512 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_25 = 0; i_25 < exportSizes.length; i_25++) {
-        var filename_19 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(onWhiteName, "_").concat(exportSizes[1], ".png");
-        var destFile_19 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_19);
-        CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile_19, startWidthonFFF512, exportSizes[1]);
+    for (var i_23 = 0; i_23 < exportSizes.length; i_23++) {
+        var filename_17 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(onWhiteName, "_").concat(exportSizes[1], ".png");
+        var destFile_17 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_17);
+        CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile_17, startWidthonFFF512, exportSizes[1]);
     }
     //save all sizes of SVG into the export folder
     // we dont need to loop svg, they are scaleable
@@ -1322,24 +1324,24 @@ function mainExpressive() {
     rgbDoc.saveAs(inverseFile, rgbSaveOpts);
     //save inverse 1024 file in all the PNG sizes
     var startWidthonFFFInversed1024 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_26 = 0; i_26 < exportSizes.length; i_26++) {
-        var filename_20 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[0], ".png");
-        var destFile_20 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_20);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_20, startWidthonFFFInversed1024, exportSizes[0]);
+    for (var i_24 = 0; i_24 < exportSizes.length; i_24++) {
+        var filename_18 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[0], ".png");
+        var destFile_18 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_18);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_18, startWidthonFFFInversed1024, exportSizes[0]);
     }
     //save inverse 512 file in all the PNG sizes
     var startWidthonFFFInversed512 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_27 = 0; i_27 < exportSizes.length; i_27++) {
-        var filename_21 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[1], ".png");
-        var destFile_21 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_21);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_21, startWidthonFFFInversed512, exportSizes[1]);
+    for (var i_25 = 0; i_25 < exportSizes.length; i_25++) {
+        var filename_19 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[1], ".png");
+        var destFile_19 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_19);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_19, startWidthonFFFInversed512, exportSizes[1]);
     }
     //save inverse file in all the SVG sizes
     var startWidth = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-    for (var i_28 = 0; i_28 < exportSizes.length; i_28++) {
-        var filename_22 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[2], ".svg");
-        var destFile_22 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_22);
-        CSTasks.scaleAndExportSVG(rgbDoc, destFile_22, startWidth, exportSizes[2]);
+    for (var i_26 = 0; i_26 < exportSizes.length; i_26++) {
+        var filename_20 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inverseName, "_").concat(rgbName, "_").concat(exportSizes[2], ".svg");
+        var destFile_20 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_20);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_20, startWidth, exportSizes[2]);
     }
     //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
     CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
@@ -1347,21 +1349,21 @@ function mainExpressive() {
     var inactiveFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + inactiveFilename);
     rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
     // save inactive png 1024
-    for (var i_29 = 0; i_29 < exportSizes.length; i_29++) {
-        var filename_23 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[0], ".png");
-        var destFile_23 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_23);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_23, startWidth, exportSizes[0]);
+    for (var i_27 = 0; i_27 < exportSizes.length; i_27++) {
+        var filename_21 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[0], ".png");
+        var destFile_21 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_21);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_21, startWidth, exportSizes[0]);
     }
     // save inactive png 512
-    for (var i_30 = 0; i_30 < exportSizes.length; i_30++) {
-        var filename_24 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[1], ".png");
-        var destFile_24 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_24);
-        CSTasks.scaleAndExportPNG(rgbDoc, destFile_24, startWidth, exportSizes[1]);
+    for (var i_28 = 0; i_28 < exportSizes.length; i_28++) {
+        var filename_22 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[1], ".png");
+        var destFile_22 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_22);
+        CSTasks.scaleAndExportPNG(rgbDoc, destFile_22, startWidth, exportSizes[1]);
     }
-    for (var i_31 = 0; i_31 < exportSizes.length; i_31++) {
-        var filename_25 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[2], ".svg");
-        var destFile_25 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_25);
-        CSTasks.scaleAndExportSVG(rgbDoc, destFile_25, startWidth, exportSizes[2]);
+    for (var i_29 = 0; i_29 < exportSizes.length; i_29++) {
+        var filename_23 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[2], ".svg");
+        var destFile_23 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_23);
+        CSTasks.scaleAndExportSVG(rgbDoc, destFile_23, startWidth, exportSizes[2]);
     }
     //close and clean up
     rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
@@ -1440,9 +1442,9 @@ function mainExpressive() {
     cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
     cmykDoc = null;
     /********************
-    Purple Masthead with text export
+    Purple Lockup with text export
     ********************/
-    //open a new doc and copy and position the icon and the masthead text
+    //open a new doc and copy and position the icon and the lockup text
     // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
     var mastDoc = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 3, DocumentColorSpace.RGB);
     mastDoc.swatches.removeAll();
@@ -1467,7 +1469,7 @@ function mainExpressive() {
     //moved it outside the function itself so we can delete it after so it doesn't get exported
     var getArtLayer3 = mastDoc.layers.getByName('Layer 1');
     var landingZoneSquare3 = getArtLayer3.pathItems.rectangle(-843, 570, 460, 460);
-    function placeIconMasthead1Correctly3(mastGroup, maxSize) {
+    function placeIconLockup1Correctly3(mastGroup, maxSize) {
         // let setLandingZoneSquareColor = new RGBColor();
         // setLandingZoneSquareColor.red = 121;
         // setLandingZoneSquareColor.green = 128;
@@ -1500,7 +1502,7 @@ function mainExpressive() {
         var W = mastGroup.width, H = mastGroup.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
         mastGroup.resize(factor, factor);
     }
-    placeIconMasthead1Correctly3(mastGroup, { W: 460, H: 460 });
+    placeIconLockup1Correctly3(mastGroup, { W: 460, H: 460 });
     // delete the landing zone
     landingZoneSquare3.remove();
     CSTasks.ungroupOnce(mastGroup);
@@ -1527,7 +1529,7 @@ function mainExpressive() {
     mainRectMastDoc.fillColor = setMainVioletBgColorMastDoc;
     /*@ts-ignore*/
     GetMyMainPurpleBgLayerMastDoc.move(myMainArtworkLayerMastDoc, ElementPlacement.PLACEATEND);
-    // svg wtw logo for new purple masthead
+    // svg wtw logo for new purple lockup
     var imagePlacedItemMastDoc = myMainArtworkLayerMastDoc.placedItems.add();
     var svgFileMastDoc = File("".concat(sourceDoc.path, "/../images/wtw_logo.ai"));
     imagePlacedItemMastDoc.file = svgFileMastDoc;
@@ -1552,19 +1554,19 @@ function mainExpressive() {
     // clip!
     app.executeMenuCommand('makeMask');
     //save a banner PNG
-    for (var i_32 = 0; i_32 < exportSizes.length; i_32++) {
-        var filename_26 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead1, ".png");
-        var destFile_26 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_26);
-        CSTasks.scaleAndExportPNG(mastDoc, destFile_26, 400, 800);
+    for (var i_30 = 0; i_30 < exportSizes.length; i_30++) {
+        var filename_24 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup1, ".png");
+        var destFile_24 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_24);
+        CSTasks.scaleAndExportPNG(mastDoc, destFile_24, 400, 800);
     }
     //save a banner SVG 
-    for (var i_33 = 0; i_33 < exportSizes.length; i_33++) {
-        var filename_27 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead1, ".svg");
-        var destFile_27 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_27);
-        CSTasks.scaleAndExportSVG(mastDoc, destFile_27, 400, 800);
+    for (var i_31 = 0; i_31 < exportSizes.length; i_31++) {
+        var filename_25 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup1, ".svg");
+        var destFile_25 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_25);
+        CSTasks.scaleAndExportSVG(mastDoc, destFile_25, 400, 800);
     }
     //save RGB EPS into the export folder
-    var mastFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead1, ".eps");
+    var mastFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup1, ".eps");
     var mastDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + mastFilename);
     var mastSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/
@@ -1576,7 +1578,7 @@ function mainExpressive() {
     mastDoc.close(SaveOptions.DONOTSAVECHANGES);
     mastDoc = null;
     /********************
-      Purple Masthead with no text export
+      Purple Lockup with no text export
       ********************/
     //open a new doc and copy and position the icon
     // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
@@ -1603,7 +1605,7 @@ function mainExpressive() {
     //moved it outside the function itself so we can delete it after so it doesn't get exported
     var getArtLayerIn4thArtboard = mastDocNoText.layers.getByName('Layer 1');
     var landingZoneSquareInFourthArtboard = getArtLayerIn4thArtboard.pathItems.rectangle(-1471, 443, 360, 360);
-    function placeIconMastheadCorrectlyIn4thDoc(mastGroupNoText, maxSize) {
+    function placeIconLockupCorrectlyIn4thDoc(mastGroupNoText, maxSize) {
         // let setLandingZoneSquareColor = new RGBColor();
         // setLandingZoneSquareColor.red = 121;
         // setLandingZoneSquareColor.green = 128;
@@ -1636,7 +1638,7 @@ function mainExpressive() {
         var W = mastGroupNoText.width, H = mastGroupNoText.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
         mastGroupNoText.resize(factor, factor);
     }
-    placeIconMastheadCorrectlyIn4thDoc(mastGroupNoText, { W: 360, H: 360 });
+    placeIconLockupCorrectlyIn4thDoc(mastGroupNoText, { W: 360, H: 360 });
     // delete the landing zone
     landingZoneSquareInFourthArtboard.remove();
     CSTasks.ungroupOnce(mastGroupNoText);
@@ -1673,19 +1675,19 @@ function mainExpressive() {
     // clip!
     app.executeMenuCommand('makeMask');
     //save a banner PNG
-    for (var i_34 = 0; i_34 < exportSizes.length; i_34++) {
-        var filename_28 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead2, ".png");
-        var destFile_28 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_28);
-        CSTasks.scaleAndExportPNG(mastDocNoText, destFile_28, 400, 800);
+    for (var i_32 = 0; i_32 < exportSizes.length; i_32++) {
+        var filename_26 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup2, ".png");
+        var destFile_26 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_26);
+        CSTasks.scaleAndExportPNG(mastDocNoText, destFile_26, 400, 800);
     }
     //save a banner SVG
-    for (var i_35 = 0; i_35 < exportSizes.length; i_35++) {
-        var filename_29 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead2, ".svg");
-        var destFile_29 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_29);
-        CSTasks.scaleAndExportSVG(mastDocNoText, destFile_29, 400, 800);
+    for (var i_33 = 0; i_33 < exportSizes.length; i_33++) {
+        var filename_27 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup2, ".svg");
+        var destFile_27 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_27);
+        CSTasks.scaleAndExportSVG(mastDocNoText, destFile_27, 400, 800);
     }
     //save RGB EPS into the export folder 
-    var mastNoTextFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(mastheadName, "_").concat(rgbName, "_").concat(masthead2, ".eps");
+    var mastNoTextFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup2, ".eps");
     var mastNoTextDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + mastNoTextFilename);
     var mastNoTextSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/

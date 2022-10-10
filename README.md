@@ -247,10 +247,11 @@ Please let me know if you’d like to discuss live. (Example below shows that ex
 
  # Issue with swatches stopping colours being RGB, trying  Edit > Edit colors > Convert to RGB
 
- - managed to fix with    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
+- managed to fix with    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
+
+```
    app.executeMenuCommand('Colors9');
-
-
+```
 
 # New amends 10/10/22
 
