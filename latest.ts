@@ -1653,13 +1653,13 @@ function mainExpressive() {
 
    //save all sizes of SVG into the export folder
    // we dont need to loop svg, they are scaleable
-   // let svgCoreStartWidth =
-   //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[1];
-   // for (let i = 0; i < exportSizes.length; i++) {
-   //    let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[i]}.svg`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
-   //    CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[i]);
-   // }
+   let svgCoreStartWidth =
+      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[1];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
+      CSTasks.scaleAndExportSVG(rgbDoc, destFile, svgCoreStartWidth, exportSizes[0]);
+   }
 
    //save EPS into the export folder
    let filename = `/${iconFilename}_${expressiveName}_${rgbName}.eps`;
@@ -1841,7 +1841,7 @@ function mainExpressive() {
 
    CSTasks.convertToCMYK(cmykDoc, cmykDoc.pathItems, colors, colorIndex);
 
-   //save a 1024 JPG
+   //save a 1024 JPG CMYK
    let jpegStartWidth1024CMYK =
       cmykDoc.artboards[0].artboardRect[2] - cmykDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
@@ -1850,15 +1850,20 @@ function mainExpressive() {
       CSTasks.scaleAndExportJPEG(cmykDoc, destFile, jpegStartWidth1024CMYK, exportSizes[0]);
    }
 
-   // png 1024
+   // png 1024 CMYK
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${cmykName}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(cmykDoc, destFile, jpegStartWidth1024CMYK, exportSizes[0]);
    }
+   // svg CMYK
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${cmykName}.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
+      CSTasks.scaleAndExportSVG(cmykDoc, destFile, jpegStartWidth1024CMYK, exportSizes[0]);
+   }
 
-
-   //save EPS into the export folder
+   //save EPS into the export folder CMYKß
    let cmykFilename = `/${iconFilename}_${expressiveName}_${cmykName}.eps`;
    let cmykDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + cmykFilename);
    let cmykSaveOpts = new EPSSaveOptions();
@@ -2045,7 +2050,7 @@ function mainExpressive() {
    }
    //save a banner SVG 
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${lockupName}_${rgbName}_${lockup1}.svg`;
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${tenByFive}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(mastDoc, destFile, 512, 1024);
    }
@@ -2214,7 +2219,7 @@ function mainExpressive() {
    }
    //save a banner SVG
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${lockupName}_${rgbName}_${lockup2}.svg`;
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${eightByFour}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(mastDocNoText, destFile, 400, 800);
    }
