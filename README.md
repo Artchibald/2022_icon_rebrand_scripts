@@ -308,3 +308,7 @@ ask benix core 1 png 1 svg
 
 ask benix expressive 1 png 1 svg
 
+Notes for Katie October 2022
+
+No option for exporting jpg as CMYK but I have the correct CMYK colors in rgb mode
+ 
