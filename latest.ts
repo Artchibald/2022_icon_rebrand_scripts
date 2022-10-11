@@ -1650,17 +1650,9 @@ function mainExpressive() {
    let jpegStartWidth1024 =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[0]}.jpg`;
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}.jpg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
       CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth1024, exportSizes[0]);
-   }
-   //save a 512 JPG
-   let jpegStartWidth512 =
-      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-   for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[1]}.jpg`;
-      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
-      CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth512, exportSizes[1]);
    }
 
    //save a master PNG
@@ -1904,6 +1896,16 @@ function mainExpressive() {
    CSTasks.ungroupOnce(cmykGroup);
 
    CSTasks.convertToCMYK(cmykDoc, cmykDoc.pathItems, colors, colorIndex);
+
+   //save a 1024 JPG
+   let jpegStartWidth1024CMYK =
+      cmykDoc.artboards[0].artboardRect[2] - cmykDoc.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${cmykName}.jpg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
+      CSTasks.scaleAndExportJPEG(cmykDoc, destFile, jpegStartWidth1024CMYK, exportSizes[0]);
+   }
+
 
    //save EPS into the export folder
    let cmykFilename = `/${iconFilename}_${expressiveName}_${cmykName}.eps`;
@@ -2248,7 +2250,7 @@ function mainExpressive() {
    let jpegStartWidth2 =
       mastDocNoText.artboards[0].artboardRect[2] - mastDocNoText.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${tenByFive}.jpg`;
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${eightByFour}.jpg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
       CSTasks.scaleAndExportJPEG(mastDocNoText, destFile, jpegStartWidth2, 800);
    }
