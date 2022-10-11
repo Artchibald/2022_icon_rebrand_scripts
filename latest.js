@@ -63,6 +63,8 @@ var sourceDocName = sourceDoc.name.slice(0, -3);
 var lockupName = "Lockup";
 var lockup1 = "Lockup1";
 var lockup2 = "Lockup2";
+var eightByFour = "800x400";
+var tenByFive = "1024x512";
 // Colors
 var rgbName = "RGB";
 var cmykName = "CMYK";
@@ -1320,9 +1322,9 @@ function mainExpressive() {
     var colorIndex = CSTasks.indexRGBColors(rgbDoc.pathItems, colors);
     //convert violet to white and save as EPS
     CSTasks.convertColorRGB(rgbDoc.pathItems, colors[violetIndex][0], colors[whiteIndex][0]);
-    var inverseFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inverseName, "_").concat(rgbName, ".eps");
-    var inverseFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + inverseFilename);
-    rgbDoc.saveAs(inverseFile, rgbSaveOpts);
+    // let inverseFilename = `/${iconFilename}_${expressiveName}_${inverseName}_${rgbName}.eps`;
+    // let inverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + inverseFilename);
+    // rgbDoc.saveAs(inverseFile, rgbSaveOpts);
     //save inverse 1024 file in all the PNG sizes
     var startWidthonFFFInversed1024 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
     for (var i_24 = 0; i_24 < exportSizes.length; i_24++) {
@@ -1346,9 +1348,9 @@ function mainExpressive() {
     }
     //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
     CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
-    var inactiveFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, ".eps");
-    var inactiveFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + inactiveFilename);
-    rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
+    // let inactiveFilename = `/${iconFilename}_${expressiveName}_${inactiveName}_${rgbName}.eps`;
+    // let inactiveFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + inactiveFilename);
+    // rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
     // save inactive png 1024
     for (var i_27 = 0; i_27 < exportSizes.length; i_27++) {
         var filename_21 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inactiveName, "_").concat(rgbName, "_").concat(exportSizes[0], ".png");
@@ -1436,9 +1438,9 @@ function mainExpressive() {
     cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
     //convert violet to white and save as EPS
     CSTasks.convertColorCMYK(cmykDoc.pathItems, colors[violetIndex][1], colors[whiteIndex][1]);
-    var cmykInverseFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(inverseName, "_").concat(cmykName, ".eps");
-    var cmykInverseFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + cmykInverseFilename);
-    cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
+    // let cmykInverseFilename = `/${iconFilename}_${expressiveName}_${inverseName}_${cmykName}.eps`;
+    // let cmykInverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + cmykInverseFilename);
+    // cmykDoc.saveAs(cmykInverseFile, rgbSaveOpts);
     //close and clean up
     cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
     cmykDoc = null;
@@ -1567,7 +1569,7 @@ function mainExpressive() {
         CSTasks.scaleAndExportSVG(mastDoc, destFile_25, 400, 800);
     }
     //save RGB EPS into the export folder
-    var mastFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup1, ".eps");
+    var mastFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(tenByFive, ".eps");
     var mastDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + mastFilename);
     var mastSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/
@@ -1688,7 +1690,7 @@ function mainExpressive() {
         CSTasks.scaleAndExportSVG(mastDocNoText, destFile_27, 400, 800);
     }
     //save RGB EPS into the export folder 
-    var mastNoTextFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup2, ".eps");
+    var mastNoTextFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(eightByFour, ".eps");
     var mastNoTextDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + mastNoTextFilename);
     var mastNoTextSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/
