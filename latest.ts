@@ -2244,6 +2244,14 @@ function mainExpressive() {
    // clip!
    app.executeMenuCommand('makeMask');
 
+   //save a banner JPG
+   let jpegStartWidth2 =
+      mastDocNoText.artboards[0].artboardRect[2] - mastDocNoText.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${tenByFive}.jpg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
+      CSTasks.scaleAndExportJPEG(mastDocNoText, destFile, jpegStartWidth2, 800);
+   }
 
    //save a banner PNG
    for (let i = 0; i < exportSizes.length; i++) {
