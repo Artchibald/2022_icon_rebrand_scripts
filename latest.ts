@@ -2077,10 +2077,12 @@ function mainExpressive() {
    app.executeMenuCommand('makeMask');
 
    //save a banner JPG
+   let jpegStartWidth =
+      mastDoc.artboards[0].artboardRect[2] - mastDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filenameJGBanner = `/${iconFilename}_${expressiveName}_${rgbName}_${tenByFive}.jpg`;
-      let destFileJPGBanner = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filenameJGBanner);
-      CSTasks.scaleAndExportJPEG(mastDoc, destFileJPGBanner, 512, 1024);
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${tenByFive}.jpg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
+      CSTasks.scaleAndExportJPEG(mastDoc, destFile, jpegStartWidth, exportSizes[0]);
    }
    //save a banner PNG
    for (let i = 0; i < exportSizes.length; i++) {
