@@ -300,7 +300,7 @@ let CSTasks = (function () {
    };
 
    //takes a document, destination file, starting width and desired width
-   //scales the document proportionally to the desired width and exports as a SVG
+   //scales the document proportionally to the desired width and exports as a JPG
    tasks.scaleAndExportJPEG = function (doc, destFile, startWidth, desiredWidth) {
       let scaling = (100.0 * desiredWidth) / startWidth;
       let options = new ExportOptionsJPEG();
@@ -563,7 +563,7 @@ try {
    new Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`).create();
 } catch (e) {
    alert(
-      "Issues with creating setup folders. Check your file permission properties maybe.",
+      "Issues with creating setup folders. Check your file permission properties.",
       e.message
    );
 }
@@ -1650,7 +1650,7 @@ function mainExpressive() {
    let jpegStartWidth1024 =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${exportSizes[0]}.jpg`;
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[0]}.jpg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
       CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth1024, exportSizes[0]);
    }
@@ -1658,7 +1658,7 @@ function mainExpressive() {
    let jpegStartWidth512 =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${exportSizes[1]}.jpg`;
+      let filename = `/${iconFilename}_${expressiveName}_${rgbName}_${exportSizes[1]}.jpg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
       CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth512, exportSizes[1]);
    }
@@ -2076,17 +2076,23 @@ function mainExpressive() {
    // clip!
    app.executeMenuCommand('makeMask');
 
+   //save a banner JPG
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filenameJGBanner = `/${iconFilename}_${expressiveName}_${rgbName}_${tenByFive}.jpg`;
+      let destFileJPGBanner = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filenameJGBanner);
+      CSTasks.scaleAndExportJPEG(mastDoc, destFileJPGBanner, 512, 1024);
+   }
    //save a banner PNG
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${lockupName}_${rgbName}_${lockup1}.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
-      CSTasks.scaleAndExportPNG(mastDoc, destFile, 400, 800);
+      CSTasks.scaleAndExportPNG(mastDoc, destFile, 512, 1024);
    }
    //save a banner SVG 
    for (let i = 0; i < exportSizes.length; i++) {
       let filename = `/${iconFilename}_${expressiveName}_${lockupName}_${rgbName}_${lockup1}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
-      CSTasks.scaleAndExportSVG(mastDoc, destFile, 400, 800);
+      CSTasks.scaleAndExportSVG(mastDoc, destFile, 512, 1024);
    }
 
    //save RGB EPS into the export folder

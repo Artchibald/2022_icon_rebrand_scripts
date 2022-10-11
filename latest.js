@@ -234,7 +234,7 @@ var CSTasks = (function () {
         doc.exportFile(destFile, ExportType.SVG, options);
     };
     //takes a document, destination file, starting width and desired width
-    //scales the document proportionally to the desired width and exports as a SVG
+    //scales the document proportionally to the desired width and exports as a JPG
     tasks.scaleAndExportJPEG = function (doc, destFile, startWidth, desiredWidth) {
         var scaling = (100.0 * desiredWidth) / startWidth;
         var options = new ExportOptionsJPEG();
@@ -466,7 +466,7 @@ try {
     new Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)).create();
 }
 catch (e) {
-    alert("Issues with creating setup folders. Check your file permission properties maybe.", e.message);
+    alert("Issues with creating setup folders. Check your file permission properties.", e.message);
 }
 /****************
  _________
@@ -1249,14 +1249,14 @@ function mainExpressive() {
     //save a 1024 JPG
     var jpegStartWidth1024 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
     for (var i_16 = 0; i_16 < exportSizes.length; i_16++) {
-        var filename_10 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(exportSizes[0], ".jpg");
+        var filename_10 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(exportSizes[0], ".jpg");
         var destFile_10 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filename_10);
         CSTasks.scaleAndExportJPEG(rgbDoc, destFile_10, jpegStartWidth1024, exportSizes[0]);
     }
     //save a 512 JPG
     var jpegStartWidth512 = rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
     for (var i_17 = 0; i_17 < exportSizes.length; i_17++) {
-        var filename_11 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(exportSizes[1], ".jpg");
+        var filename_11 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(exportSizes[1], ".jpg");
         var destFile_11 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filename_11);
         CSTasks.scaleAndExportJPEG(rgbDoc, destFile_11, jpegStartWidth512, exportSizes[1]);
     }
@@ -1556,17 +1556,23 @@ function mainExpressive() {
     sourceDoc.selectObjectsOnActiveArtboard();
     // clip!
     app.executeMenuCommand('makeMask');
-    //save a banner PNG
+    //save a banner JPG
     for (var i_30 = 0; i_30 < exportSizes.length; i_30++) {
+        var filenameJGBanner = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(tenByFive, ".jpg");
+        var destFileJPGBanner = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filenameJGBanner);
+        CSTasks.scaleAndExportJPEG(mastDoc, destFileJPGBanner, 512, 1024);
+    }
+    //save a banner PNG
+    for (var i_31 = 0; i_31 < exportSizes.length; i_31++) {
         var filename_24 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup1, ".png");
         var destFile_24 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_24);
-        CSTasks.scaleAndExportPNG(mastDoc, destFile_24, 400, 800);
+        CSTasks.scaleAndExportPNG(mastDoc, destFile_24, 512, 1024);
     }
     //save a banner SVG 
-    for (var i_31 = 0; i_31 < exportSizes.length; i_31++) {
+    for (var i_32 = 0; i_32 < exportSizes.length; i_32++) {
         var filename_25 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup1, ".svg");
         var destFile_25 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_25);
-        CSTasks.scaleAndExportSVG(mastDoc, destFile_25, 400, 800);
+        CSTasks.scaleAndExportSVG(mastDoc, destFile_25, 512, 1024);
     }
     //save RGB EPS into the export folder
     var mastFilename = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(rgbName, "_").concat(tenByFive, ".eps");
@@ -1678,13 +1684,13 @@ function mainExpressive() {
     // clip!
     app.executeMenuCommand('makeMask');
     //save a banner PNG
-    for (var i_32 = 0; i_32 < exportSizes.length; i_32++) {
+    for (var i_33 = 0; i_33 < exportSizes.length; i_33++) {
         var filename_26 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup2, ".png");
         var destFile_26 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_26);
         CSTasks.scaleAndExportPNG(mastDocNoText, destFile_26, 400, 800);
     }
     //save a banner SVG
-    for (var i_33 = 0; i_33 < exportSizes.length; i_33++) {
+    for (var i_34 = 0; i_34 < exportSizes.length; i_34++) {
         var filename_27 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(lockupName, "_").concat(rgbName, "_").concat(lockup2, ".svg");
         var destFile_27 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_27);
         CSTasks.scaleAndExportSVG(mastDocNoText, destFile_27, 400, 800);
