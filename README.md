@@ -44,7 +44,7 @@ https://youtu.be/yxtrt7nkOjA
 - FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts  
 - Video set up tutorial available here: https://youtu.be/yxtrt7nkOjA.
 - Open your own .ai template or the provided ones in folders called test.
-- Go to file > Scripts > Other Scripts > Import our new script.
+- In Illustrator, go to to file > Scripts > Other Scripts > Import our new script.
 -  Make sure you have the Graphik font installed on your CPU. 
 - You must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets. Otherwise you will get an error that says "error = svgFile".
 - Illustrator says (not responding) on PC but it will respond, give Bill Gates some time XD !).
@@ -58,7 +58,8 @@ https://youtu.be/yxtrt7nkOjA
 - Make sure you are using the correct swatches/colours. 
 - Illustrator check advanced colour mode is correct:  Edit > Assign profile > Must match sRGB IEC61966-2.1.
 - Select each individual color shape and under Window > Colours make sure each shape colour is set to rgb in tiny top right burger menu if bugs encountered.
-- If it does not save exports as intended, check the file permissions of where the .ai file is saved (right click folder > Properties > Visibility > Read and write access? Also you can try "apply permissions to sub folders too" if you find that option) 
+- If it does not save exports as intended, check the file permissions of where the .ai file is saved (right click folder > Properties > Visibility > Read and write access? Also you can try "apply permissions to sub folders too" if you find that option)
+- Please do not use the Graphik font in any other projects without permission, this is a copyrighted font, therefore not included in this repo.  
 - Any issues: archie ATsymbol archibaldbutler.com.
 
 # Run watch task to compile ts to js
@@ -186,8 +187,6 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 - Wednesday 1/2 day, calls, review, packaging and handoff 
 <!-- # No license for graphik font, delete on completion -->
 
-
-UNPAID BELOW
 
 - 2 hours amends Diane Thu 23 June to first icon script (on colour blocks)
 - Friday 24 June 1 hour call and set up
