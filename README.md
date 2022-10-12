@@ -186,13 +186,12 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 - Tues 19 July Amends and feedback from the design US team implemented, more documentation and video tutrial created
 - Wednesday 1/2 day, calls, review, packaging and handoff 
 <!-- # No license for graphik font, delete on completion -->
-
-
 - 2 hours amends Diane Thu 23 June to first icon script (on colour blocks)
 - Friday 24 June 1 hour call and set up
 - Sat 25 June 3 hours docs review, repo set up, set up typescript installation, remove all errors from original js script copy as TS
 - 26 July 2 hours, Katie requested removing expressive jpgs and pngs under 512. Had to repackage and retest.
-
+- 10 (1/2 day), 11, 12 Oct 2022, 2.5 days reworking the whole operation to rectify exports according to brief from Katie.
+ 
 # Shorten file names as per Jo request?
 
 # Add swatch to your swatches panel before starting with swtach .ai file. Swatch menu > Other Library...
