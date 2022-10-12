@@ -121,6 +121,58 @@ To
 - Then all the Core exports (sourceDoc.artboards[0].XXXX)
 - Then all the expressive exports (sourceDoc.artboards[1].XXXX)
 
+# Font issues
+
+Font type must be TT (truetype), doesn't work with O (opentype)
+
+
+
+
+ # Illustrator Edit > Assign profile > Must match sRGB IEC61966-2.1 or it won't work
+
+ # Select each individual colour shape and under Window > Colours make sure each shape colour is set to rgb in burger menu or it won't work!
+
+ # Presentation question what would be liked for folder structure
+
+ # Blockers
+
+ SVG dimensions in their code to be potentially addressed
+
+ # Issue with swatches stopping colours being RGB, trying  Edit > Edit colors > Convert to RGB
+
+- managed to fix with    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
+
+- list of commands can be useful for a specific task: https://community.adobe.com/t5/illustrator-discussions/a-list-of-illustrator-menu-commands-we-can-call-from-javascript/td-p/7694367
+
+```
+   app.executeMenuCommand('Colors9');
+```
+# Briefs and other less impportant notes
+
+# To do
+
+- Change svg dimensions in their respective code?
+- Do we move our resize functions into reusable section at top of script?
+
+# Done
+
+- Create folders for all SVG, EPS, JPG,PNG and try to save them in the right place
+- Find bug: One or more colours....
+- let tasks: any = {}; line 83, better solution than any?
+- Is there a way to edit the viewbox 256 settings in each svg?
+- Convert to CMYK breaking script, not working colours undefined
+- Inverse action works with old colours not new ones
+- do cropped 16 + 24
+- documentation - reusability for other devs
+- DONE CMYK and RGB don't match this time round! We blocked with a commented return.
+
+# Notes from design brief call 29june
+
+- 1 new brand graphic, magenta colour panels + patterns = perspective
+- 2 iconology new style
+- if you are manipulating them, follow the pdf process
+- Graphic motif I use 100% STRIPE scaling(web)
+
 # Initial call brief
 
 - 24/06/22
@@ -159,10 +211,6 @@ To
 - stripes: designer chooses which and direction
 
 
-# Font issues
-
-Font type must be TT (truetype), doesn't work with O (opentype)
-
 # TUBS
 
 
@@ -185,13 +233,12 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 - Mon 18 Jul, clean script more, doc cleanups more, added 2 new export assets as per spreadsheet, Core and Expressive SVG onFFF.
 - Tues 19 July Amends and feedback from the design US team implemented, more documentation and video tutrial created
 - Wednesday 1/2 day, calls, review, packaging and handoff 
-<!-- # No license for graphik font, delete on completion -->
 - 2 hours amends Diane Thu 23 June to first icon script (on colour blocks)
 - Friday 24 June 1 hour call and set up
 - Sat 25 June 3 hours docs review, repo set up, set up typescript installation, remove all errors from original js script copy as TS
 - 26 July 2 hours, Katie requested removing expressive jpgs and pngs under 512. Had to repackage and retest.
 - 10 (1/2 day), 11, 12 Oct 2022, 2.5 days reworking the whole operation to rectify exports according to brief from Katie.
- 
+
 # Shorten file names as per Jo request?
 
 # Add swatch to your swatches panel before starting with swtach .ai file. Swatch menu > Other Library...
@@ -209,48 +256,6 @@ The text and the logo would also remain locked in a consistent location, and the
 Please let me know if you’d like to discuss live. (Example below shows that expressive icon would be cropped – slightly). See email 28 June
 
 # New action for pattern form Diane and Chris, see chat and discuss on call
-
-# To do
-
-- Change svg dimensions in their respective code?
-- Do we move our resize funcrions into reusable section at top of script?
-
-# Done
-
-- Create folders for all SVG, EPS, JPG,PNG and try to save them in the right place
-- Find bug: One or more colours....
-- let tasks: any = {}; line 83, better solution than any?
-- Is there a way to edit the viewbox 256 settings in each svg?
-- Convert to CMYK breaking script, not working colours undefined
-- Inverse action works with old colours not new ones
-- do cropped 16 + 24
-- documentation - reusability for other devs
-- DONE CMYK and RGB don't match this time round! We blocked with a commented return.
-
-# Notes from design brief call 29june
-
-- 1 new brand graphic, magenta colour panels + patterns = perspective
-- 2 iconology new style
-- if you are manipulating them, follow the pdf process
-- Graphic motif I use 100% STRIPE scaling(web)
-
- # Illustrator Edit > Assign profile > Must match sRGB IEC61966-2.1 or it won't work
-
- # Select each individual colour shape and under Window > Colours make sure each shape colour is set to rgb in burger menu or it won't work!
-
- # Presentation question what would be liked for folder structure
-
- # Blockers
-
- SVG dimensions in their code to be potentially addressed
-
- # Issue with swatches stopping colours being RGB, trying  Edit > Edit colors > Convert to RGB
-
-- managed to fix with    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
-
-```
-   app.executeMenuCommand('Colors9');
-```
 
 # New amends 10/10/22
 
