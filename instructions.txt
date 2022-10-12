@@ -1,5 +1,6 @@
 - This script only works locally not on a server.
 - Don't forget to change .txt to .js on the script.
+-  Make sure you have the Graphik font installed on your CPU. 
 - FULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts  
 - Video set up tutorial available here: https://youtu.be/yxtrt7nkOjA.
 - Open your own .ai template or the provided ones in folders called test.

@@ -45,6 +45,7 @@ https://youtu.be/yxtrt7nkOjA
 - Video set up tutorial available here: https://youtu.be/yxtrt7nkOjA.
 - Open your own .ai template or the provided ones in folders called test.
 - Go to file > Scripts > Other Scripts > Import our new script.
+-  Make sure you have the Graphik font installed on your CPU. 
 - You must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets. Otherwise you will get an error that says "error = svgFile".
 - Illustrator says (not responding) on PC but it will respond, give Bill Gates some time XD !).
 - If you run the script again, you should probably delete the previous assets created. They get intermixed and overwritten. 

@@ -21,7 +21,7 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 - CMYK EPS 
 - CMYK inverse EPS
 ************************************************/
-alert(" \n\nThis script only works locally not on a server. \n\nDon't forget to change .txt to .js on the script. \n\nFULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts   \n\nVideo set up tutorial available here: https://youtu.be/yxtrt7nkOjA. \n\nOpen your own.ai template or the provided ones in folders called test. \n\nGo to file > Scripts > Other Scripts > Import our new script. \n\nYou must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets.Otherwise you will get an error that says error = svgFile. \n\nIllustrator says(not responding) on PC but it will respond, give Bill Gates some time XD!). \n\nIf you run the script again, you should probably delete the previous assets created.They get intermixed and overwritten. \n\nBoth artboard sizes must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\nIcons must be on a layer called exactly 'Art'. \n\nMake sure all layers are unlocked to avoid bugs. \n\nExported assets will be saved where the.ai file is saved. \n\nPlease try to use underscore instead of spaces to avoid bugs in filenames. \n\nMake sure you are using the correct swatches / colours. \n\nIllustrator check advanced colour mode is correct: Edit > Assign profile > Must match sRGB IEC61966 - 2.1. \n\nSelect each individual color shape and under Window > Colours make sure each shape colour is set to rgb in tiny top right burger menu if bugs encountered. \n\nIf it does not save exports as intended, check the file permissions of where the.ai file is saved(right click folder > Properties > Visibility > Read and write access ? Also you can try apply permissions to sub folders too if you find that option) \n\nAny issues: archie ATsymbol archibaldbutler.com.");
+alert(" \n\nThis script only works locally not on a server. \n\nDon't forget to change .txt to .js on the script. \n\nFULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts   \n\nVideo set up tutorial available here: https://youtu.be/yxtrt7nkOjA. \n\nOpen your own.ai template or the provided ones in folders called test. \n\nGo to file > Scripts > Other Scripts > Import our new script. \n\n Make sure you have the Graphik font installed on your CPU. \n\nYou must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets. Otherwise you will get an error that says error = svgFile. \n\nIllustrator says(not responding) on PC but it will respond, give Bill Gates some time XD!). \n\nIf you run the script again, you should probably delete the previous assets created.They get intermixed and overwritten. \n\nBoth artboard sizes must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\nIcons must be on a layer called exactly 'Art'. \n\nMake sure all layers are unlocked to avoid bugs. \n\nExported assets will be saved where the.ai file is saved. \n\nPlease try to use underscore instead of spaces to avoid bugs in filenames. \n\nMake sure you are using the correct swatches / colours. \n\nIllustrator check advanced colour mode is correct: Edit > Assign profile > Must match sRGB IEC61966 - 2.1. \n\nSelect each individual color shape and under Window > Colours make sure each shape colour is set to rgb in tiny top right burger menu if bugs encountered. \n\nIf it does not save exports as intended, check the file permissions of where the.ai file is saved(right click folder > Properties > Visibility > Read and write access ? Also you can try apply permissions to sub folders too if you find that option) \n\nAny issues: archie ATsymbol archibaldbutler.com.");
 
 /********************************* 
 VARIABLES YOU MIGHT NEED TO CHANGE 
@@ -761,31 +761,31 @@ function mainCore() {
    //save all sizes of PNG into the export folder
    let startWidth =
       rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-   // for (let i = 0; i < exportSizes.length; i++) {
-   //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.png`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
-   //    CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
-   // }
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.png`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
+      CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
+   }
    // non transparent png exports
-   // let startWidthonFFF =
-   //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-   // for (let i = 0; i < exportSizes.length; i++) {
-   //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[i]}.png`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
-   //    CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile, startWidthonFFF, exportSizes[i]);
-   // }
+   let startWidthonFFF =
+      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[i]}.png`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
+      CSTasks.scaleAndExportNonTransparentPNG(rgbDoc, destFile, startWidthonFFF, exportSizes[i]);
+   }
 
    //save all sizes of JPEG into the export folder
-   // let jpegStartWidth =
-   //    rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
-   // for (let i = 0; i < exportSizes.length; i++) {
-   //    let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.jpg`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${jpgName}`) + filename);
-   //    CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth, exportSizes[i]);
-   // }
+   let jpegStartWidth =
+      rgbDoc.artboards[0].artboardRect[2] - rgbDoc.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${coreName}_${rgbName}_${exportSizes[i]}.jpg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${jpgName}`) + filename);
+      CSTasks.scaleAndExportJPEG(rgbDoc, destFile, jpegStartWidth, exportSizes[i]);
+   }
 
    //save EPS into the export folder
-   let filename = `/${iconFilename}_${coreName}_${rgbName}.eps`;
+   let filename = `/${iconFilename}_${rgbName}.eps`;
    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + filename);
    let rgbSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
@@ -801,29 +801,29 @@ function mainCore() {
       colors[whiteIndex][0]
    );
 
-   // let inverseFilename = `/${iconFilename}_${inverseName}_${rgbName}.eps`;
-   // let inverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + inverseFilename);
-   // rgbDoc.saveAs(inverseFile, rgbSaveOpts);
+   let inverseFilename = `/${iconFilename}_${inverseName}_${rgbName}.eps`;
+   let inverseFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + inverseFilename);
+   rgbDoc.saveAs(inverseFile, rgbSaveOpts);
 
    //save inverse file in all the PNG sizes
-   // for (let i = 0; i < exportSizes.length; i++) {
-   //    let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[i]}.png`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
-   //    CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
-   // }
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${coreName}_${inverseName}_${rgbName}_${exportSizes[i]}.png`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
+      CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
+   }
 
    //convert to inactive color (WTW Icon grey at 100% opacity) and save as EPS
    CSTasks.convertAll(rgbDoc.pathItems, colors[grayIndex][0], 100);
 
-   // let inactiveFilename = `/${iconFilename}_${inactiveName}_${rgbName}.eps`;
-   // let inactiveFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + inactiveFilename);
-   // rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
+   let inactiveFilename = `/${iconFilename}_${inactiveName}_${rgbName}.eps`;
+   let inactiveFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + inactiveFilename);
+   rgbDoc.saveAs(inactiveFile, rgbSaveOpts);
 
-   // for (let i = 0; i < exportSizes.length; i++) {
-   //    let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[i]}.png`;
-   //    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
-   //    CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
-   // }
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${coreName}_${inactiveName}_${rgbName}_${exportSizes[i]}.png`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filename);
+      CSTasks.scaleAndExportPNG(rgbDoc, destFile, startWidth, exportSizes[i]);
+   }
 
    //close and clean up
    rgbDoc.close(SaveOptions.DONOTSAVECHANGES);
@@ -920,13 +920,13 @@ function mainCore() {
    let startWidthCroppedOnFFF =
       rgbDocCroppedVersion.artboards[0].artboardRect[2] - rgbDocCroppedVersion.artboards[0].artboardRect[0];
    //24x24
-   // let filenameCropped24PngOnFFF = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[7]}.png`;
-   // let destFileCropped24PngOnFFF = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped24PngOnFFF);
-   // CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped24PngOnFFF, startWidthCroppedOnFFF, exportSizes[7]);
+   let filenameCropped24PngOnFFF = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[7]}.png`;
+   let destFileCropped24PngOnFFF = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped24PngOnFFF);
+   CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped24PngOnFFF, startWidthCroppedOnFFF, exportSizes[7]);
    //16x16
-   // let filenameCropped16PngOnFFF = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[8]}.png`;
-   // let destFileCropped16PngOnFFF = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped16PngOnFFF);
-   // CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped16PngOnFFF, startWidthCroppedOnFFF, exportSizes[8]);
+   let filenameCropped16PngOnFFF = `/${iconFilename}_${coreName}_${rgbName}_${onWhiteName}_${exportSizes[8]}.png`;
+   let destFileCropped16PngOnFFF = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${pngName}`) + filenameCropped16PngOnFFF);
+   CSTasks.scaleAndExportNonTransparentPNG(rgbDocCroppedVersion, destFileCropped16PngOnFFF, startWidthCroppedOnFFF, exportSizes[8]);
 
    // save cropped 16 and 24 sizes of PNG into the export folder
    let startWidthCropped =
@@ -999,7 +999,7 @@ function mainCore() {
 
 
    /****************
-   CMYK export (EPS) (Inverse?)
+   CMYK export (EPS) (Inverse)
    ****************/
 
    //open a new document with CMYK colorspace, and duplicate the icon to the new document
@@ -1026,7 +1026,7 @@ function mainCore() {
    CSTasks.convertToCMYK(cmykDoc, cmykDoc.pathItems, colors, colorIndex);
 
    //save EPS into the export folder
-   let cmykFilename = `/${iconFilename}_${coreName}_${cmykName}.eps`;
+   let cmykFilename = `/${iconFilename}_${cmykName}.eps`;
    let cmykDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + cmykFilename);
    let cmykSaveOpts = new EPSSaveOptions();
    cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
@@ -1037,6 +1037,23 @@ function mainCore() {
       colors[violetIndex][1],
       colors[whiteIndex][1]
    );
+
+   //save inverse EPS into the export folder
+   let cmykFilename2 = `/${iconFilename}_${inverseName}_${cmykName}.eps`;
+   let cmykDestFile2 = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + cmykFilename2);
+   let cmykSaveOpts2 = new EPSSaveOptions();
+   cmykDoc.saveAs(cmykDestFile2, cmykSaveOpts2);
+
+   //convert to inactive color
+   CSTasks.convertAll(cmykDoc.pathItems, colors[grayIndex][0], 100);
+
+   //save CMYK EPS into the export folder
+   let CMYKFilename2 = `/${iconFilename}_${inactiveName}_${cmykName}.eps`;
+   let CMYKDestFile2 = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + CMYKFilename2);
+   let CMYKSaveOpts2 = new EPSSaveOptions();
+   /*@ts-ignore*/
+   CMYKSaveOpts2.cmykPostScript = false;
+   cmykDoc.saveAs(CMYKDestFile2, CMYKSaveOpts2);
 
    //close and clean up
    cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
