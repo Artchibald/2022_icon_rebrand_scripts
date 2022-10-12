@@ -64,7 +64,7 @@ https://youtu.be/yxtrt7nkOjA
 
 # Run watch task to compile ts to js
 
-tsc -p /Users/fbisurveillancevan81/Desktop/WTW_v2/codebase/WTW_v2/tsconfig.json --watch 
+tsc -p /NAVIGATE_TO_CODEBASE_FOLDER/tsconfig.json --watch 
  
 Or VS code main top nav menu > Terminal > Run Build Task > Watch
 
@@ -142,12 +142,14 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 
 - managed to fix with    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
 
-- list of commands can be useful for a specific task: https://community.adobe.com/t5/illustrator-discussions/a-list-of-illustrator-menu-commands-we-can-call-from-javascript/td-p/7694367
-
 ```
    app.executeMenuCommand('Colors9');
 ```
-# Briefs and other less impportant notes
+
+- The list of all these available commands can be useful for a specific task: https://community.adobe.com/t5/illustrator-discussions/a-list-of-illustrator-menu-commands-we-can-call-from-javascript/td-p/7694367
+
+
+# Briefs and other less important notes
 
 # To do
 
@@ -210,10 +212,7 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 - 1 export is favicon.ico
 - stripes: designer chooses which and direction
 
-
 # TUBS
-
-
 
 - Monday 27 June 8 hours, start script edits, convert to typescript without breaking, multiple tests, artboard division breakthrough, separate new file into 2 artboards, core & expressive. Move masthead over to position artboard 3 with JS maths. Lots of reading old script and ai script docs. Drew diagram of intended funcitonalty and passed onto team for review.
 - Tue 28 June Reviewed and commented back on expectations spreadsheet. Read up on favicon.ico. Code bugs resolved: Hid guidelines layer before expots start, create expressive folder, move masthead down vertically, successfully add graphik font to script.
@@ -245,15 +244,11 @@ Font type must be TT (truetype), doesn't work with O (opentype)
 
 # New briefs from Katie
 
-As mentioned, we wanted to explore potential options for exporting the expressive assets onto artboards with specific layouts.
-
-Please see attached .ai file (social media and email sizes).
-
-Basically – wondering if we can select a consistent X,Y coordinate and place that expressive icon there, with a dark ultraviolet background, and in the case of the social items – pre-populate the text of the application as well as the logo (assets attached here).
-
-The text and the logo would also remain locked in a consistent location, and the expressive icon would be consistently cropped.
-
-Please let me know if you’d like to discuss live. (Example below shows that expressive icon would be cropped – slightly). See email 28 June
+- As mentioned, we wanted to explore potential options for exporting the expressive assets onto artboards with specific layouts.
+- Please see attached .ai file (social media and email sizes).
+- Basically – wondering if we can select a consistent X,Y coordinate and place that expressive icon there, with a dark ultraviolet background, and in the case of the social items – pre-populate the text of the application as well as the logo (assets attached here).
+- The text and the logo would also remain locked in a consistent location, and the expressive icon would be consistently cropped.
+- Please let me know if you’d like to discuss live. (Example below shows that expressive icon would be cropped – slightly). See email 28 June
 
 # New action for pattern form Diane and Chris, see chat and discuss on call
 
@@ -261,58 +256,34 @@ Please let me know if you’d like to discuss live. (Example below shows that ex
 
 CORE:
 
-Just core and expressive
-
-No top level icons
-
-Cropped
-
-Naming stuff
-
-Masthead becomes lockup
-
-EPS CMYK inverse Core is missing
-
-Remove jpg inactive from core
-
-SVG scale down
-
-SVG core  they want 2 onluy
-
-core cropped and core
-
-EPS
-
-Delete inverse CMYK
+- Just core and expressive
+- No top level icons
+- Cropped
+- Naming stuff
+- Masthead becomes lockup
+- EPS CMYK inverse Core is missing
+- Remove jpg inactive from core
+- SVG scale down
+- SVG core  they want 2 onluy
+- core cropped and core
+- EPS
+- Delete inverse CMYK
 
 EXPRESSIVE:
 
-EPS
-
-New name
+- EPS
+- New name
 
 ask_benix_expressive_RGB_1024x512
 ask_benix_expressive_RGB_800x400
 ask_benix_expressive_RGB
 ask_benix_expressive_CMYK
 
-All expresiive remove all inactive and expressive, not in core
-
-Expressive jpg
-
-only 2, 512 and 1024, delete the jpg expressive folder
-
-IN JPG Should be the same as EPS in jpg
-
-Same for PNG, EPS should be in png folder too
-
-In root folder, top level needs 2 things
-
-ask benix core 1 png 1 svg
-
-ask benix expressive 1 png 1 svg
-
-Notes for Katie October 2022
-
-No option for exporting jpg as CMYK but I have the correct CMYK colors in rgb mode
- 
+- All expresiive remove all inactive and expressive, not in core
+- Expressive jpg
+- only 2, 512 and 1024, delete the jpg expressive folder
+- IN JPG Should be the same as EPS in jpg
+- Same for PNG, EPS should be in png folder too
+- In root folder, top level needs 2 things
+- ask benix core 1 png 1 svg
+- ask benix expressive 1 png 1 svgß
