@@ -8,10 +8,11 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 - Creates a new artboard at 24x24
 - Creates a new artboard at 1400x128
 (if these artboards already exist, optionally clears and rebuilds these artboards instead)
-
 - Adds resized copies of the icon to the artboards
 - Asks for the name of the icon and adds text to the lockup icon
-
+- Asks for purple banner text
+- Creates a purple banner 1024 x 512 with text, the icon and logo
+- Creates a purple banner 800 x 400 with icon and logo, no text
 - Creates exports of the icon:
 - RGB EPS
 - RGB inverse EPS
@@ -20,6 +21,10 @@ Starting with an open AI file with a single icon on a single 256 x 256 artboard
 - RGB lockup
 - CMYK EPS
 - CMYK inverse EPS
+- Purple banner with text exports
+- Purple banner no text exports
+- Opens created folder root
+- Add instructions in the alert below and in the readme and in the instructions.txt before packaging up with the files in /test/ so the end user can try everything in Illustrator with one zip.
 ************************************************/
 alert(" \n\nThis script only works locally not on a server. \n\nDon't forget to change .txt to .js on the script. \n\nFULL README: https://github.com/Artchibald/2022_icon_rebrand_scripts   \n\nVideo set up tutorial available here: https://youtu.be/yxtrt7nkOjA. \n\nOpen your own.ai template or the provided ones in folders called test. \n\nGo to file > Scripts > Other Scripts > Import our new script. \n\n Make sure you have the Graphik font installed on your CPU. \n\nYou must have the folder called images in the parent folder, this is where wtw_logo.ai is saved so it can be imported into the big purple banner and exported as assets. Otherwise you will get an error that says error = svgFile. \n\nIllustrator says(not responding) on PC but it will respond, give Bill Gates some time XD!). \n\nIf you run the script again, you should probably delete the previous assets created.They get intermixed and overwritten. \n\nBoth artboard sizes must be exactly 256px x 256px. \n\nGuides must be on a layer called exactly 'Guidelines'. \n\nIcons must be on a layer called exactly 'Art'. \n\nMake sure all layers are unlocked to avoid bugs. \n\nExported assets will be saved where the.ai file is saved. \n\nPlease try to use underscore instead of spaces to avoid bugs in filenames. \n\nMake sure you are using the correct swatches / colours. \n\nIllustrator check advanced colour mode is correct: Edit > Assign profile > Must match sRGB IEC61966 - 2.1. \n\nSelect each individual color shape and under Window > Colours make sure each shape colour is set to rgb in tiny top right burger menu if bugs encountered. \n\nIf it does not save exports as intended, check the file permissions of where the.ai file is saved(right click folder > Properties > Visibility > Read and write access ? Also you can try apply permissions to sub folders too if you find that option) \n\nAny issues: archie ATsymbol archibaldbutler.com.");
 /*********************************
@@ -46,6 +51,7 @@ var CMYKColorElements = [
     [0, 0, 0, 0],
     [0, 0, 0, 50], // Dark grey (unused)
 ];
+// Make sure you have the font below installed, ask for font from client
 var desiredFont = "Graphik-Regular";
 var exportSizes = [1024, 512, 256, 128, 64, 48, 32, 24, 16]; //sizes to export
 var violetIndex = 0; //these are for converting to inverse and inactive versions
@@ -83,6 +89,7 @@ var rebuild = true;
 var guideLayer = sourceDoc.layers["Guidelines"];
 var name = sourceDoc.name.split(".")[0];
 var destFolder = Folder(sourceDoc.path + "/" + name);
+// All reusable functions are in CSTasks below
 var CSTasks = (function () {
     var tasks = {};
     /********************
