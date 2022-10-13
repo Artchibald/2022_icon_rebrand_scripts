@@ -1038,29 +1038,29 @@ function mainCore() {
    let cmykSaveOpts = new EPSSaveOptions();
    cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
 
-   //convert violet to white and save as EPS
-   CSTasks.convertColorCMYK(
-      cmykDoc.pathItems,
-      colors[violetIndex][1],
-      colors[whiteIndex][1]
-   );
+   // //convert violet to white and save as EPS
+   // CSTasks.convertColorCMYK(
+   //    cmykDoc.pathItems,
+   //    colors[violetIndex][1],
+   //    colors[whiteIndex][1]
+   // );
 
-   //save inverse EPS into the export folder
-   let cmykFilename2 = `/${iconFilename}_${inverseName}_${cmykName}.eps`;
-   let cmykDestFile2 = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + cmykFilename2);
-   let cmykSaveOpts2 = new EPSSaveOptions();
-   cmykDoc.saveAs(cmykDestFile2, cmykSaveOpts2);
+   // //save inverse EPS into the export folder
+   // let cmykFilename2 = `/${iconFilename}_${inverseName}_${cmykName}.eps`;
+   // let cmykDestFile2 = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + cmykFilename2);
+   // let cmykSaveOpts2 = new EPSSaveOptions();
+   // cmykDoc.saveAs(cmykDestFile2, cmykSaveOpts2);
 
-   //convert to inactive color
-   CSTasks.convertAll(cmykDoc.pathItems, colors[grayIndex][0], 100);
+   // //convert to inactive color
+   // CSTasks.convertAll(cmykDoc.pathItems, colors[grayIndex][0], 100);
 
-   //save CMYK EPS into the export folder
-   let CMYKFilename2 = `/${iconFilename}_${inactiveName}_${cmykName}.eps`;
-   let CMYKDestFile2 = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + CMYKFilename2);
-   let CMYKSaveOpts2 = new EPSSaveOptions();
-   /*@ts-ignore*/
-   CMYKSaveOpts2.cmykPostScript = false;
-   cmykDoc.saveAs(CMYKDestFile2, CMYKSaveOpts2);
+   // //save CMYK EPS into the export folder
+   // let CMYKFilename2 = `/${iconFilename}_${inactiveName}_${cmykName}.eps`;
+   // let CMYKDestFile2 = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + CMYKFilename2);
+   // let CMYKSaveOpts2 = new EPSSaveOptions();
+   // /*@ts-ignore*/
+   // CMYKSaveOpts2.cmykPostScript = false;
+   // cmykDoc.saveAs(CMYKDestFile2, CMYKSaveOpts2);
 
    //close and clean up
    cmykDoc.close(SaveOptions.DONOTSAVECHANGES);
