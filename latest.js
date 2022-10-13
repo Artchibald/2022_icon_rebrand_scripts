@@ -475,6 +475,13 @@ try {
 catch (e) {
     alert("Issues with creating setup folders. Check your file permission properties.", e.message);
 }
+/*****************************
+Moving both prompts to the top of the file for efficiency purposes
+******************************/
+//request a name for the icon, and place that as text on the lockup artboard
+var appNameCore = prompt("What name do you want to put in the first Core lockup?");
+//request a name for the icon, and place that as text on the lockup artboard
+var appNameExpressive = prompt("What name do you want to put in the second Expressive lockup?");
 /****************
  _________
 \_   ___ \  ___________   ____
@@ -544,10 +551,8 @@ function mainCore() {
         sourceDoc.artboards[2].artboardRect[1] + iconOffset[1],
     ];
     CSTasks.translateObjectTo(mast, mastPos);
-    //request a name for the icon, and place that as text on the lockup artboard
-    var appName = prompt("What name do you want to put in the lockup?");
     var textRef = sourceDoc.textFrames.add();
-    textRef.contents = appName;
+    textRef.contents = appNameCore;
     textRef.textRange.characterAttributes.size = 178;
     CSTasks.setFont(textRef, desiredFont);
     //vertically align the baseline to be 64 px above the botom of the artboard
@@ -632,7 +637,7 @@ function mainCore() {
         CSTasks.scaleAndExportJPEG(rgbDoc, destFile_6, jpegStartWidth, exportSizes[i_12]);
     }
     //save EPS into the export folder
-    var filename = "/".concat(iconFilename, "_").concat(rgbName, ".eps");
+    var filename = "/".concat(iconFilename, "_").concat(coreName, "_").concat(rgbName, ".eps");
     var destFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(coreName, "/").concat(epsName)) + filename);
     var rgbSaveOpts = new EPSSaveOptions();
     /*@ts-ignore*/
@@ -798,7 +803,7 @@ function mainCore() {
     CSTasks.ungroupOnce(cmykGroup);
     CSTasks.convertToCMYK(cmykDoc, cmykDoc.pathItems, colors, colorIndex);
     //save EPS into the export folder
-    var cmykFilename = "/".concat(iconFilename, "_").concat(cmykName, ".eps");
+    var cmykFilename = "/".concat(iconFilename, "_").concat(coreName, "_").concat(cmykName, ".eps");
     var cmykDestFile = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(coreName, "/").concat(epsName)) + cmykFilename);
     var cmykSaveOpts = new EPSSaveOptions();
     cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
@@ -1045,14 +1050,12 @@ function mainExpressive() {
     imagePlacedItem.left = 62;
     /*@ts-ignore*/
     // svgFile.embed();
-    //request a name for the icon, and place that as text on the lockup artboard
-    var appName = prompt("What name do you want to put in second the lockup?");
     var textRef = sourceDoc.textFrames.add();
     //use the areaText method to create the text frame
     var pathRef = sourceDoc.pathItems.rectangle(-850, -800, 480, 400);
     /*@ts-ignore*/
     textRef = sourceDoc.textFrames.areaText(pathRef);
-    textRef.contents = appName;
+    textRef.contents = appNameExpressive;
     textRef.textRange.characterAttributes.size = 62;
     textRef.textRange.paragraphAttributes.hyphenation = false;
     // textRef.textRange.characterAttributes.horizontalScale = 2299;

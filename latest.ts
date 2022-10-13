@@ -574,7 +574,14 @@ try {
       e.message
    );
 }
+/*****************************
+Moving both prompts to the top of the file for efficiency purposes
+******************************/
+//request a name for the icon, and place that as text on the lockup artboard
+let appNameCore = prompt("What name do you want to put in the first Core lockup?");
 
+//request a name for the icon, and place that as text on the lockup artboard
+let appNameExpressive = prompt("What name do you want to put in the second Expressive lockup?");
 /****************
  _________                       
 \_   ___ \  ___________   ____  
@@ -664,11 +671,10 @@ function mainCore() {
    ];
    CSTasks.translateObjectTo(mast, mastPos);
 
-   //request a name for the icon, and place that as text on the lockup artboard
-   let appName = prompt("What name do you want to put in the lockup?");
+
 
    let textRef = sourceDoc.textFrames.add();
-   textRef.contents = appName;
+   textRef.contents = appNameCore;
    textRef.textRange.characterAttributes.size = 178;
    CSTasks.setFont(textRef, desiredFont);
 
@@ -792,7 +798,7 @@ function mainCore() {
    }
 
    //save EPS into the export folder
-   let filename = `/${iconFilename}_${rgbName}.eps`;
+   let filename = `/${iconFilename}_${coreName}_${rgbName}.eps`;
    let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + filename);
    let rgbSaveOpts = new EPSSaveOptions();
    /*@ts-ignore*/
@@ -1033,7 +1039,7 @@ function mainCore() {
    CSTasks.convertToCMYK(cmykDoc, cmykDoc.pathItems, colors, colorIndex);
 
    //save EPS into the export folder
-   let cmykFilename = `/${iconFilename}_${cmykName}.eps`;
+   let cmykFilename = `/${iconFilename}_${coreName}_${cmykName}.eps`;
    let cmykDestFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${coreName}/${epsName}`) + cmykFilename);
    let cmykSaveOpts = new EPSSaveOptions();
    cmykDoc.saveAs(cmykDestFile, cmykSaveOpts);
@@ -1357,8 +1363,7 @@ function mainExpressive() {
    /*@ts-ignore*/
    // svgFile.embed();
 
-   //request a name for the icon, and place that as text on the lockup artboard
-   let appName = prompt("What name do you want to put in second the lockup?");
+
 
    let textRef = sourceDoc.textFrames.add();
 
@@ -1367,7 +1372,7 @@ function mainExpressive() {
    /*@ts-ignore*/
    textRef = sourceDoc.textFrames.areaText(pathRef);
 
-   textRef.contents = appName;
+   textRef.contents = appNameExpressive;
    textRef.textRange.characterAttributes.size = 62;
 
    textRef.textRange.paragraphAttributes.hyphenation = false;
