@@ -979,7 +979,7 @@ function mainExpressive() {
     // create a landing zone square to place icon inside
     //moved it outside the function itself so we can delete it after so it doesn't get exported
     var getArtLayer = sourceDoc.layers.getByName('Art');
-    var landingZoneSquare = getArtLayer.pathItems.rectangle(-844, 571, 460, 460);
+    var landingZoneSquare = getArtLayer.pathItems.rectangle(-844, 572, 460, 460);
     function placeIconLockup1Correctly(mastBannerIconOnText, maxSize) {
         // let setLandingZoneSquareColor = new RGBColor();
         // setLandingZoneSquareColor.red = 12;
@@ -1472,7 +1472,7 @@ function mainExpressive() {
     // create a landing zone square to place icon inside
     //moved it outside the function itself so we can delete it after so it doesn't get exported
     var getArtLayer3 = mastDoc.layers.getByName('Layer 1');
-    var landingZoneSquare3 = getArtLayer3.pathItems.rectangle(-843, 570, 460, 460);
+    var landingZoneSquare3 = getArtLayer3.pathItems.rectangle(-845, 571, 460, 460);
     function placeIconLockup1Correctly3(mastGroup, maxSize) {
         // let setLandingZoneSquareColor = new RGBColor();
         // setLandingZoneSquareColor.red = 121;
@@ -1515,8 +1515,8 @@ function mainExpressive() {
     ElementPlacement.PLACEATEND);
     // text position
     var mastTextLoc = [
-        mastDoc.artboards[0].artboardRect[0] + 62,
-        mastDoc.artboards[0].artboardRect[1] - 62,
+        mastDoc.artboards[0].artboardRect[0] + 63,
+        mastDoc.artboards[0].artboardRect[1] - 64,
     ];
     CSTasks.translateObjectTo(mastText, mastTextLoc);
     // add new style purple banner elements
@@ -1537,7 +1537,7 @@ function mainExpressive() {
     var imagePlacedItemMastDoc = myMainArtworkLayerMastDoc.placedItems.add();
     var svgFileMastDoc = File("".concat(sourceDoc.path, "/../images/wtw_logo.ai"));
     imagePlacedItemMastDoc.file = svgFileMastDoc;
-    imagePlacedItemMastDoc.top = -1181;
+    imagePlacedItemMastDoc.top = -1189;
     imagePlacedItemMastDoc.left = 62;
     // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
     var myCroppingLayerMastDoc = mastDoc.layers.add();
@@ -1615,7 +1615,7 @@ function mainExpressive() {
     // create a landing zone square to place icon inside
     //moved it outside the function itself so we can delete it after so it doesn't get exported
     var getArtLayerIn4thArtboard = mastDocNoText.layers.getByName('Layer 1');
-    var landingZoneSquareInFourthArtboard = getArtLayerIn4thArtboard.pathItems.rectangle(-1471, 443, 360, 360);
+    var landingZoneSquareInFourthArtboard = getArtLayerIn4thArtboard.pathItems.rectangle(-1471, 444, 360, 360);
     function placeIconLockupCorrectlyIn4thDoc(mastGroupNoText, maxSize) {
         // let setLandingZoneSquareColor = new RGBColor();
         // setLandingZoneSquareColor.red = 121;

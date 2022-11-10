@@ -125,8 +125,9 @@ To
 
 Font type must be TT (truetype), doesn't work with O (opentype)
 
+# 1 off bug when updating Illustrator
 
-
+After I updated Illustrator, it couldn't read wtw_logo.ai, so I opened that file in Illustrator, saved it, ran the script again and it worked.
 
  # Illustrator Edit > Assign profile > Must match sRGB IEC61966-2.1 or it won't work
 

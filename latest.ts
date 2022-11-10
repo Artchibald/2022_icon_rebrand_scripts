@@ -1272,7 +1272,7 @@ function mainExpressive() {
    let getArtLayer = sourceDoc.layers.getByName('Art');
    let landingZoneSquare = getArtLayer.pathItems.rectangle(
       -844,
-      571,
+      572,
       460,
       460);
 
@@ -1951,8 +1951,8 @@ function mainExpressive() {
    //moved it outside the function itself so we can delete it after so it doesn't get exported
    let getArtLayer3 = mastDoc.layers.getByName('Layer 1');
    let landingZoneSquare3 = getArtLayer3.pathItems.rectangle(
-      -843,
-      570,
+      -845,
+      571,
       460,
       460);
 
@@ -2009,8 +2009,8 @@ function mainExpressive() {
    );
    // text position
    let mastTextLoc = [
-      mastDoc.artboards[0].artboardRect[0] + 62,
-      mastDoc.artboards[0].artboardRect[1] - 62,
+      mastDoc.artboards[0].artboardRect[0] + 63,
+      mastDoc.artboards[0].artboardRect[1] - 64,
    ];
    CSTasks.translateObjectTo(mastText, mastTextLoc);
 
@@ -2037,7 +2037,7 @@ function mainExpressive() {
    let imagePlacedItemMastDoc = myMainArtworkLayerMastDoc.placedItems.add();
    let svgFileMastDoc = File(`${sourceDoc.path}/../images/wtw_logo.ai`);
    imagePlacedItemMastDoc.file = svgFileMastDoc;
-   imagePlacedItemMastDoc.top = -1181;
+   imagePlacedItemMastDoc.top = -1189;
    imagePlacedItemMastDoc.left = 62;
 
    // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
@@ -2139,7 +2139,7 @@ function mainExpressive() {
    let getArtLayerIn4thArtboard = mastDocNoText.layers.getByName('Layer 1');
    let landingZoneSquareInFourthArtboard = getArtLayerIn4thArtboard.pathItems.rectangle(
       -1471,
-      443,
+      444,
       360,
       360);
 
