@@ -1081,7 +1081,7 @@ function mainExpressive() {
     Set up purple artboard 4 in main file
     ******************/
     //if there are 3 artboards, create the new fourth lockup artboard
-    // creat last artboard in file
+    // creat 00x400 artboard in file
     var FourthMainArtboardFirstRect = sourceDoc.artboards[1].artboardRect;
     sourceDoc.artboards.add(
     // this fires but then gets replaced further down
@@ -1172,6 +1172,101 @@ function mainExpressive() {
     // svgFile.embed();
     var secondResizedRect = CSTasks.newRect(sourceDoc.artboards[4].artboardRect[0], -sourceDoc.artboards[4].artboardRect[1], 800, 400);
     sourceDoc.artboards[4].artboardRect = secondResizedRect;
+    /******************
+      Set up purple artboard 5 in main file
+      ******************/
+    //if there are 3 artboards, create the new fourth lockup artboard
+    // creat 00x400 artboard in file
+    var FifthMainArtboardFirstRect = sourceDoc.artboards[1].artboardRect;
+    sourceDoc.artboards.add(
+    // this fires but then gets replaced further down
+    CSTasks.newRect(FifthMainArtboardFirstRect[1], FifthMainArtboardFirstRect[2] + 1316, 800, 500));
+    //select the contents on artboard 1
+    var selFifthBanner = CSTasks.selectContentsOnArtboard(sourceDoc, 1);
+    // make sure all colors are RGB, equivalent of Edit > Colors > Convert to RGB
+    app.executeMenuCommand('Colors9');
+    if (selFifthBanner.length == 0) {
+        //if nothing is in the artboard
+        alert("Please try again with artwork on the main second 256x256 artboard.");
+        return;
+    }
+    /********************************
+    Add elements to new fifth artboard with lockup
+    *********************************/
+    //place icon on lockup
+    /*@ts-ignore*/
+    var fifthBannerMast = iconGroup.duplicate(iconGroup.layer, ElementPlacement.PLACEATEND);
+    var fifthBannerMastPos = [
+        sourceDoc.artboards[5].artboardRect[0] + iconOffset[0],
+        sourceDoc.artboards[5].artboardRect[1] + iconOffset[1],
+    ];
+    CSTasks.translateObjectTo(fifthBannerMast, fifthBannerMastPos);
+    /********************************
+    Custom function to create a landing square to place the icon correctly
+    Some icons have width or height less than 256 so it needed special centering geometrically
+    you can see the landing zone square by changing fill to true and uncommenting color
+    *********************************/
+    // create a landing zone square to place icon inside
+    //moved it outside the function itself so we can delete it after so it doesn't get exported
+    var getArtLayer5 = sourceDoc.layers.getByName('Art');
+    var landingZoneSquare5 = getArtLayer5.pathItems.rectangle(-2116, 444, 360, 360);
+    function placeIconLockup1Correctly5(fifthBannerMast, maxSize) {
+        // let setLandingZoneSquareColor = new RGBColor();
+        // setLandingZoneSquareColor.red = 121;
+        // setLandingZoneSquareColor.green = 128;
+        // setLandingZoneSquareColor.blue = 131;
+        // landingZoneSquare5.fillColor = setLandingZoneSquareColor;
+        landingZoneSquare5.name = "LandingZone2";
+        landingZoneSquare5.filled = false;
+        /*@ts-ignore*/
+        landingZoneSquare5.move(getArtLayer5, ElementPlacement.PLACEATEND);
+        // start moving expressive icon into our new square landing zone
+        var placedfifthBannerMast = fifthBannerMast;
+        var landingZone = sourceDoc.pathItems.getByName("LandingZone2");
+        var preferredWidth = (360);
+        var preferredHeight = (360);
+        // do the width
+        var widthRatio = (preferredWidth / placedfifthBannerMast.width) * 100;
+        if (placedfifthBannerMast.width != preferredWidth) {
+            placedfifthBannerMast.resize(widthRatio, widthRatio);
+        }
+        // now do the height
+        var heightRatio = (preferredHeight / placedfifthBannerMast.height) * 100;
+        if (placedfifthBannerMast.height != preferredHeight) {
+            placedfifthBannerMast.resize(heightRatio, heightRatio);
+        }
+        // now let's center the art on the landing zone
+        var centerArt = [placedfifthBannerMast.left + (placedfifthBannerMast.width / 2), placedfifthBannerMast.top + (placedfifthBannerMast.height / 2)];
+        var centerLz = [landingZone.left + (landingZone.width / 2), landingZone.top + (landingZone.height / 2)];
+        placedfifthBannerMast.translate(centerLz[0] - centerArt[0], centerLz[1] - centerArt[1]);
+        // need another centered proportioning to fix it exactly in correct position
+        var W = fifthBannerMast.width, H = fifthBannerMast.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
+        fifthBannerMast.resize(factor, factor);
+    }
+    placeIconLockup1Correctly5(fifthBannerMast, { W: 360, H: 360 });
+    // delete the landing zone
+    landingZoneSquare5.remove();
+    // fifthBannerMast.width = 360;
+    // fifthBannerMast.height = 360;
+    // new purple bg
+    // Add new layer above Guidelines and fill white
+    var fifthMainArtworkLayer = sourceDoc.layers.getByName('Art');
+    var fifthMainPurpleBgLayer = sourceDoc.layers.add();
+    fifthMainPurpleBgLayer.name = "Main_Purple_BG_layer_two";
+    var getfifthMainPurpleBgLayer = sourceDoc.layers.getByName('Main_Purple_BG_layer_two');
+    var fifthMainRect = getfifthMainPurpleBgLayer.pathItems.rectangle(-1972, 0, 800, 500);
+    var fifthMainVioletBgColor = new RGBColor();
+    fifthMainVioletBgColor.red = 72;
+    fifthMainVioletBgColor.green = 8;
+    fifthMainVioletBgColor.blue = 111;
+    fifthMainRect.filled = true;
+    fifthMainRect.fillColor = fifthMainVioletBgColor;
+    /*@ts-ignore*/
+    getfifthMainPurpleBgLayer.move(fifthMainArtworkLayer, ElementPlacement.PLACEATEND);
+    /*@ts-ignore*/
+    // svgFile.embed();
+    var fifthResizedRect = CSTasks.newRect(sourceDoc.artboards[5].artboardRect[0], -sourceDoc.artboards[5].artboardRect[1], 800, 500);
+    sourceDoc.artboards[5].artboardRect = fifthResizedRect;
     /*********************************************************************
     Export an SVG on a white background
     **********************************************************************/
