@@ -1902,12 +1902,12 @@ function mainExpressive() {
     mastDocNoText800x500.activeLayer.hasSelectedArtwork = true;
     // insert clipping rect here
     var mainClipRectMastDocNoText800x500 = GetMyCroppingLayerMastDocNoText800x500.pathItems.rectangle(-1972, 0, 800, 500);
-    var setClipBgColorMastDocNoText800x500 = new RGBColor();
-    setClipBgColorMastDocNoText800x500.red = 111;
-    setClipBgColorMastDocNoText800x500.green = 111;
-    setClipBgColorMastDocNoText800x500.blue = 222;
-    mainClipRectMastDocNoText800x500.filled = true;
-    mainClipRectMastDocNoText800x500.fillColor = setClipBgColorMastDocNoText800x500;
+    // let setClipBgColorMastDocNoText800x500 = new RGBColor();
+    // setClipBgColorMastDocNoText800x500.red = 111;
+    // setClipBgColorMastDocNoText800x500.green = 111;
+    // setClipBgColorMastDocNoText800x500.blue = 222;
+    // mainClipRectMastDocNoText800x500.filled = true;
+    // mainClipRectMastDocNoText800x500.fillColor = setClipBgColorMastDocNoText800x500;
     // select all for clipping here
     mastDocNoText800x500.selectObjectsOnActiveArtboard();
     // clip!
@@ -1935,6 +1935,19 @@ function mainExpressive() {
     var mastNoTextFilename800x500 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(smallName, ".eps");
     var mastNoTextDestFile800x500 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + mastNoTextFilename800x500);
     var mastNoTextSaveOpts800x500 = new EPSSaveOptions();
+    //save a banner JPG @2x
+    var jpegStartWidth800x500_2x = mastDocNoText800x500.artboards[0].artboardRect[2] - mastDocNoText800x500.artboards[0].artboardRect[0];
+    for (var i_32 = 0; i_32 < exportSizes.length; i_32++) {
+        var filename_26 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(largeName, ".jpg");
+        var destFile_26 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filename_26);
+        CSTasks.scaleAndExportJPEG(mastDocNoText800x500, destFile_26, jpegStartWidth800x500_2x, 1600);
+    }
+    //save a banner PNG @2x
+    for (var i_33 = 0; i_33 < exportSizes.length; i_33++) {
+        var filename_27 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(largeName, ".png");
+        var destFile_27 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_27);
+        CSTasks.scaleAndExportPNG(mastDocNoText800x500, destFile_27, jpegStartWidth800x500_2x, 1600);
+    }
     /*@ts-ignore*/
     mastNoTextSaveOpts800x500.cmykPostScript = false;
     /*@ts-ignore*/

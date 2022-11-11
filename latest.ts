@@ -2551,12 +2551,12 @@ function mainExpressive() {
       0,
       800,
       500);
-   let setClipBgColorMastDocNoText800x500 = new RGBColor();
-   setClipBgColorMastDocNoText800x500.red = 111;
-   setClipBgColorMastDocNoText800x500.green = 111;
-   setClipBgColorMastDocNoText800x500.blue = 222;
-   mainClipRectMastDocNoText800x500.filled = true;
-   mainClipRectMastDocNoText800x500.fillColor = setClipBgColorMastDocNoText800x500;
+   // let setClipBgColorMastDocNoText800x500 = new RGBColor();
+   // setClipBgColorMastDocNoText800x500.red = 111;
+   // setClipBgColorMastDocNoText800x500.green = 111;
+   // setClipBgColorMastDocNoText800x500.blue = 222;
+   // mainClipRectMastDocNoText800x500.filled = true;
+   // mainClipRectMastDocNoText800x500.fillColor = setClipBgColorMastDocNoText800x500;
    // select all for clipping here
    mastDocNoText800x500.selectObjectsOnActiveArtboard();
 
@@ -2588,6 +2588,48 @@ function mainExpressive() {
    let mastNoTextFilename800x500 = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${smallName}.eps`;
    let mastNoTextDestFile800x500 = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + mastNoTextFilename800x500);
    let mastNoTextSaveOpts800x500 = new EPSSaveOptions();
+
+
+
+
+
+
+
+
+
+
+
+
+   //save a banner JPG @2x
+   let jpegStartWidth800x500_2x =
+      mastDocNoText800x500.artboards[0].artboardRect[2] - mastDocNoText800x500.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${largeName}.jpg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
+      CSTasks.scaleAndExportJPEG(mastDocNoText800x500, destFile, jpegStartWidth800x500_2x, 1600);
+   }
+
+   //save a banner PNG @2x
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${largeName}.png`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
+      CSTasks.scaleAndExportPNG(mastDocNoText800x500, destFile, jpegStartWidth800x500_2x, 1600);
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    /*@ts-ignore*/
    mastNoTextSaveOpts800x500.cmykPostScript = false;
    /*@ts-ignore*/
