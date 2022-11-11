@@ -2585,7 +2585,7 @@ function mainExpressive() {
       CSTasks.scaleAndExportSVG(mastDocNoText800x500, destFile, 500, 800);
    }
    //save RGB EPS into the export folder 
-   let mastNoTextFilename800x500 = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${smallName}.eps`;
+   let mastNoTextFilename800x500 = `/${iconFilename}_${expressiveName}_${sixteenTenName}.eps`;
    let mastNoTextDestFile800x500 = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + mastNoTextFilename800x500);
    let mastNoTextSaveOpts800x500 = new EPSSaveOptions();
 

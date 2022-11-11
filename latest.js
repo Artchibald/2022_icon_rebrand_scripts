@@ -1932,7 +1932,7 @@ function mainExpressive() {
         CSTasks.scaleAndExportSVG(mastDocNoText800x500, destFile_25, 500, 800);
     }
     //save RGB EPS into the export folder 
-    var mastNoTextFilename800x500 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(smallName, ".eps");
+    var mastNoTextFilename800x500 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, ".eps");
     var mastNoTextDestFile800x500 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + mastNoTextFilename800x500);
     var mastNoTextSaveOpts800x500 = new EPSSaveOptions();
     //save a banner JPG @2x
