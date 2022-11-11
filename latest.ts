@@ -2408,19 +2408,6 @@ function mainExpressive() {
    mastDocNoText = null;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
    /********************
   Purple fifth Lockup with no text export at 800x500
   ********************/
@@ -2469,16 +2456,11 @@ function mainExpressive() {
 
 
 
-      let setLandingZoneSquareColor = new RGBColor();
-      setLandingZoneSquareColor.red = 121;
-      setLandingZoneSquareColor.green = 128;
-      setLandingZoneSquareColor.blue = 131;
-      landingZoneSquareInFifthArtboard.fillColor = setLandingZoneSquareColor;
-
-
-
-
-
+      // let setLandingZoneSquareColor = new RGBColor();
+      // setLandingZoneSquareColor.red = 121;
+      // setLandingZoneSquareColor.green = 128;
+      // setLandingZoneSquareColor.blue = 131;
+      // landingZoneSquareInFifthArtboard.fillColor = setLandingZoneSquareColor;
 
       landingZoneSquareInFifthArtboard.name = "LandingZone4"
       landingZoneSquareInFifthArtboard.filled = false;
@@ -2589,17 +2571,6 @@ function mainExpressive() {
    let mastNoTextDestFile800x500 = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + mastNoTextFilename800x500);
    let mastNoTextSaveOpts800x500 = new EPSSaveOptions();
 
-
-
-
-
-
-
-
-
-
-
-
    //save a banner JPG @2x
    let jpegStartWidth800x500_2x =
       mastDocNoText800x500.artboards[0].artboardRect[2] - mastDocNoText800x500.artboards[0].artboardRect[0];
@@ -2616,20 +2587,6 @@ function mainExpressive() {
       CSTasks.scaleAndExportPNG(mastDocNoText800x500, destFile, jpegStartWidth800x500_2x, 1600);
    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
    /*@ts-ignore*/
    mastNoTextSaveOpts800x500.cmykPostScript = false;
    /*@ts-ignore*/
@@ -2639,9 +2596,6 @@ function mainExpressive() {
    //close and clean up
    mastDocNoText800x500.close(SaveOptions.DONOTSAVECHANGES);
    mastDocNoText800x500 = null;
-
-
-
 
    /************
    Final cleanup

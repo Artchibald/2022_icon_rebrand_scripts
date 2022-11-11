@@ -1844,11 +1844,11 @@ function mainExpressive() {
     var getArtLayerIn5thArtboard = mastDocNoText800x500.layers.getByName('Layer 1');
     var landingZoneSquareInFifthArtboard = getArtLayerIn5thArtboard.pathItems.rectangle(-2114, 444, 360, 360);
     function placeIconLockupCorrectlyIn5thDoc(mastGroupNoText800x500, maxSize) {
-        var setLandingZoneSquareColor = new RGBColor();
-        setLandingZoneSquareColor.red = 121;
-        setLandingZoneSquareColor.green = 128;
-        setLandingZoneSquareColor.blue = 131;
-        landingZoneSquareInFifthArtboard.fillColor = setLandingZoneSquareColor;
+        // let setLandingZoneSquareColor = new RGBColor();
+        // setLandingZoneSquareColor.red = 121;
+        // setLandingZoneSquareColor.green = 128;
+        // setLandingZoneSquareColor.blue = 131;
+        // landingZoneSquareInFifthArtboard.fillColor = setLandingZoneSquareColor;
         landingZoneSquareInFifthArtboard.name = "LandingZone4";
         landingZoneSquareInFifthArtboard.filled = false;
         /*@ts-ignore*/
