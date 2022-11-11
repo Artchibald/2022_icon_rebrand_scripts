@@ -92,7 +92,10 @@ let guideLayer = sourceDoc.layers["Guidelines"];
 let name = sourceDoc.name.split(".")[0];
 let destFolder = Folder(sourceDoc.path + "/" + name);
 
-
+// 800x500 names
+let sixteenTenName = "1610";
+let smallName = "small";
+let largeName = "large";
 
 /**********************************
 Module for image manipulation tasks 
@@ -2238,7 +2241,7 @@ function mainExpressive() {
 
 
    /********************
-     Purple Lockup with no text export
+     Purple Lockup 800x400 with no text export
      ********************/
    //open a new doc and copy and position the icon
    // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
@@ -2403,6 +2406,200 @@ function mainExpressive() {
    //close and clean up
    mastDocNoText.close(SaveOptions.DONOTSAVECHANGES);
    mastDocNoText = null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /********************
+  Purple fifth Lockup with no text export at 800x500
+  ********************/
+   //open a new doc and copy and position the icon
+   // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
+   let mastDocNoText800x500 = CSTasks.duplicateArtboardInNewDoc(
+      sourceDoc,
+      5,
+      DocumentColorSpace.RGB
+   );
+   mastDocNoText800x500.swatches.removeAll();
+
+   let mastGroupNoText800x500 = iconGroup.duplicate(
+      mastDocNoText800x500.layers[0],
+      /*@ts-ignore*/
+      ElementPlacement.PLACEATEND
+   );
+   // new icon width in rebrand
+   // mastGroupNoText800x500.width = 360;
+   // mastGroupNoText800x500.height = 360;
+
+   // new icon position
+   let mastLocNoText800x500 = [
+      mastDocNoText800x500.artboards[0].artboardRect[0],
+      mastDocNoText800x500.artboards[0].artboardRect[1],
+   ];
+   CSTasks.translateObjectTo(mastGroupNoText800x500, mastLocNoText800x500);
+
+
+   /********************************
+     Custom function to create a landing square to place the icon correctly
+     Some icons have width or height less than 256 so it needed special centering geometrically
+     you can see the landing zone square by changing fill to true and uncommenting color
+     *********************************/
+
+   // create a landing zone square to place icon inside
+   //moved it outside the function itself so we can delete it after so it doesn't get exported
+   let getArtLayerIn5thArtboard = mastDocNoText800x500.layers.getByName('Layer 1');
+   let landingZoneSquareInFifthArtboard = getArtLayerIn5thArtboard.pathItems.rectangle(
+      -2114,
+      444,
+      360,
+      360);
+
+   function placeIconLockupCorrectlyIn5thDoc(mastGroupNoText800x500, maxSize) {
+
+
+
+      let setLandingZoneSquareColor = new RGBColor();
+      setLandingZoneSquareColor.red = 121;
+      setLandingZoneSquareColor.green = 128;
+      setLandingZoneSquareColor.blue = 131;
+      landingZoneSquareInFifthArtboard.fillColor = setLandingZoneSquareColor;
+
+
+
+
+
+
+      landingZoneSquareInFifthArtboard.name = "LandingZone4"
+      landingZoneSquareInFifthArtboard.filled = false;
+      /*@ts-ignore*/
+      landingZoneSquareInFifthArtboard.move(getArtLayerIn5thArtboard, ElementPlacement.PLACEATEND);
+
+      // start moving expressive icon into our new square landing zone
+      let placedmastGroup = mastGroupNoText800x500;
+      let landingZone = mastDocNoText800x500.pathItems.getByName("LandingZone4");
+      let preferredWidth = (360);
+      let preferredHeight = (360);
+      // do the width
+      let widthRatio = (preferredWidth / placedmastGroup.width) * 100;
+      if (placedmastGroup.width != preferredWidth) {
+         placedmastGroup.resize(widthRatio, widthRatio);
+      }
+      // now do the height
+      let heightRatio = (preferredHeight / placedmastGroup.height) * 100;
+      if (placedmastGroup.height != preferredHeight) {
+         placedmastGroup.resize(heightRatio, heightRatio);
+      }
+      // now let's center the art on the landing zone
+      let centerArt = [placedmastGroup.left + (placedmastGroup.width / 2), placedmastGroup.top + (placedmastGroup.height / 2)];
+      let centerLz = [landingZone.left + (landingZone.width / 2), landingZone.top + (landingZone.height / 2)];
+      placedmastGroup.translate(centerLz[0] - centerArt[0], centerLz[1] - centerArt[1]);
+
+      // need another centered proportioning to fix it exactly in correct position
+      let W = mastGroupNoText800x500.width,
+         H = mastGroupNoText800x500.height,
+         MW = maxSize.W,
+         MH = maxSize.H,
+         factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
+      mastGroupNoText800x500.resize(factor, factor);
+   }
+   placeIconLockupCorrectlyIn5thDoc(mastGroupNoText800x500, { W: 360, H: 360 });
+
+   // delete the landing zone
+   landingZoneSquareInFifthArtboard.remove();
+
+   CSTasks.ungroupOnce(mastGroupNoText800x500);
+
+   // add new style purple banner 4 elements
+   let myMainArtworkLayerMastDocNoText800x500 = mastDocNoText800x500.layers.getByName('Layer 1');
+   let myMainPurpleBgLayerMastDocNoText800x500 = mastDocNoText800x500.layers.add();
+   myMainPurpleBgLayerMastDocNoText800x500.name = "Main_Purple_BG_layer";
+   let GetMyMainPurpleBgLayerMastDocNoText800x500 = mastDocNoText800x500.layers.getByName('Main_Purple_BG_layer');
+   let mainRectMastDocNoText800x500 = GetMyMainPurpleBgLayerMastDocNoText800x500.pathItems.rectangle(
+      -1972,
+      0,
+      800,
+      500);
+   let setMainVioletBgColorMastDocNoText800x500 = new RGBColor();
+   setMainVioletBgColorMastDocNoText800x500.red = 72;
+   setMainVioletBgColorMastDocNoText800x500.green = 8;
+   setMainVioletBgColorMastDocNoText800x500.blue = 111;
+   mainRectMastDocNoText800x500.filled = true;
+   mainRectMastDocNoText800x500.fillColor = setMainVioletBgColorMastDocNoText800x500;
+   /*@ts-ignore*/
+   GetMyMainPurpleBgLayerMastDocNoText800x500.move(myMainArtworkLayerMastDocNoText800x500, ElementPlacement.PLACEATEND);
+
+   // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
+   let myCroppingLayerMastDocNoText800x500 = mastDocNoText800x500.layers.add();
+   myCroppingLayerMastDocNoText800x500.name = "crop";
+   let GetMyCroppingLayerMastDocNoText800x500 = mastDocNoText800x500.layers.getByName('crop');
+   mastDocNoText800x500.activeLayer = GetMyCroppingLayerMastDocNoText800x500;
+   mastDocNoText800x500.activeLayer.hasSelectedArtwork = true;
+   // insert clipping rect here
+   let mainClipRectMastDocNoText800x500 = GetMyCroppingLayerMastDocNoText800x500.pathItems.rectangle(
+      -1972,
+      0,
+      800,
+      500);
+   let setClipBgColorMastDocNoText800x500 = new RGBColor();
+   setClipBgColorMastDocNoText800x500.red = 111;
+   setClipBgColorMastDocNoText800x500.green = 111;
+   setClipBgColorMastDocNoText800x500.blue = 222;
+   mainClipRectMastDocNoText800x500.filled = true;
+   mainClipRectMastDocNoText800x500.fillColor = setClipBgColorMastDocNoText800x500;
+   // select all for clipping here
+   mastDocNoText800x500.selectObjectsOnActiveArtboard();
+
+   // clip!
+   app.executeMenuCommand('makeMask');
+
+   //save a banner JPG
+   let jpegStartWidth800x500 =
+      mastDocNoText800x500.artboards[0].artboardRect[2] - mastDocNoText800x500.artboards[0].artboardRect[0];
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${smallName}.jpg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
+      CSTasks.scaleAndExportJPEG(mastDocNoText800x500, destFile, jpegStartWidth800x500, 800);
+   }
+
+   //save a banner PNG
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${smallName}.png`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
+      CSTasks.scaleAndExportPNG(mastDocNoText800x500, destFile, jpegStartWidth800x500, 800);
+   }
+   //save a banner SVG
+   for (let i = 0; i < exportSizes.length; i++) {
+      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${smallName}.svg`;
+      let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
+      CSTasks.scaleAndExportSVG(mastDocNoText800x500, destFile, 500, 800);
+   }
+   //save RGB EPS into the export folder 
+   let mastNoTextFilename800x500 = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${smallName}.eps`;
+   let mastNoTextDestFile800x500 = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${epsName}`) + mastNoTextFilename800x500);
+   let mastNoTextSaveOpts800x500 = new EPSSaveOptions();
+   /*@ts-ignore*/
+   mastNoTextSaveOpts800x500.cmykPostScript = false;
+   /*@ts-ignore*/
+   mastNoTextSaveOpts800x500.embedLinkedFiles = true;
+   mastDocNoText800x500.saveAs(mastNoTextDestFile800x500, mastNoTextSaveOpts800x500);
+
+   //close and clean up
+   mastDocNoText800x500.close(SaveOptions.DONOTSAVECHANGES);
+   mastDocNoText800x500 = null;
+
+
+
 
    /************
    Final cleanup

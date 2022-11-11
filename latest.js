@@ -89,6 +89,10 @@ var rebuild = true;
 var guideLayer = sourceDoc.layers["Guidelines"];
 var name = sourceDoc.name.split(".")[0];
 var destFolder = Folder(sourceDoc.path + "/" + name);
+// 800x500 names
+var sixteenTenName = "1610";
+var smallName = "small";
+var largeName = "large";
 // All reusable functions are in CSTasks below
 var CSTasks = (function () {
     var tasks = {};
@@ -1684,7 +1688,7 @@ function mainExpressive() {
     mastDoc.close(SaveOptions.DONOTSAVECHANGES);
     mastDoc = null;
     /********************
-      Purple Lockup with no text export
+      Purple Lockup 800x400 with no text export
       ********************/
     //open a new doc and copy and position the icon
     // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
@@ -1811,6 +1815,134 @@ function mainExpressive() {
     //close and clean up
     mastDocNoText.close(SaveOptions.DONOTSAVECHANGES);
     mastDocNoText = null;
+    /********************
+   Purple fifth Lockup with no text export at 800x500
+   ********************/
+    //open a new doc and copy and position the icon
+    // duplication did not work as expected here. I have used a less elegant solution whereby I recreated the purple banner instead of copying it.
+    var mastDocNoText800x500 = CSTasks.duplicateArtboardInNewDoc(sourceDoc, 5, DocumentColorSpace.RGB);
+    mastDocNoText800x500.swatches.removeAll();
+    var mastGroupNoText800x500 = iconGroup.duplicate(mastDocNoText800x500.layers[0], 
+    /*@ts-ignore*/
+    ElementPlacement.PLACEATEND);
+    // new icon width in rebrand
+    // mastGroupNoText800x500.width = 360;
+    // mastGroupNoText800x500.height = 360;
+    // new icon position
+    var mastLocNoText800x500 = [
+        mastDocNoText800x500.artboards[0].artboardRect[0],
+        mastDocNoText800x500.artboards[0].artboardRect[1],
+    ];
+    CSTasks.translateObjectTo(mastGroupNoText800x500, mastLocNoText800x500);
+    /********************************
+      Custom function to create a landing square to place the icon correctly
+      Some icons have width or height less than 256 so it needed special centering geometrically
+      you can see the landing zone square by changing fill to true and uncommenting color
+      *********************************/
+    // create a landing zone square to place icon inside
+    //moved it outside the function itself so we can delete it after so it doesn't get exported
+    var getArtLayerIn5thArtboard = mastDocNoText800x500.layers.getByName('Layer 1');
+    var landingZoneSquareInFifthArtboard = getArtLayerIn5thArtboard.pathItems.rectangle(-2114, 444, 360, 360);
+    function placeIconLockupCorrectlyIn5thDoc(mastGroupNoText800x500, maxSize) {
+        var setLandingZoneSquareColor = new RGBColor();
+        setLandingZoneSquareColor.red = 121;
+        setLandingZoneSquareColor.green = 128;
+        setLandingZoneSquareColor.blue = 131;
+        landingZoneSquareInFifthArtboard.fillColor = setLandingZoneSquareColor;
+        landingZoneSquareInFifthArtboard.name = "LandingZone4";
+        landingZoneSquareInFifthArtboard.filled = false;
+        /*@ts-ignore*/
+        landingZoneSquareInFifthArtboard.move(getArtLayerIn5thArtboard, ElementPlacement.PLACEATEND);
+        // start moving expressive icon into our new square landing zone
+        var placedmastGroup = mastGroupNoText800x500;
+        var landingZone = mastDocNoText800x500.pathItems.getByName("LandingZone4");
+        var preferredWidth = (360);
+        var preferredHeight = (360);
+        // do the width
+        var widthRatio = (preferredWidth / placedmastGroup.width) * 100;
+        if (placedmastGroup.width != preferredWidth) {
+            placedmastGroup.resize(widthRatio, widthRatio);
+        }
+        // now do the height
+        var heightRatio = (preferredHeight / placedmastGroup.height) * 100;
+        if (placedmastGroup.height != preferredHeight) {
+            placedmastGroup.resize(heightRatio, heightRatio);
+        }
+        // now let's center the art on the landing zone
+        var centerArt = [placedmastGroup.left + (placedmastGroup.width / 2), placedmastGroup.top + (placedmastGroup.height / 2)];
+        var centerLz = [landingZone.left + (landingZone.width / 2), landingZone.top + (landingZone.height / 2)];
+        placedmastGroup.translate(centerLz[0] - centerArt[0], centerLz[1] - centerArt[1]);
+        // need another centered proportioning to fix it exactly in correct position
+        var W = mastGroupNoText800x500.width, H = mastGroupNoText800x500.height, MW = maxSize.W, MH = maxSize.H, factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
+        mastGroupNoText800x500.resize(factor, factor);
+    }
+    placeIconLockupCorrectlyIn5thDoc(mastGroupNoText800x500, { W: 360, H: 360 });
+    // delete the landing zone
+    landingZoneSquareInFifthArtboard.remove();
+    CSTasks.ungroupOnce(mastGroupNoText800x500);
+    // add new style purple banner 4 elements
+    var myMainArtworkLayerMastDocNoText800x500 = mastDocNoText800x500.layers.getByName('Layer 1');
+    var myMainPurpleBgLayerMastDocNoText800x500 = mastDocNoText800x500.layers.add();
+    myMainPurpleBgLayerMastDocNoText800x500.name = "Main_Purple_BG_layer";
+    var GetMyMainPurpleBgLayerMastDocNoText800x500 = mastDocNoText800x500.layers.getByName('Main_Purple_BG_layer');
+    var mainRectMastDocNoText800x500 = GetMyMainPurpleBgLayerMastDocNoText800x500.pathItems.rectangle(-1972, 0, 800, 500);
+    var setMainVioletBgColorMastDocNoText800x500 = new RGBColor();
+    setMainVioletBgColorMastDocNoText800x500.red = 72;
+    setMainVioletBgColorMastDocNoText800x500.green = 8;
+    setMainVioletBgColorMastDocNoText800x500.blue = 111;
+    mainRectMastDocNoText800x500.filled = true;
+    mainRectMastDocNoText800x500.fillColor = setMainVioletBgColorMastDocNoText800x500;
+    /*@ts-ignore*/
+    GetMyMainPurpleBgLayerMastDocNoText800x500.move(myMainArtworkLayerMastDocNoText800x500, ElementPlacement.PLACEATEND);
+    // we need to make artboard clipping mask here for the artboard to crop expressive icons correctly.
+    var myCroppingLayerMastDocNoText800x500 = mastDocNoText800x500.layers.add();
+    myCroppingLayerMastDocNoText800x500.name = "crop";
+    var GetMyCroppingLayerMastDocNoText800x500 = mastDocNoText800x500.layers.getByName('crop');
+    mastDocNoText800x500.activeLayer = GetMyCroppingLayerMastDocNoText800x500;
+    mastDocNoText800x500.activeLayer.hasSelectedArtwork = true;
+    // insert clipping rect here
+    var mainClipRectMastDocNoText800x500 = GetMyCroppingLayerMastDocNoText800x500.pathItems.rectangle(-1972, 0, 800, 500);
+    var setClipBgColorMastDocNoText800x500 = new RGBColor();
+    setClipBgColorMastDocNoText800x500.red = 111;
+    setClipBgColorMastDocNoText800x500.green = 111;
+    setClipBgColorMastDocNoText800x500.blue = 222;
+    mainClipRectMastDocNoText800x500.filled = true;
+    mainClipRectMastDocNoText800x500.fillColor = setClipBgColorMastDocNoText800x500;
+    // select all for clipping here
+    mastDocNoText800x500.selectObjectsOnActiveArtboard();
+    // clip!
+    app.executeMenuCommand('makeMask');
+    //save a banner JPG
+    var jpegStartWidth800x500 = mastDocNoText800x500.artboards[0].artboardRect[2] - mastDocNoText800x500.artboards[0].artboardRect[0];
+    for (var i_29 = 0; i_29 < exportSizes.length; i_29++) {
+        var filename_23 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(smallName, ".jpg");
+        var destFile_23 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filename_23);
+        CSTasks.scaleAndExportJPEG(mastDocNoText800x500, destFile_23, jpegStartWidth800x500, 800);
+    }
+    //save a banner PNG
+    for (var i_30 = 0; i_30 < exportSizes.length; i_30++) {
+        var filename_24 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(smallName, ".png");
+        var destFile_24 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_24);
+        CSTasks.scaleAndExportPNG(mastDocNoText800x500, destFile_24, jpegStartWidth800x500, 800);
+    }
+    //save a banner SVG
+    for (var i_31 = 0; i_31 < exportSizes.length; i_31++) {
+        var filename_25 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(smallName, ".svg");
+        var destFile_25 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_25);
+        CSTasks.scaleAndExportSVG(mastDocNoText800x500, destFile_25, 500, 800);
+    }
+    //save RGB EPS into the export folder 
+    var mastNoTextFilename800x500 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(smallName, ".eps");
+    var mastNoTextDestFile800x500 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(epsName)) + mastNoTextFilename800x500);
+    var mastNoTextSaveOpts800x500 = new EPSSaveOptions();
+    /*@ts-ignore*/
+    mastNoTextSaveOpts800x500.cmykPostScript = false;
+    /*@ts-ignore*/
+    mastNoTextSaveOpts800x500.embedLinkedFiles = true;
+    mastDocNoText800x500.saveAs(mastNoTextDestFile800x500, mastNoTextSaveOpts800x500);
+    //close and clean up
+    mastDocNoText800x500.close(SaveOptions.DONOTSAVECHANGES);
+    mastDocNoText800x500 = null;
     /************
     Final cleanup
     ************/
