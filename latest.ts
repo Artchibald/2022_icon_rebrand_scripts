@@ -2562,7 +2562,7 @@ function mainExpressive() {
    }
    //save a banner SVG
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${smallName}.svg`;
+      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}.svg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${svgName}`) + filename);
       CSTasks.scaleAndExportSVG(mastDocNoText800x500, destFile, 500, 800);
    }

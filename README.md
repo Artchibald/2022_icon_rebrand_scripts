@@ -238,7 +238,7 @@ After I updated Illustrator, it couldn't read wtw_logo.ai, so I opened that file
 - Sat 25 June 3 hours docs review, repo set up, set up typescript installation, remove all errors from original js script copy as TS
 - 26 July 2 hours, Katie requested removing expressive jpgs and pngs under 512. Had to repackage and retest.
 - 10 (1/2 day), 11, 12 Oct 2022, 2.5 days reworking the whole operation to rectify exports according to brief from Katie.
-
+- Thu 10 Nov - 1/2 day migraine. double check expressive banner crops @8px for Michael Williams, they were out and technically time consuming to correct and review feedback from Katie with attached files.  
 # Shorten file names as per Jo request?
 
 # Add swatch to your swatches panel before starting with swtach .ai file. Swatch menu > Other Library...
@@ -287,4 +287,7 @@ ask_benix_expressive_CMYK
 - Same for PNG, EPS should be in png folder too
 - In root folder, top level needs 2 things
 - ask benix core 1 png 1 svg
-- ask benix expressive 1 png 1 svgß
+- ask benix expressive 1 png 1 svg
+
+[![explain][explain]](https://github.com/Artchibald/2022_icon_rebrand_scripts)
+[explain]: images/explain.png

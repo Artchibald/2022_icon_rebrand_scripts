@@ -1927,7 +1927,7 @@ function mainExpressive() {
     }
     //save a banner SVG
     for (var i_31 = 0; i_31 < exportSizes.length; i_31++) {
-        var filename_25 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(smallName, ".svg");
+        var filename_25 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, ".svg");
         var destFile_25 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(svgName)) + filename_25);
         CSTasks.scaleAndExportSVG(mastDocNoText800x500, destFile_25, 500, 800);
     }
