@@ -1594,10 +1594,10 @@ function mainExpressive() {
    //moved it outside the function itself so we can delete it after so it doesn't get exported
    let getArtLayer5 = sourceDoc.layers.getByName('Art');
    let landingZoneSquare5 = getArtLayer5.pathItems.rectangle(
-      -2116,
-      444,
-      360,
-      360);
+      -2024,
+      352,
+      456,
+      456);
 
    function placeIconLockup1Correctly5(fifthBannerMast, maxSize) {
       // let setLandingZoneSquareColor = new RGBColor();
@@ -1613,8 +1613,8 @@ function mainExpressive() {
       // start moving expressive icon into our new square landing zone
       let placedfifthBannerMast = fifthBannerMast;
       let landingZone = sourceDoc.pathItems.getByName("LandingZone2");
-      let preferredWidth = (360);
-      let preferredHeight = (360);
+      let preferredWidth = (456);
+      let preferredHeight = (456);
       // do the width
       let widthRatio = (preferredWidth / placedfifthBannerMast.width) * 100;
       if (placedfifthBannerMast.width != preferredWidth) {
@@ -1638,13 +1638,13 @@ function mainExpressive() {
          factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
       fifthBannerMast.resize(factor, factor);
    }
-   placeIconLockup1Correctly5(fifthBannerMast, { W: 360, H: 360 });
+   placeIconLockup1Correctly5(fifthBannerMast, { W: 456, H: 456 });
 
    // delete the landing zone
    landingZoneSquare5.remove();
 
-   // fifthBannerMast.width = 360;
-   // fifthBannerMast.height = 360;
+   // fifthBannerMast.width = 456;
+   // fifthBannerMast.height = 456;
 
    // new purple bg
    // Add new layer above Guidelines and fill white
@@ -2447,10 +2447,10 @@ function mainExpressive() {
    //moved it outside the function itself so we can delete it after so it doesn't get exported
    let getArtLayerIn5thArtboard = mastDocNoText800x500.layers.getByName('Layer 1');
    let landingZoneSquareInFifthArtboard = getArtLayerIn5thArtboard.pathItems.rectangle(
-      -2114,
-      444,
-      360,
-      360);
+      -2022,
+      352,
+      456,
+      456);
 
    function placeIconLockupCorrectlyIn5thDoc(mastGroupNoText800x500, maxSize) {
 
@@ -2470,8 +2470,8 @@ function mainExpressive() {
       // start moving expressive icon into our new square landing zone
       let placedmastGroup = mastGroupNoText800x500;
       let landingZone = mastDocNoText800x500.pathItems.getByName("LandingZone4");
-      let preferredWidth = (360);
-      let preferredHeight = (360);
+      let preferredWidth = (456);
+      let preferredHeight = (456);
       // do the width
       let widthRatio = (preferredWidth / placedmastGroup.width) * 100;
       if (placedmastGroup.width != preferredWidth) {
@@ -2495,7 +2495,7 @@ function mainExpressive() {
          factor = W / H > MW / MH ? MW / W * 100 : MH / H * 100;
       mastGroupNoText800x500.resize(factor, factor);
    }
-   placeIconLockupCorrectlyIn5thDoc(mastGroupNoText800x500, { W: 360, H: 360 });
+   placeIconLockupCorrectlyIn5thDoc(mastGroupNoText800x500, { W: 456, H: 456 });
 
    // delete the landing zone
    landingZoneSquareInFifthArtboard.remove();
