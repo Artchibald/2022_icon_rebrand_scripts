@@ -1552,7 +1552,7 @@ function mainExpressive() {
 
    //if there are 3 artboards, create the new fourth lockup artboard
 
-   // creat 00x400 artboard in file
+   // create 800x500 artboard in file
    let FifthMainArtboardFirstRect = sourceDoc.artboards[1].artboardRect;
    sourceDoc.artboards.add(
       // this fires but then gets replaced further down
@@ -2454,8 +2454,6 @@ function mainExpressive() {
 
    function placeIconLockupCorrectlyIn5thDoc(mastGroupNoText800x500, maxSize) {
 
-
-
       // let setLandingZoneSquareColor = new RGBColor();
       // setLandingZoneSquareColor.red = 121;
       // setLandingZoneSquareColor.green = 128;
@@ -2549,14 +2547,14 @@ function mainExpressive() {
    let jpegStartWidth800x500 =
       mastDocNoText800x500.artboards[0].artboardRect[2] - mastDocNoText800x500.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${smallName}.jpg`;
+      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_1x.jpg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
       CSTasks.scaleAndExportJPEG(mastDocNoText800x500, destFile, jpegStartWidth800x500, 800);
    }
 
    //save a banner PNG
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${smallName}.png`;
+      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_1x.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(mastDocNoText800x500, destFile, jpegStartWidth800x500, 800);
    }
@@ -2575,14 +2573,14 @@ function mainExpressive() {
    let jpegStartWidth800x500_2x =
       mastDocNoText800x500.artboards[0].artboardRect[2] - mastDocNoText800x500.artboards[0].artboardRect[0];
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${largeName}.jpg`;
+      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_2x.jpg`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${jpgName}`) + filename);
       CSTasks.scaleAndExportJPEG(mastDocNoText800x500, destFile, jpegStartWidth800x500_2x, 1600);
    }
 
    //save a banner PNG @2x
    for (let i = 0; i < exportSizes.length; i++) {
-      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_${largeName}.png`;
+      let filename = `/${iconFilename}_${expressiveName}_${sixteenTenName}_2x.png`;
       let destFile = new File(Folder(`${sourceDoc.path}/${sourceDocName}/${expressiveName}/${pngName}`) + filename);
       CSTasks.scaleAndExportPNG(mastDocNoText800x500, destFile, jpegStartWidth800x500_2x, 1600);
    }

@@ -1180,7 +1180,7 @@ function mainExpressive() {
       Set up purple artboard 5 in main file
       ******************/
     //if there are 3 artboards, create the new fourth lockup artboard
-    // creat 00x400 artboard in file
+    // create 800x500 artboard in file
     var FifthMainArtboardFirstRect = sourceDoc.artboards[1].artboardRect;
     sourceDoc.artboards.add(
     // this fires but then gets replaced further down
@@ -1915,13 +1915,13 @@ function mainExpressive() {
     //save a banner JPG
     var jpegStartWidth800x500 = mastDocNoText800x500.artboards[0].artboardRect[2] - mastDocNoText800x500.artboards[0].artboardRect[0];
     for (var i_29 = 0; i_29 < exportSizes.length; i_29++) {
-        var filename_23 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(smallName, ".jpg");
+        var filename_23 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_1x.jpg");
         var destFile_23 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filename_23);
         CSTasks.scaleAndExportJPEG(mastDocNoText800x500, destFile_23, jpegStartWidth800x500, 800);
     }
     //save a banner PNG
     for (var i_30 = 0; i_30 < exportSizes.length; i_30++) {
-        var filename_24 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(smallName, ".png");
+        var filename_24 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_1x.png");
         var destFile_24 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_24);
         CSTasks.scaleAndExportPNG(mastDocNoText800x500, destFile_24, jpegStartWidth800x500, 800);
     }
@@ -1938,13 +1938,13 @@ function mainExpressive() {
     //save a banner JPG @2x
     var jpegStartWidth800x500_2x = mastDocNoText800x500.artboards[0].artboardRect[2] - mastDocNoText800x500.artboards[0].artboardRect[0];
     for (var i_32 = 0; i_32 < exportSizes.length; i_32++) {
-        var filename_26 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(largeName, ".jpg");
+        var filename_26 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_2x.jpg");
         var destFile_26 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(jpgName)) + filename_26);
         CSTasks.scaleAndExportJPEG(mastDocNoText800x500, destFile_26, jpegStartWidth800x500_2x, 1600);
     }
     //save a banner PNG @2x
     for (var i_33 = 0; i_33 < exportSizes.length; i_33++) {
-        var filename_27 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_").concat(largeName, ".png");
+        var filename_27 = "/".concat(iconFilename, "_").concat(expressiveName, "_").concat(sixteenTenName, "_2x.png");
         var destFile_27 = new File(Folder("".concat(sourceDoc.path, "/").concat(sourceDocName, "/").concat(expressiveName, "/").concat(pngName)) + filename_27);
         CSTasks.scaleAndExportPNG(mastDocNoText800x500, destFile_27, jpegStartWidth800x500_2x, 1600);
     }
